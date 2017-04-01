@@ -1,5 +1,6 @@
 
 #include <mlx.h>
+#include "libft.h"
 
 void	bresenham(t_env *e, t_coord p1, t_coord p2)
 {
