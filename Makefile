@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/03 19:40:04 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/03 19:57:38 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@ar rc $(NAME) $(OBJS)
-	@ar -s $(NAME)
+	@$(CC) $(CFLAGS) -o $(NAME)
 	@echo "Library created ! [OK]"
 
 %.o: %.c
