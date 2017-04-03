@@ -6,56 +6,53 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/03 19:57:38 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/03 21:13:25 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
-# -- VARIABLES --
-
-# Names
 NAME = fdf
 
-# Compiler
 CC = gcc
 
-# Compiler flags
-CFLAGS = -c -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -I $(INC) -I $(LIB_INC)
+LFLAGS = -lmlx -framework OpenGL -framework AppKit -lft -L$(LIB_PATH)
 
-# Files path
-INC = inc/
+LIB_PATH = libft
+LIB_INC = $(LIB_PATH)/includes
 
-# Files path
-VPATH = src/
+VPATH = src
+INC = inc
 
-
-SRCS =	parse_input.c \
-
-# -- OBJECTS --
+SRCS =	fdf.c \
+		parse_input.c \
 
 OBJS = $(SRCS:.c=.o)
 
-# -- RULES --
-
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME)
-	@echo "Library created ! [OK]"
+$(NAME): libft $(OBJS)
+	@$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) -o $(NAME)
+	@echo "-- $(NAME): binary created --"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -I $(INC) -o $@ $^
+	@$(CC) $(CFLAGS) -c $^
+
+libft:
+	@make -C $(LIB_PATH)
 
 clean:
 	@rm -f $(OBJS)
-	@echo "Objects deleted   [OK]"
+	@make -C $(LIB_PATH) $@
+	@echo "-- $(NAME): objects deleted --"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "Binary deleted    [OK]"
+	@make -C $(LIB_PATH) $@
+	@echo "-- $(NAME): binary deleted --"
 
 re: fclean all
 
 # This rule allow the library build process to complete even if there are
 # files named 'all, clean, fclean, re' in the working directory
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft
