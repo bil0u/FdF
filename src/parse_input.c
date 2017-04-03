@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/01 19:15:56 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/03 21:05:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	count_and_check(t_list *lst)
 	return (ref_value);
 }
 
-int			*str_to_inttab(char *str, int nb_columns)
+static int	*str_to_inttab(char *str, int nb_columns)
 {
 	int		*line;
 	int		i;
@@ -120,31 +120,4 @@ t_map		*input_to_map(char *file)
 	}
 	ft_lstdel(&leak, &ft_delcontent);
 	return (m);
-}
-
-int			main(int argc, char **argv)
-{
-	t_map	*m;
-	int		i;
-	int		j;
-
-	if (argc != 2)
-	{
-		ft_putendl_fd("usage : ./fdf [path/to/file]", 2);
-		return (-1);
-	}
-	m = input_to_map(argv[1]);
-	i = 0;
-	while (i < m->nb_lines)
-	{
-		j = 0;
-		while (j < m->nb_columns)
-		{
-			ft_printf("%d ", m->tab[i][j]);
-			j++;
-		}
-		ft_putendl("");
-		i++;
-	}
-	return (0);
 }
