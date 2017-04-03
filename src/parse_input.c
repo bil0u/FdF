@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/03 22:49:53 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/03 23:27:21 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	file_to_lst(char *file, t_list **dst)
 	int		fd;
 	char	*buff;
 
-	if (!dst || (fd = open(file, O_RDONLY)) < 0)
+	if ((fd = open(file, O_RDONLY)) < 0)
 		return (ERROR);
 	nb_lines = 0;
 	buff = NULL;
@@ -106,7 +106,7 @@ t_map		*input_to_map(char *file)
 	if ((m = (t_map *)ft_memalloc(sizeof(*m))) == NULL)
 		end_error(&lst, &m, i, "malloc: cannot allocate memory");
 	if ((m->nb_lines = file_to_lst(file, &lst)) == ERROR)
-		end_error(&lst, &m, i, "open: cannot open file");
+		end_error(&lst, &m, i, "open: file does not exist");
 	if ((m->nb_columns = count_and_check(lst)) == ERROR)
 		end_error(&lst, &m, i, "fdf: file not valid");
 	i = m->nb_lines;

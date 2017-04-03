@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/03 21:06:27 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/03 23:21:09 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int			main(int argc, char **argv)
 		return (-1);
 	}
 	m = input_to_map(argv[1]);
+
+	//		TESTING_PART		//@
 	i = 0;
 	while (i < m->nb_lines)
 	{
@@ -38,5 +40,8 @@ int			main(int argc, char **argv)
 		ft_putendl("");
 		i++;
 	}
+	//							//
+
+//	ft_memdel((void **)&m);
 	return (0);
 }

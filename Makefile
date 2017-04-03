@@ -6,53 +6,84 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/03 22:57:33 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/04 01:50:16 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
+# -- VARIABLES --
+
+# Name
 NAME = fdf
 
+# Compiler
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra -I $(INC) -I $(LIB_INC)
-LFLAGS = -lmlx -framework OpenGL -framework AppKit -lft -L$(LIB_PATH)
+# Flags
+CFLAGS = -Wall -Werror -Wextra $(INCLUDES)
+LFLAGS = -lmlx -framework OpenGL -framework AppKit -lft -L $(LIB_DIR)
 
-LIB_PATH = libft
-LIB_INC = $(LIB_PATH)/includes
+# Library paths
+LIB_DIR = ./libft
+LIB_INCLUDES_DIR = $(LIB_DIR)/includes
 
-VPATH = src
-INC = inc
+# Sources paths
+VPATH = ./src
+INCLUDES_DIR = ./includes
 
-SRCS =	fdf.c \
-		parse_input.c \
+# Includes paths
+INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR)
 
-OBJS = $(SRCS:.c=.o)
+# Sources files
+SOURCES =	fdf.c \
+			parse_input.c \
+
+# Objects files
+OBJECTS = $(SOURCES:.c=.o)
+
+# -- RULES --
 
 all: $(NAME)
+	echo >> /dev/null
 
-$(NAME): libft $(OBJS)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) -o $(NAME)
-	@echo "-- $(NAME): binary created --"
+$(NAME): lib
+	printf "> \033[31;33;1m$(NAME)\033[0m : \033[32mCreating objects \033[0m "
+	make obj
+	printf "\n"
+	printf "> \033[31;33;1m$(NAME)\033[0m : \033[32mCreating binary\033[0m "
+	$(CC) $(CFLAGS) $(LFLAGS) $(OBJECTS) -o $(NAME)
+	printf "\t\t\033[37;1m[\033[32;1mDONE\033[0m\033[37;1m]\033[0m\n"
+
+obj: $(OBJECTS)
+	echo >> /dev/null
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $^
+	$(CC) -o $@ -c $< $(CFLAGS)
+	printf "\033[32m.\033[0m"
 
-libft:
-	@make -C $(LIB_PATH)
+lib:
+	make -C $(LIB_DIR)
 
 clean:
-	@rm -f $(OBJS)
-	@make -C $(LIB_PATH) $@
-	@echo "-- $(NAME): objects deleted --"
+	printf "> \033[31;33;1m$(NAME)\033[0m : \033[31mDeleting objects\033[0m "
+	rm -f $(OBJECTS)
+	printf "\t\t\033[37;1m[\033[31;1mX\033[0m\033[37;1m]\033[0m\n"
+	make -C $(LIB_DIR) $@
 
 fclean: clean
-	@rm -f $(NAME)
-	@make -C $(LIB_PATH) $@
-	@echo "-- $(NAME): binary deleted --"
+	printf "> \033[31;33;1m$(NAME)\033[0m : \033[31mDeleting binary\033[0m "
+	rm -f $(NAME)
+	printf "\t\t\033[37;1m[\033[31;1mX\033[0m\033[37;1m]\033[0m\n"
+	make -C $(LIB_DIR) $@
 
 re: fclean all
 
+sandwich: re
+	make clean
+	echo "Sandwich ready !"
 # This rule allow the library build process to complete even if there are
 # files named 'all, clean, fclean, re' in the working directory
 
-.PHONY: all clean fclean re libft
+
+.PHONY: all obj lib clean fclean re sandwich
+
+.SILENT: all obj lib clean fclean re sandwich $(NAME) $(OBJECTS)
