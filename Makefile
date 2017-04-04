@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/04 20:09:46 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/04 20:44:00 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,18 +20,20 @@ CC = gcc
 
 # Flags
 CFLAGS = -Wall -Werror -Wextra $(INCLUDES) -DDEBUG
-LFLAGS = -lmlx -framework OpenGL -framework AppKit -lft -L $(LIB_DIR)
+LFLAGS = -lmlx -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
 
 # Library paths
 LIB_DIR = ./libft
 LIB_INCLUDES_DIR = $(LIB_DIR)/inc
+LIB_GRAPHIC_DIR = ./libgraphic
+LIB_GRAPHIC_INCLUDES_DIR = $(LIB_GRAPHIC_DIR)/inc
 
 # Sources paths
 VPATH = ./src
 INCLUDES_DIR = ./inc
 
 # Includes paths
-INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR)
+INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDE_DIR)
 
 # Sources files
 FILES =		fdf \
@@ -73,18 +75,21 @@ $(OBJ_DIR)/%.o: %.c
 
 lib:
 	make -C $(LIB_DIR)
+	make -C $(LIB_GRAPHIC_DIR)
 
 clean:
 	printf "> \e[31;33;1m$(NAME)\e[0m : \e[31mDeleting objects\e[0m "
 	rm -rf $(OBJ_DIR)
 	printf "\t\t\e[37;1m[\e[31;1mX\e[0m\e[37;1m]\e[0m\n"
 	make -C $(LIB_DIR) $@
+	make -C $(LIB_GRAPHIC_DIR) $@
 
 fclean: clean
 	printf "> \e[31;33;1m$(NAME)\e[0m : \e[31mDeleting binary\e[0m "
 	rm -f $(NAME)
 	printf "\t\t\e[37;1m[\e[31;1mX\e[0m\e[37;1m]\e[0m\n"
 	make -C $(LIB_DIR) $@
+	make -C $(LIB_GRAPHIC_DIR) $@
 
 re: fclean all
 
