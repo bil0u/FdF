@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/04 19:46:04 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/04 19:47:08 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ lib:
 
 clean:
 	printf "> \e[31;33;1m$(NAME)\e[0m : \e[31mDeleting objects\e[0m "
-	rm -f $(OBJECTS)
+	rm -rf $(OBJ_DIR)
 	printf "\t\t\e[37;1m[\e[31;1mX\e[0m\e[37;1m]\e[0m\n"
 	make -C $(LIB_DIR) $@
 
