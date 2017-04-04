@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/04 19:36:51 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/04 19:46:04 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ OBJ_DIR = ./obj
 
 # -- RULES --
 
-all: $(NAME)
+all: prep $(NAME)
 	echo >> /dev/null
 
 debug: lib
@@ -88,6 +88,9 @@ fclean: clean
 
 re: fclean all
 
+prep:
+	mkdir -p $(OBJ_DIR)
+
 sandwich: re
 	make clean
 	echo "Sandwich ready !"
@@ -95,6 +98,6 @@ sandwich: re
 # files named 'all, clean, fclean, re' in the working directory
 
 
-.PHONY: all obj lib clean fclean re sandwich
+.PHONY: all obj lib clean fclean re sandwich prep debug
 
-.SILENT: all obj lib clean fclean re sandwich debug $(NAME) $(OBJECTS)
+.SILENT: all obj lib clean fclean re sandwich prep debug $(NAME) $(OBJECTS)
