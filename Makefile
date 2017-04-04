@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/04 19:47:08 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/04 20:09:46 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,11 @@ LFLAGS = -lmlx -framework OpenGL -framework AppKit -lft -L $(LIB_DIR)
 
 # Library paths
 LIB_DIR = ./libft
-LIB_INCLUDES_DIR = $(LIB_DIR)/includes
+LIB_INCLUDES_DIR = $(LIB_DIR)/inc
 
 # Sources paths
 VPATH = ./src
-INCLUDES_DIR = ./includes
+INCLUDES_DIR = ./inc
 
 # Includes paths
 INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR)
@@ -67,7 +67,7 @@ $(NAME): lib
 obj: $(OBJECTS)
 	echo >> /dev/null
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 	printf "\e[32m.\e[0m"
 
