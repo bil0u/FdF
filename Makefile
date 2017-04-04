@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/04 20:49:18 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/04 20:55:00 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ VPATH = ./src
 INCLUDES_DIR = ./inc
 
 # Includes paths
-INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDE_DIR)
+INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_DIR)
 
 # Sources files
 FILES =		fdf \
