@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/04 20:44:00 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/04 20:49:18 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,6 @@ OBJ_DIR = ./obj
 # -- RULES --
 
 all: prep $(NAME)
-	echo >> /dev/null
 
 debug: lib
 	printf "> \e[31;33;1m$(NAME)\e[0m \e[37;1m[\e[0m\e[34;1mDEBUG MODE\e[0m\e[37;1m]\e[0m : \e[32mCreating objects \e[0m "
