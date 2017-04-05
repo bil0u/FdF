@@ -6,23 +6,21 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/04 20:22:18 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/05 03:39:34 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "fdf.h"
+#include "mlx_env.h"
 #include "parse_input.h"
 
 int			main(int argc, char **argv)
 {
-	t_map	*m;
+	t_mlxenv	*e;
+	t_map		*m;
 
 	if (argc != 2)
-	{
-		ft_putendl_fd("usage : ./fdf [path/to/file]", 2);
-		return (-1);
-	}
+		end_session(NULL, NULL, "usage : ./fdf [path/to/file]", EXIT_FAILURE);
 	m = input_to_map(argv[1]);
 
 #ifdef DEBUG
@@ -43,6 +41,9 @@ int			main(int argc, char **argv)
 		}
 	}
 #endif
-	ft_memdel((void **)&m);
+
+	e = init_mlxenv(m);
+	mlx_loop(e->mlx_id);
+	end_session(m, e, NULL, EXIT_SUCCESS);
 	return (0);
 }

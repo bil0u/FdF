@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/03 23:27:21 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/05 01:38:34 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 
 static void	end_error(t_list **lst, t_map **m, int i, char *msg)
 {
-	if ((*m)->nb_lines != ERROR && (*m)->nb_columns != ERROR)
+	if (m && *m && (*m)->nb_lines != ERROR && (*m)->nb_columns != ERROR)
 	{
 		while (i < (*m)->nb_lines)
 		{
 			ft_memdel((void **)&((*m)->tab[i]));
 			i++;
 		}
+		ft_memdel((void **)m);
 	}
-	ft_memdel((void **)m);
 	ft_lstdel(lst, &ft_delcontent);
 	ft_putendl_fd(msg, 2);
 	exit(EXIT_FAILURE);
