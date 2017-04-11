@@ -21,13 +21,11 @@ CC = gcc
 # Flags
 CFLAGS = -Wall -Werror -Wextra $(INCLUDES) -DDEBUG
 LFLAGS = -lmlx -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
-
 # Library paths
 LIB_DIR = ./libft
 LIB_INCLUDES_DIR = $(LIB_DIR)/inc
 LIB_GRAPHIC_DIR = ./libgraphic
 LIB_GRAPHIC_INCLUDES_DIR = $(LIB_GRAPHIC_DIR)/inc
-
 # Sources paths
 VPATH = ./src
 INCLUDES_DIR = ./inc
@@ -39,9 +37,11 @@ INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_D
 FILES =		fdf \
 			mlx_env \
 			parse_input \
+			matrix_utils \
 
 SOURCES = $(patsubst %,$(SRC_DIR)/%,$(FILES:=.c))
 SRC_DIR = ./src
+
 # Objects files
 OBJECTS = $(patsubst %,$(OBJ_DIR)/%,$(FILES:=.o))
 OBJ_DIR = ./obj
@@ -50,7 +50,7 @@ OBJ_DIR = ./obj
 
 all: prep $(NAME)
 
-debug: lib
+debug: prep lib
 	printf "> \e[31;33;1m$(NAME)\e[0m \e[37;1m[\e[0m\e[34;1mDEBUG MODE\e[0m\e[37;1m]\e[0m : \e[32mCreating objects \e[0m "
 	make obj
 	printf "\n"
@@ -58,7 +58,7 @@ debug: lib
 	$(CC) $(CFLAGS) $(LFLAGS) $(OBJECTS) -o $(NAME)
 	printf "\t\t\e[37;1m[\e[32;1mDONE\e[0m\e[37;1m]\e[0m\n"
 
-$(NAME): lib
+$(NAME): lib 
 	printf "> \e[31;33;1m$(NAME)\e[0m : \e[32mCreating objects \e[0m "
 	make obj
 	printf "\n"
