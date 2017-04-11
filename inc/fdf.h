@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/04 21:07:41 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/11 03:11:01 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@
 # include "libft.h"
 # include "libgraphic.h"
 
-typedef struct	s_map
+typedef	struct	s_scene
 {
-	int			**tab;
+	t_vertex4f	**tab;
 	int			nb_lines;
 	int			nb_columns;
-}				t_map;
-
+}				t_scene;
 #endif

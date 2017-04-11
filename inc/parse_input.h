@@ -6,13 +6,13 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:05:40 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/05 02:10:43 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/11 03:11:15 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_INPUT_H
 # define PARSE_INPUT_H
 
-t_map		*input_to_map(char *file);
+t_scene		*input_to_scene(char *file);
 
 #endif

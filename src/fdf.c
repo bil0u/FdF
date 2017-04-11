@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/05 03:39:34 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/11 03:27:03 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,35 @@
 int			main(int argc, char **argv)
 {
 	t_mlxenv	*e;
-	t_map		*m;
+	t_scene		*s;
 
 	if (argc != 2)
 		end_session(NULL, NULL, "usage : ./fdf [path/to/file]", EXIT_FAILURE);
-	m = input_to_map(argv[1]);
+	s = input_to_scene(argv[1]);
 
 #ifdef DEBUG
 	{
 		int 		i;
 		int 		j;
 		i = 0;
-		while (i < m->nb_lines)
+		ft_putendl("------------");
+		while (i < s->nb_lines)
 		{
 			j = 0;
-			while (j < m->nb_columns)
+			while (j < s->nb_columns)
 			{
-				ft_printf("%d ", m->tab[i][j]);
+				ft_printf("{%.f,%.f,%.f} ", (s->tab[i][j]).x, (s->tab[i][j]).y, (s->tab[i][j]).z);
 				j++;
 			}
 			ft_putendl("");
 			i++;
 		}
+		ft_putendl("------------");
 	}
 #endif
 
-	e = init_mlxenv(m);
+	e = init_mlxenv(s);
 	mlx_loop(e->mlx_id);
-	end_session(m, e, NULL, EXIT_SUCCESS);
+	end_session(s, e, NULL, EXIT_SUCCESS);
 	return (0);
 }

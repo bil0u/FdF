@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/05 01:38:34 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/11 03:00:06 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@
 #include "libft.h"
 #include "fdf.h"
 
-static void	end_error(t_list **lst, t_map **m, int i, char *msg)
+static void			end_error(t_list **lst, t_scene **s, int i, char *msg)
 {
-	if (m && *m && (*m)->nb_lines != ERROR && (*m)->nb_columns != ERROR)
+	if (s && *s && (*s)->nb_lines != ERROR && (*s)->nb_columns != ERROR)
 	{
-		while (i < (*m)->nb_lines)
+		while (i < (*s)->nb_lines)
 		{
-			ft_memdel((void **)&((*m)->tab[i]));
+			ft_memdel((void **)&((*s)->tab[i]));
 			i++;
 		}
-		ft_memdel((void **)m);
+		ft_memdel((void **)s);
 	}
 	ft_lstdel(lst, &ft_delcontent);
 	ft_putendl_fd(msg, 2);
 	exit(EXIT_FAILURE);
 }
 
-static int	file_to_lst(char *file, t_list **dst)
+static int			file_to_lst(char *file, t_list **dst)
 {
-	int		nb_lines;
-	int		fd;
-	char	*buff;
+	int				nb_lines;
+	int				fd;
+	char			*buff;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
 		return (ERROR);
@@ -52,11 +52,11 @@ static int	file_to_lst(char *file, t_list **dst)
 	return (nb_lines);
 }
 
-static int	count_and_check(t_list *lst)
+static int			count_and_check(t_list *lst)
 {
-	char	*str;
-	int		ref_value;
-	int		ret;
+	char			*str;
+	int				ref_value;
+	int				ret;
 
 	if (!lst)
 		return (ERROR);
@@ -77,48 +77,50 @@ static int	count_and_check(t_list *lst)
 	return (ref_value);
 }
 
-static int	*str_to_inttab(char *str, int nb_columns)
+static t_vertex4f	*str_to_vertices(char *str, int nb_columns, int curr_line)
 {
-	int		*line;
-	int		i;
+	t_vertex4f		*line;
+	int				i;
 
-	if ((line = (int *)ft_memalloc(sizeof(int) * nb_columns)) == NULL)
+	if (!(line = (t_vertex4f *)ft_memalloc(sizeof(t_vertex4f) * nb_columns)))
 		return (NULL);
 	i = 0;
 	while (i < nb_columns)
 	{
-		line[i] = ft_atoi(str);
+		(line[i]).x = i;
+		(line[i]).y = curr_line;
+		(line[i]).z = ft_atoi(str);
 		str = ft_strchr(str, MAP_SEPARATOR) + 1;
 		i++;
 	}
 	return (line);
 }
 
-t_map		*input_to_map(char *file)
+t_scene				*input_to_scene(char *file)
 {
-	t_list	*lst;
-	t_list	*leak;
-	t_map	*m;
-	int		i;
+	t_list			*lst;
+	t_list			*leak;
+	t_scene			*s;
+	int				i;
 
 	lst = NULL;
 	i = 0;
-	if ((m = (t_map *)ft_memalloc(sizeof(*m))) == NULL)
-		end_error(&lst, &m, i, "malloc: cannot allocate memory");
-	if ((m->nb_lines = file_to_lst(file, &lst)) == ERROR)
-		end_error(&lst, &m, i, "open: file does not exist");
-	if ((m->nb_columns = count_and_check(lst)) == ERROR)
-		end_error(&lst, &m, i, "fdf: file not valid");
-	i = m->nb_lines;
-	if ((m->tab = (int **)ft_memalloc(sizeof(int *) * m->nb_lines)) == NULL)
-		end_error(&lst, &m, i, "malloc: cannot allocate memory");
+	if (!(s = (t_scene *)malloc(sizeof(t_scene))))
+		end_error(&lst, &s, i, "malloc: cannot allocate memory");
+	if ((s->nb_lines = file_to_lst(file, &lst)) == ERROR)
+		end_error(&lst, &s, i, "open: file does not exist");
+	if ((s->nb_columns = count_and_check(lst)) == ERROR)
+		end_error(&lst, &s, i, "fdf: file not valid");
+	i = s->nb_lines;
+	if (!(s->tab = (t_vertex4f **)malloc(sizeof(t_vertex4f *) * s->nb_lines)))
+		end_error(&lst, &s, i, "malloc: cannot allocate memory");
 	leak = lst;
 	while (i-- > 0)
 	{
-		if ((m->tab[i] = str_to_inttab(lst->content, m->nb_columns)) == NULL)
-			end_error(&lst, &m, i, "malloc: cannot allocate memory");
+		if (!(s->tab[i] = str_to_vertices(lst->content, s->nb_columns, i)))
+			end_error(&lst, &s, i, "malloc: cannot allocate memory");
 		lst = lst->next;
 	}
 	ft_lstdel(&leak, &ft_delcontent);
-	return (m);
+	return (s);
 }
