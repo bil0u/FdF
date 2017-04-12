@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/11 03:00:06 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/12 08:18:49 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ static int			count_and_check(t_list *lst)
 	return (ref_value);
 }
 
-static t_vertex4f	*str_to_vertices(char *str, int nb_columns, int curr_line)
+static t_vector4	*str_to_vertices(char *str, int nb_columns, int curr_line)
 {
-	t_vertex4f		*line;
+	t_vector4		*line;
 	int				i;
 
-	if (!(line = (t_vertex4f *)ft_memalloc(sizeof(t_vertex4f) * nb_columns)))
+	if (!(line = (t_vector4 *)ft_memalloc(sizeof(t_vector4) * nb_columns)))
 		return (NULL);
 	i = 0;
 	while (i < nb_columns)
@@ -90,6 +90,7 @@ static t_vertex4f	*str_to_vertices(char *str, int nb_columns, int curr_line)
 		(line[i]).x = i;
 		(line[i]).y = curr_line;
 		(line[i]).z = ft_atoi(str);
+		(line[i]).w = 1.0;
 		str = ft_strchr(str, MAP_SEPARATOR) + 1;
 		i++;
 	}
@@ -112,7 +113,7 @@ t_scene				*input_to_scene(char *file)
 	if ((s->nb_columns = count_and_check(lst)) == ERROR)
 		end_error(&lst, &s, i, "fdf: file not valid");
 	i = s->nb_lines;
-	if (!(s->tab = (t_vertex4f **)malloc(sizeof(t_vertex4f *) * s->nb_lines)))
+	if (!(s->tab = (t_vector4 **)malloc(sizeof(t_vector4 *) * s->nb_lines)))
 		end_error(&lst, &s, i, "malloc: cannot allocate memory");
 	leak = lst;
 	while (i-- > 0)
