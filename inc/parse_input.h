@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:05:40 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/11 03:11:15 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/14 05:00:55 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define PARSE_INPUT_H
 
 t_scene		*input_to_scene(char *file);
+void		center_scene(t_scene *world);
 
 #endif

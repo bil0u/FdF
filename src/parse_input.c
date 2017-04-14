@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/12 08:18:49 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/14 05:40:10 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "libft.h"
+#include "libgraphic.h"
 #include "fdf.h"
 
-static void			end_error(t_list **lst, t_scene **s, int i, char *msg)
+static void			end_error(t_list **lst, t_scene **world, int i, char *msg)
 {
-	if (s && *s && (*s)->nb_lines != ERROR && (*s)->nb_columns != ERROR)
+	if (world && *world
+				&& (*world)->nb_rows != ERROR && (*world)->nb_columns != ERROR)
 	{
-		while (i < (*s)->nb_lines)
+		while (i < (*world)->nb_rows)
 		{
-			ft_memdel((void **)&((*s)->tab[i]));
+			ft_memdel((void **)&((*world)->map[i]));
 			i++;
 		}
-		ft_memdel((void **)s);
+		ft_memdel((void **)world);
 	}
 	ft_lstdel(lst, &ft_delcontent);
 	ft_putendl_fd(msg, 2);
@@ -34,22 +36,22 @@ static void			end_error(t_list **lst, t_scene **s, int i, char *msg)
 
 static int			file_to_lst(char *file, t_list **dst)
 {
-	int				nb_lines;
+	int				nb_rows;
 	int				fd;
 	char			*buff;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
 		return (ERROR);
-	nb_lines = 0;
+	nb_rows = 0;
 	buff = NULL;
 	while (get_next_line(fd, &buff) > 0)
 	{
 		ft_lstadd(dst, ft_lstnew(buff, ft_strlen(buff) + 1));
 		ft_strdel(&buff);
-		nb_lines++;
+		nb_rows++;
 	}
 	close(fd);
-	return (nb_lines);
+	return (nb_rows);
 }
 
 static int			count_and_check(t_list *lst)
@@ -77,7 +79,57 @@ static int			count_and_check(t_list *lst)
 	return (ref_value);
 }
 
-static t_vector4	*str_to_vertices(char *str, int nb_columns, int curr_line)
+static float		get_z_midvalue(t_scene *world)
+{
+	t_vector4	*curr;
+	float		z_min;
+	float		z_max;
+	int			i;
+	int			j;
+
+	z_min = (world->map[0][0]).z;
+	z_max = z_min;
+	i = world->nb_rows;
+	while (i--)
+	{
+		j = world->nb_columns;
+		while (j--)
+		{
+			curr = world->map[i] + j;
+			if (curr->z < z_min)
+				z_min = curr->z;
+			else if (curr->z > z_max)
+				z_max = curr->z;
+		}
+	}
+	return ((z_max - z_min) / 2.0f);
+}
+
+void			center_scene(t_scene *world)
+{
+	t_vertex3f	center;
+	t_vector4	*curr;
+	int			i;
+	int			j;
+
+	center.x = (float)(world->nb_columns - 1) / 2.0f;
+	center.y = (float)(world->nb_rows - 1) / 2.0f;
+	center.z = get_z_midvalue(world);
+	i = world->nb_rows;
+	while (i--)
+	{
+		j = world->nb_columns;
+		while (j--)
+		{
+			curr = world->map[i] + j;
+			curr->x -= center.x;
+			curr->y -= center.y;
+			curr->z -= center.z;
+		}
+	}
+}
+
+static t_vector4	*to_vec4tab(char *str, int nb_columns, int curr)
 {
 	t_vector4		*line;
 	int				i;
@@ -87,10 +139,10 @@ static t_vector4	*str_to_vertices(char *str, int nb_columns, int curr_line)
 	i = 0;
 	while (i < nb_columns)
 	{
-		(line[i]).x = i;
-		(line[i]).y = curr_line;
-		(line[i]).z = ft_atoi(str);
-		(line[i]).w = 1.0;
+		(line + i)->x = (float)i;
+		(line + i)->y = (float)curr;
+		(line + i)->z = (float)ft_atoi(str);
+		(line + i)->w = 1.0f;
 		str = ft_strchr(str, MAP_SEPARATOR) + 1;
 		i++;
 	}
@@ -100,28 +152,28 @@ static t_vector4	*str_to_vertices(char *str, int nb_columns, int curr_line)
 t_scene				*input_to_scene(char *file)
 {
 	t_list			*lst;
-	t_list			*leak;
-	t_scene			*s;
+	t_list			*curr;
+	t_scene			*world;
 	int				i;
 
 	lst = NULL;
 	i = 0;
-	if (!(s = (t_scene *)malloc(sizeof(t_scene))))
-		end_error(&lst, &s, i, "malloc: cannot allocate memory");
-	if ((s->nb_lines = file_to_lst(file, &lst)) == ERROR)
-		end_error(&lst, &s, i, "open: file does not exist");
-	if ((s->nb_columns = count_and_check(lst)) == ERROR)
-		end_error(&lst, &s, i, "fdf: file not valid");
-	i = s->nb_lines;
-	if (!(s->tab = (t_vector4 **)malloc(sizeof(t_vector4 *) * s->nb_lines)))
-		end_error(&lst, &s, i, "malloc: cannot allocate memory");
-	leak = lst;
+	if (!(world = (t_scene *)malloc(sizeof(t_scene))))
+		end_error(&lst, &world, i, "malloc: cannot allocate memory");
+	if ((world->nb_rows = file_to_lst(file, &lst)) == ERROR)
+		end_error(&lst, &world, i, "open: file does not exist");
+	if ((world->nb_columns = count_and_check(lst)) == ERROR)
+		end_error(&lst, &world, i, "fdf: file not valid");
+	i = world->nb_rows;
+	if (!(world->map = (t_vector4 **)malloc(sizeof(t_vector4 *) * i)))
+		end_error(&lst, &world, i, "malloc: cannot allocate memory");
+	curr = lst;
 	while (i-- > 0)
 	{
-		if (!(s->tab[i] = str_to_vertices(lst->content, s->nb_columns, i)))
-			end_error(&lst, &s, i, "malloc: cannot allocate memory");
-		lst = lst->next;
+		if (!(world->map[i] = to_vec4tab(curr->content, world->nb_columns, i)))
+			end_error(&curr, &world, i, "malloc: cannot allocate memory");
+		curr = curr->next;
 	}
-	ft_lstdel(&leak, &ft_delcontent);
-	return (s);
+	ft_lstdel(&lst, &ft_delcontent);
+	return (world);
 }

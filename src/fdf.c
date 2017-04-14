@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/12 10:04:11 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/14 05:40:13 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,22 @@
 #include "matrix_utils.h"
 
 #ifdef DEBUG
+
 #include <stdio.h>
 
-void	print_mat4(char *name, t_matrix4 *m)
-{
-	printf("-- %-15s --\n", name);
-	printf("{% .f % .f % .f % .f }\n", m->array[0][0], m->array[0][1], m->array[0][2], m->array[0][3]);
-	printf("{% .f % .f % .f % .f }\n", m->array[1][0], m->array[1][1], m->array[1][2], m->array[1][3]);
-	printf("{% .f % .f % .f % .f }\n", m->array[2][0], m->array[2][1], m->array[2][2], m->array[2][3]);
-	printf("{% .f % .f % .f % .f }\n", m->array[3][0], m->array[3][1], m->array[3][2], m->array[3][3]);
-	printf("---------------------\n");
-}
-
-void	print_vec4(t_vector4 *v)
-{
-	printf("{% .f % .f % .f }(%.f)  ", v->x, v->y, v->z, v->w);
-}
-
-void	print_scene_values(char *name, t_scene *s)
+void	print_scene_values(char *name, t_scene *world)
 {
 	int 		i;
 	int 		j;
 	i = 0;
 	printf("-- %-15s --\n", name);
-	while (i < s->nb_lines)
+	while (i < world->nb_rows)
 	{
 		j = 0;
-		while (j < s->nb_columns)
+		while (j < world->nb_columns)
 		{
-			print_vec4(&(s->tab[i][j]));
+			print_vec4(&(world->map[i][j]));
+		printf("  ");
 			j++;
 		}
 		printf("\n");
@@ -53,38 +40,40 @@ void	print_scene_values(char *name, t_scene *s)
 	printf("---------------------\n");
 }
 
-#endif
-
-int			main(int argc, char **argv)
+void	matrix_test(t_scene *world)
 {
-	t_mlxenv	*e;
-	t_scene		*s;
-
-	if (argc != 2)
-		end_session(NULL, NULL, "usage : ./fdf [path/to/file]", EXIT_FAILURE);
-	s = input_to_scene(argv[1]);
-#ifdef DEBUG
 	t_matrix4	m_local;
 	t_matrix4	m_trans;
 	t_matrix4	m_scale;
 	t_matrix4	m_rot;
 
-	m_trans = ft_gen_translate_mat4(1.0, 0.0, 0.0);
-	print_mat4("Translation matrix", &m_trans);
-	m_scale = ft_gen_scale_mat4(2.0, 2.0, 1.0);
-	print_mat4("Scale matrix", &m_scale);
-	m_rot = ft_gen_rotation_mat4(90.0, 0.0, 0.0, 1.0);
-	print_mat4("Rotation matrix", &m_rot);
+	m_trans = ft_gen_translate_mat4(0.0, 0.0, 0.0);
+	print_mat4(&m_trans, "Translation");
+	m_scale = ft_gen_scale_mat4(1.0, 1.0, 1.0);
+	print_mat4(&m_scale, "Scale");
+	m_rot = ft_gen_rotation_mat4(0.0, 0.0, 0.0, 0.0);
+	print_mat4(&m_rot, "Rotation");
 	m_local = ft_mat4_mul_mat4(&m_scale, &m_rot);
 	m_local = ft_mat4_mul_mat4(&m_local, &m_trans);
-	print_mat4("Final matrix", &m_local);
-	print_scene_values("> Before <", s);
-	apply_mat4_to_scene(&m_local, s);
-	print_scene_values("> After <", s);
+	print_mat4(&m_local, "Final");
+	print_scene_values("> Before <", world);
+	apply_mat4_to_scene(&m_local, world);
+	print_scene_values("> After <", world);
+}
 #endif
 
-	e = init_mlxenv(s);
-//	mlx_loop(e->arraylx_id);
-	end_session(s, e, NULL, EXIT_SUCCESS);
+int		main(int argc, char **argv)
+{
+	t_mlxenv	*e;
+	t_scene		*world;
+
+	if (argc != 2)
+		end_session(NULL, NULL, "usage : ./fdf [path/to/file]", EXIT_FAILURE);
+	world = input_to_scene(argv[1]);
+	center_scene(world);
+	matrix_test(world);
+	e = init_mlxenv(world);
+//	mlx_loop(e->mlx_id);
+	end_session(world, e, NULL, EXIT_SUCCESS);
 	return (0);
 }
