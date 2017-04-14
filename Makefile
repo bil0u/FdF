@@ -19,9 +19,10 @@ NAME = fdf
 CC = gcc
 
 # Flags
-CFLAGS = -Wall -Werror -Wextra $(INCLUDES) -DDEBUG
-LFLAGS = -lmlx -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
+CFLAGS = -Wall -Werror -Wextra $(INCLUDES) -DDEBUG -g -O3
+LFLAGS = -lmlx -L $(MLX_DIR) -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
 # Library paths
+MLX_DIR = /usr/local/lib/
 LIB_DIR = ./libft
 LIB_INCLUDES_DIR = $(LIB_DIR)/inc
 LIB_GRAPHIC_DIR = ./libgraphic
@@ -35,7 +36,7 @@ INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_D
 
 # Sources files
 FILES =		fdf \
-			mlx_env \
+			env_utils \
 			parse_input \
 			matrix_utils \
 

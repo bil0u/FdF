@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/14 05:40:13 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/14 20:02:48 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	matrix_test(t_scene *world)
 
 int		main(int argc, char **argv)
 {
-	t_mlxenv	*e;
+	t_env		*env;
 	t_scene		*world;
 
 	if (argc != 2)
@@ -72,8 +72,8 @@ int		main(int argc, char **argv)
 	world = input_to_scene(argv[1]);
 	center_scene(world);
 	matrix_test(world);
-	e = init_mlxenv(world);
-//	mlx_loop(e->mlx_id);
-	end_session(world, e, NULL, EXIT_SUCCESS);
+	env = init_env(world);
+//	mlx_loop(env->m_env->init_id);
+	end_session(world, env, NULL, EXIT_SUCCESS);
 	return (0);
 }

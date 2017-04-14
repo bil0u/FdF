@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/14 04:55:22 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/14 19:32:10 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,13 @@ typedef	struct	s_scene
 	int			nb_rows;
 	int			nb_columns;
 }				t_scene;
+
+typedef struct	s_env
+{
+	t_mlxenv	*m_env;
+	t_mlxwin	*m_win;
+	t_mlximg	*m_img;
+	t_scene		*world;
+}				t_env;
+
 #endif
