@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/14 05:01:49 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/15 20:30:29 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	apply_mat4_to_scene(t_matrix4 *m, t_scene *world)
 	{
 		j = world->nb_columns;
 		while (j--)
-			world->map[i][j] = ft_mat4_mul_vec4(m, &(world->map[i][j]));
+			world->map[i][j] = ft_mat4_mul_quat(m, &(world->map[i][j]));
 	}
 }

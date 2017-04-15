@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/14 20:02:48 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/15 20:30:33 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_scene_values(char *name, t_scene *world)
 		j = 0;
 		while (j < world->nb_columns)
 		{
-			print_vec4(&(world->map[i][j]));
+			print_quat(&(world->map[i][j]));
 		printf("  ");
 			j++;
 		}

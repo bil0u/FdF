@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/14 19:32:10 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/15 20:31:00 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 typedef	struct	s_scene
 {
-	t_vector4	**map;
+	t_quater	**map;
 	int			nb_rows;
 	int			nb_columns;
 }				t_scene;

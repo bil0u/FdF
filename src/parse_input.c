@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/14 05:40:10 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/15 20:30:22 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int			count_and_check(t_list *lst)
 
 static float		get_z_midvalue(t_scene *world)
 {
-	t_vector4	*curr;
+	t_quater	*curr;
 	float		z_min;
 	float		z_max;
 	int			i;
@@ -108,7 +108,7 @@ static float		get_z_midvalue(t_scene *world)
 void			center_scene(t_scene *world)
 {
 	t_vertex3f	center;
-	t_vector4	*curr;
+	t_quater	*curr;
 	int			i;
 	int			j;
 
@@ -129,12 +129,12 @@ void			center_scene(t_scene *world)
 	}
 }
 
-static t_vector4	*to_vec4tab(char *str, int nb_columns, int curr)
+static t_quater	*to_quattab(char *str, int nb_columns, int curr)
 {
-	t_vector4		*line;
+	t_quater		*line;
 	int				i;
 
-	if (!(line = (t_vector4 *)ft_memalloc(sizeof(t_vector4) * nb_columns)))
+	if (!(line = (t_quater *)ft_memalloc(sizeof(t_quater) * nb_columns)))
 		return (NULL);
 	i = 0;
 	while (i < nb_columns)
@@ -165,12 +165,12 @@ t_scene				*input_to_scene(char *file)
 	if ((world->nb_columns = count_and_check(lst)) == ERROR)
 		end_error(&lst, &world, i, "fdf: file not valid");
 	i = world->nb_rows;
-	if (!(world->map = (t_vector4 **)malloc(sizeof(t_vector4 *) * i)))
+	if (!(world->map = (t_quater **)malloc(sizeof(t_quater *) * i)))
 		end_error(&lst, &world, i, "malloc: cannot allocate memory");
 	curr = lst;
 	while (i-- > 0)
 	{
-		if (!(world->map[i] = to_vec4tab(curr->content, world->nb_columns, i)))
+		if (!(world->map[i] = to_quattab(curr->content, world->nb_columns, i)))
 			end_error(&curr, &world, i, "malloc: cannot allocate memory");
 		curr = curr->next;
 	}
