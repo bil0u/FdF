@@ -1,40 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/17 23:43:10 by upopee           ###   ########.fr       */
+/*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
+/*   Updated: 2017/04/17 20:57:50 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "fdf.h"
+#include "env_utils.h"
+#include "key_hook.h"
 
-# define MAP_SEPARATOR ' '
-
-# define X_ENLARGE 10
-# define Y_ENLARGE 10
-# define Z_ENLARGE 1
-
-# include "libft.h"
-# include "libgraphic.h"
-
-typedef	struct	s_scene
+int		key_hook(int keycode, t_env *env)
 {
-	t_quater	**map;
-	int			nb_rows;
-	int			nb_columns;
-}				t_scene;
-
-typedef struct	s_env
-{
-	t_mlxenv	*m_env;
-	t_mlxwin	*m_win;
-	t_mlximg	*m_img;
-	t_scene		*world;
-}				t_env;
-
-#endif
+	if (keycode == KEY_ESC)
+		end_session(env, NULL, EXIT_SUCCESS);
+	return (0);
+}

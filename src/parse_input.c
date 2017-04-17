@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/15 20:30:22 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/17 21:51:58 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static float		get_z_midvalue(t_scene *world)
 				z_max = curr->z;
 		}
 	}
-	return ((z_max - z_min) / 2.0f);
+	return ((z_max - z_min) * Z_ENLARGE / 2.0f);
 }
 
 void			center_scene(t_scene *world)
@@ -112,8 +112,8 @@ void			center_scene(t_scene *world)
 	int			i;
 	int			j;
 
-	center.x = (float)(world->nb_columns - 1) / 2.0f;
-	center.y = (float)(world->nb_rows - 1) / 2.0f;
+	center.x = (float)(world->nb_columns - 1) * X_ENLARGE / 2.0f;
+	center.y = (float)(world->nb_rows - 1) * Z_ENLARGE / 2.0f;
 	center.z = get_z_midvalue(world);
 	i = world->nb_rows;
 	while (i--)
@@ -139,9 +139,9 @@ static t_quater	*to_quattab(char *str, int nb_columns, int curr)
 	i = 0;
 	while (i < nb_columns)
 	{
-		(line + i)->x = (float)i;
-		(line + i)->y = (float)curr;
-		(line + i)->z = (float)ft_atoi(str);
+		(line + i)->x = (float)i * X_ENLARGE;
+		(line + i)->y = (float)curr * Y_ENLARGE;
+		(line + i)->z = (float)ft_atoi(str) * Z_ENLARGE;
 		(line + i)->w = 1.0f;
 		str = ft_strchr(str, MAP_SEPARATOR) + 1;
 		i++;

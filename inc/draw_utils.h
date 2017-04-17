@@ -1,40 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   draw_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/17 23:43:10 by upopee           ###   ########.fr       */
+/*   Created: 2017/04/17 22:38:54 by upopee            #+#    #+#             */
+/*   Updated: 2017/04/17 22:39:08 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef DRAW_UTILS_H
+# define DRAW_UTILS_H
 
-# define MAP_SEPARATOR ' '
-
-# define X_ENLARGE 10
-# define Y_ENLARGE 10
-# define Z_ENLARGE 1
-
-# include "libft.h"
-# include "libgraphic.h"
-
-typedef	struct	s_scene
-{
-	t_quater	**map;
-	int			nb_rows;
-	int			nb_columns;
-}				t_scene;
-
-typedef struct	s_env
-{
-	t_mlxenv	*m_env;
-	t_mlxwin	*m_win;
-	t_mlximg	*m_img;
-	t_scene		*world;
-}				t_env;
+int		refresh_window(t_env *env);
 
 #endif

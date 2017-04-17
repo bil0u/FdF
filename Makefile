@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/05 03:00:04 by upopee           ###   ########.fr       *#
+#*   Updated: 2017/04/17 22:39:49 by upopee           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,10 @@ INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_D
 
 # Sources files
 FILES =		fdf \
-			env_utils \
+			key_hook \
 			parse_input \
+			env_utils \
+			draw_utils \
 			matrix_utils \
 
 SOURCES = $(patsubst %,$(SRC_DIR)/%,$(FILES:=.c))

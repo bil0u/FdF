@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   key_hook.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/17 23:43:10 by upopee           ###   ########.fr       */
+/*   Created: 2017/04/17 20:33:09 by upopee            #+#    #+#             */
+/*   Updated: 2017/04/17 21:02:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef KEY_HOOK_H
+# define KEY_HOOK_H
 
-# define MAP_SEPARATOR ' '
+# define KEY_ESC 53
 
-# define X_ENLARGE 10
-# define Y_ENLARGE 10
-# define Z_ENLARGE 1
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
 
-# include "libft.h"
-# include "libgraphic.h"
+# define KEY_PLUS 69
+# define KEY_MINUS 78
 
-typedef	struct	s_scene
-{
-	t_quater	**map;
-	int			nb_rows;
-	int			nb_columns;
-}				t_scene;
-
-typedef struct	s_env
-{
-	t_mlxenv	*m_env;
-	t_mlxwin	*m_win;
-	t_mlximg	*m_img;
-	t_scene		*world;
-}				t_env;
+int		key_hook(int keycode, t_env *env);
 
 #endif
