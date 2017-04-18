@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/17 22:39:41 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/18 05:22:02 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	matrix_test(t_scene *world)
 	t_matrix4	m_rot;
 	t_quater	q_test;
 
-	m_scale = ft_gen_scale_mat4(2.0, 2.0, 1.0);
+	m_scale = ft_gen_scale_mat4(3.0, 3.0, 3.0);
 	m_rot = ft_gen_rotation_mat4(0.0, 0.0, 0.0, 0.0);
 	m_trans = ft_gen_translate_mat4(0.0, 0.0, 0.0);
 	m_local = ft_mat4_mul_mat4(&m_scale, &m_rot);
