@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/18 05:51:28 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/18 17:01:44 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void		draw_map(t_env *env)
 			curr_pixel = img->center;
 			curr_pixel += (int)(curr_point->x) * (img->bpp / 8);
 			curr_pixel += (int)(curr_point->y) * img->sz_line;
-			retina_pixel_to_img(curr_pixel, env, 0xFFFFFF);
+			retina_pixel_to_img(curr_pixel, env, 0x00FFFFFF);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/17 22:49:02 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/19 00:38:40 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void			end_session(t_env *env, char *msg, int status)
 			}
 			free(env->world);
 		}
+		if (env->cam)
+			free(env->cam);
 		del_mlxwin(env->m_env->init_id, env->m_win);
 		del_mlxenv(env->m_env);
 		free(env);
@@ -60,6 +62,8 @@ t_env			*init_env(t_scene *world)
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
 	env->world = world;
 	get_winsize(world, &sz_x, &sz_y);
+	if (!(env->cam = ft_init_camera_new(DFLT_VANGLE, DFLT_NEAR, DFLT_FAR)))
+		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
 	if (!(env->m_env = init_mlxenv()))
 		end_session(env, "mlx: cannot connect with server", EXIT_FAILURE);
 	if (!(env->m_win = init_mlxwin(env->m_env->init_id, sz_x, sz_y, "> FDF <")))

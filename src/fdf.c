@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/18 05:22:02 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/19 00:50:12 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	print_scene_values(char *name, t_scene *world)
 		while (j < world->nb_columns)
 		{
 			print_quat(&(world->map[i][j]));
-		printf("  ");
+			printf("  ");
 			j++;
 		}
 		printf("\n");
@@ -49,32 +49,38 @@ void	print_scene_values(char *name, t_scene *world)
 	printf("\n");
 }
 
-void	matrix_test(t_scene *world)
+void	test(t_env *env)
 {
-	t_matrix4	m_local;
+	t_matrix4	m_all;
+
+	t_matrix4	m_view;
+	t_matrix4	m_model;
+
 	t_matrix4	m_trans;
 	t_matrix4	m_scale;
 	t_matrix4	m_rot;
-	t_quater	q_test;
 
 	m_scale = ft_gen_scale_mat4(3.0, 3.0, 3.0);
 	m_rot = ft_gen_rotation_mat4(0.0, 0.0, 0.0, 0.0);
 	m_trans = ft_gen_translate_mat4(0.0, 0.0, 0.0);
-	m_local = ft_mat4_mul_mat4(&m_scale, &m_rot);
-	m_local = ft_mat4_mul_mat4(&m_local, &m_trans);
+	m_model = ft_mat4_mul_mat4(&m_scale, &m_rot);
+	m_model = ft_mat4_mul_mat4(&m_model, &m_trans);
 
-	q_test = ft_mat4_to_quat(&m_local);
+	t_quater	eye = {0.0, 10.0, 10.0, 0.0};
+	t_quater	up = {0.0, 0.0, 1.0, 0.0};
+	m_view = ft_lookat(env->cam, &eye, &env->world->center, &up);
 
 	print_mat4(&m_scale, "Scale");
 	print_mat4(&m_rot, "Rotation");
 	print_mat4(&m_trans, "Translation");
-	print_mat4(&m_local, "Final");
-
-	print_quater("quater test", &q_test);
-
-	print_scene_values(">>> Before <<<", world);
-	apply_mat4_to_scene(&m_local, world);
-	print_scene_values(">>> After <<<", world);
+	printf("----------\n");
+	print_mat4(&m_model, "Model Matrix");
+	print_mat4(&m_view, "View Matrix");
+	printf("----------\n");
+	print_scene_values(">>> Before <<<", env->world);
+	apply_mat4_to_scene(&m_model, env->world);
+	apply_mat4_to_scene(&m_view, env->world);
+	print_scene_values(">>> After <<<", env->world);
 }
 #endif
 
@@ -87,8 +93,10 @@ int		main(int argc, char **argv)
 		end_session(NULL, "usage : ./fdf [path/to/file]", EXIT_FAILURE);
 	world = input_to_scene(argv[1]);
 	center_scene(world);
-	matrix_test(world);
 	env = init_env(world);
+
+	test(env);
+
 	mlx_key_hook(env->m_win->id, &key_hook, env);
 	mlx_expose_hook(env->m_win->id, &refresh_window, env);
 	mlx_loop(env->m_env->init_id);

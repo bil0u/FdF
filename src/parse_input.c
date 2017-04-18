@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/18 05:40:38 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/18 21:56:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static float		get_z_midvalue(t_scene *world)
 
 void			center_scene(t_scene *world)
 {
-	t_vertex3f	center;
+	t_quater	center;
 	t_quater	*curr;
 	int			i;
 	int			j;
@@ -115,6 +115,7 @@ void			center_scene(t_scene *world)
 	center.x = (float)(world->nb_columns - 1) * X_SCALE / 2.0f;
 	center.y = (float)(world->nb_rows - 1) * Y_SCALE / 2.0f;
 	center.z = get_z_midvalue(world);
+	center.w = 1.0;
 	i = world->nb_rows;
 	while (i--)
 	{
@@ -127,6 +128,7 @@ void			center_scene(t_scene *world)
 			curr->z -= center.z;
 		}
 	}
+	world->center = center;
 }
 
 static t_quater	*to_quattab(char *str, int nb_columns, int curr)

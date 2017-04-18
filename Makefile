@@ -19,7 +19,7 @@ NAME = fdf
 CC = gcc
 
 # Flags
-CFLAGS = -Wall $(INCLUDES) -DDEBUG -g -O0
+CFLAGS = -Wall -Wextra -Wall $(INCLUDES) -DDEBUG -g -O0
 LFLAGS = -lmlx -L $(MLX_DIR) -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
 # Library paths
 MLX_DIR = /usr/local/lib/
