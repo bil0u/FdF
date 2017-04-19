@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/18 21:56:14 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/19 06:05:27 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void			center_scene(t_scene *world)
 			curr->z -= center.z;
 		}
 	}
-	world->center = center;
 }
 
 static t_quater	*to_quattab(char *str, int nb_columns, int curr)

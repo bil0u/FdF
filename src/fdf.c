@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/19 00:50:12 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/19 07:11:11 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,25 @@ void	test(t_env *env)
 	t_matrix4	m_rot;
 
 	m_scale = ft_gen_scale_mat4(3.0, 3.0, 3.0);
-	m_rot = ft_gen_rotation_mat4(0.0, 0.0, 0.0, 0.0);
+	m_rot = ft_gen_rotation_mat4(45.0, 15.0, 15.0, 5.0);
 	m_trans = ft_gen_translate_mat4(0.0, 0.0, 0.0);
 	m_model = ft_mat4_mul_mat4(&m_scale, &m_rot);
 	m_model = ft_mat4_mul_mat4(&m_model, &m_trans);
 
-	t_quater	eye = {0.0, 10.0, 10.0, 0.0};
-	t_quater	up = {0.0, 0.0, 1.0, 0.0};
-	m_view = ft_lookat(env->cam, &eye, &env->world->center, &up);
+	m_view = ft_lookat(env->cam, env->cam.eye, &env->world->center, &up);
 
 	print_mat4(&m_scale, "Scale");
 	print_mat4(&m_rot, "Rotation");
 	print_mat4(&m_trans, "Translation");
 	printf("----------\n");
 	print_mat4(&m_model, "Model Matrix");
-	print_mat4(&m_view, "View Matrix");
+//	print_mat4(&m_view, "View Matrix");
 	printf("----------\n");
 	print_scene_values(">>> Before <<<", env->world);
 	apply_mat4_to_scene(&m_model, env->world);
-	apply_mat4_to_scene(&m_view, env->world);
+//	apply_mat4_to_scene(&m_view, env->world);
 	print_scene_values(">>> After <<<", env->world);
+	print_cam(env->cam);
 }
 #endif
 
