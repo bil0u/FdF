@@ -6,10 +6,11 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/21 05:03:47 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/21 06:26:13 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "fdf.h"
 #include "parse_input.h"
 #include "key_hook.h"
@@ -34,10 +35,10 @@ void	print_scene_values(char *name, t_scene *world)
 	int 		j;
 	i = 0;
 	printf("-- %-15s --\n", name);
-	while (i < world->nb_rows)
+	while (i < world->height)
 	{
 		j = 0;
-		while (j < world->nb_columns)
+		while (j < world->width)
 		{
 			print_quat(&(world->map[i][j]));
 			printf("  ");
@@ -63,9 +64,13 @@ void	test(t_env *env)
 	t_matrix4 m_model = ft_mat4_mul_mat4(&m_scale, &m_rot);
 	m_model = ft_mat4_mul_mat4(&m_model, &m_trans);
 
-	t_vector3 eye = {(3.0), (5.0), (2.0)};
+	t_vector3 eye = {(0.0), (2.0), (6.0)};
 	t_vector3 center = {0.0, 0.0, 0.0};
 	t_vector3 up = {0.0, 0.0, 1.0};
+	//float mid_x = (float)env->world->width * 0.5;
+	//float mid_y = (float)env->world->height * 0.5;
+	//float half_dist = sqrtf(mid_x * mid_x + mid_y * mid_y);
+	//env->cam->far = half_dist * 2.0;
 	t_matrix4 m_view = ft_lookat(env->cam, &eye, &center, &up);
 
 	t_matrix4 m_proj = ft_perspective_proj_mat4(env->cam->view_angle, env->cam->near, env->cam->far);
@@ -89,7 +94,7 @@ void	test(t_env *env)
 //	print_scene_values(">>> VIEW <<<", env->world);
 //	apply_mat4_to_scene(&m_proj, env->world, &ft_mat4_mul_quat);
 
-	apply_mat4_to_scene(&m_all, env->world, &ft_mat4_mul_quat);
+	apply_mat4_to_scene(&m_all, env->world, &ft_mat4_mulnorm_quat);
 
 	print_scene_values(">>> AFTER TRANSFORMATION <<<", env->world);
 	print_cam(env->cam);

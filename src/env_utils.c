@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/20 22:20:34 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/21 06:32:15 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void			end_session(t_env *env, char *msg, int status)
 		{
 			if (env->world->map)
 			{
-				i = env->world->nb_rows;
+				i = env->world->height;
 				while (i-- > 0)
 					free(env->world->map[i]);
 				free(env->world->map);
@@ -46,8 +46,8 @@ static void		get_winsize(t_scene *world, int *sz_x, int *sz_y)
 	int		x;
 	int		y;
 
-	x = ((world->nb_columns * MLXWIN_DEFAULT_OFFSET) + MLXWIN_MARGEX + 1);
-	y = ((world->nb_rows * MLXWIN_DEFAULT_OFFSET) + MLXWIN_MARGEY + 1);
+	x = ((world->width * MLXWIN_DEFAULT_OFFSET) + MLXWIN_MARGEX + 1);
+	y = ((world->height * MLXWIN_DEFAULT_OFFSET) + MLXWIN_MARGEY + 1);
 	*sz_x = x > MLXWIN_SIZEX_MAX ? MLXWIN_SIZEX_MAX : x;
 	*sz_y = y > MLXWIN_SIZEY_MAX ? MLXWIN_SIZEY_MAX : y;
 }

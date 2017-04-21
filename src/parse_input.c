@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/20 01:35:47 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/21 06:27:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 static void			end_error(t_list **lst, t_scene **world, int i, char *msg)
 {
 	if (world && *world
-				&& (*world)->nb_rows != ERROR && (*world)->nb_columns != ERROR)
+				&& (*world)->height != ERROR && (*world)->width != ERROR)
 	{
-		while (i < (*world)->nb_rows)
+		while (i < (*world)->height)
 		{
 			ft_memdel((void **)&((*world)->map[i]));
 			i++;
@@ -36,22 +36,22 @@ static void			end_error(t_list **lst, t_scene **world, int i, char *msg)
 
 static int			file_to_lst(char *file, t_list **dst)
 {
-	int				nb_rows;
+	int				height;
 	int				fd;
 	char			*buff;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
 		return (ERROR);
-	nb_rows = 0;
+	height = 0;
 	buff = NULL;
 	while (get_next_line(fd, &buff) > 0)
 	{
 		ft_lstadd(dst, ft_lstnew(buff, ft_strlen(buff) + 1));
 		ft_strdel(&buff);
-		nb_rows++;
+		height++;
 	}
 	close(fd);
-	return (nb_rows);
+	return (height);
 }
 
 static int			count_and_check(t_list *lst)
@@ -89,10 +89,10 @@ static float		get_z_midvalue(t_scene *world)
 
 	z_min = (world->map[0][0]).z;
 	z_max = z_min;
-	i = world->nb_rows;
+	i = world->height;
 	while (i--)
 	{
-		j = world->nb_columns;
+		j = world->width;
 		while (j--)
 		{
 			curr = world->map[i] + j;
@@ -112,14 +112,14 @@ void			center_scene(t_scene *world)
 	int			i;
 	int			j;
 
-	center.x = (float)(world->nb_columns - 1) * X_SCALE / 2.0f;
-	center.y = (float)(world->nb_rows - 1) * Y_SCALE / 2.0f;
+	center.x = (float)(world->width - 1) * X_SCALE / 2.0f;
+	center.y = (float)(world->height - 1) * Y_SCALE / 2.0f;
 	center.z = get_z_midvalue(world);
 	center.w = 1.0;
-	i = world->nb_rows;
+	i = world->height;
 	while (i--)
 	{
-		j = world->nb_columns;
+		j = world->width;
 		while (j--)
 		{
 			curr = world->map[i] + j;
@@ -130,15 +130,15 @@ void			center_scene(t_scene *world)
 	}
 }
 
-static t_quater	*to_quattab(char *str, int nb_columns, int curr)
+static t_quater	*to_quattab(char *str, int width, int curr)
 {
 	t_quater		*line;
 	int				i;
 
-	if (!(line = (t_quater *)ft_memalloc(sizeof(t_quater) * nb_columns)))
+	if (!(line = (t_quater *)ft_memalloc(sizeof(t_quater) * width)))
 		return (NULL);
 	i = 0;
-	while (i < nb_columns)
+	while (i < width)
 	{
 		line[i] = ft_to_quat((float)(i * X_SCALE),
 							(float)(curr * Y_SCALE),
@@ -161,17 +161,17 @@ t_scene				*input_to_scene(char *file)
 	i = 0;
 	if (!(world = (t_scene *)malloc(sizeof(t_scene))))
 		end_error(&lst, &world, i, "malloc: cannot allocate memory");
-	if ((world->nb_rows = file_to_lst(file, &lst)) == ERROR)
+	if ((world->height = file_to_lst(file, &lst)) == ERROR)
 		end_error(&lst, &world, i, "open: file does not exist");
-	if ((world->nb_columns = count_and_check(lst)) == ERROR)
+	if ((world->width = count_and_check(lst)) == ERROR)
 		end_error(&lst, &world, i, "fdf: file not valid");
-	i = world->nb_rows;
+	i = world->height;
 	if (!(world->map = (t_quater **)malloc(sizeof(t_quater *) * i)))
 		end_error(&lst, &world, i, "malloc: cannot allocate memory");
 	curr = lst;
 	while (i-- > 0)
 	{
-		if (!(world->map[i] = to_quattab(curr->content, world->nb_columns, i)))
+		if (!(world->map[i] = to_quattab(curr->content, world->width, i)))
 			end_error(&curr, &world, i, "malloc: cannot allocate memory");
 		curr = curr->next;
 	}
