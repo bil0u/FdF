@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/19 06:05:27 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/20 01:35:47 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,10 @@ static t_quater	*to_quattab(char *str, int nb_columns, int curr)
 	i = 0;
 	while (i < nb_columns)
 	{
-		(line + i)->x = (float)i * X_SCALE;
-		(line + i)->y = (float)curr * Y_SCALE;
-		(line + i)->z = (float)ft_atoi(str) * Z_SCALE;
-		(line + i)->w = 1.0f;
+		line[i] = ft_to_quat((float)(i * X_SCALE),
+							(float)(curr * Y_SCALE),
+							(float)(ft_atoi(str) * Z_SCALE),
+							1.0f);
 		str = ft_strchr(str, MAP_SEPARATOR) + 1;
 		i++;
 	}

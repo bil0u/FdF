@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/18 21:48:13 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/21 04:46:50 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # define MAP_SEPARATOR ' '
 
-# define X_SCALE 10
-# define Y_SCALE 10
-# define Z_SCALE 3
+# define X_SCALE 1
+# define Y_SCALE 1
+# define Z_SCALE 1
 
 # include "libft.h"
 # include "libgraphic.h"

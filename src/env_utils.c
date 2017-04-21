@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/19 04:51:28 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/20 22:20:34 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,20 @@ static void		get_winsize(t_scene *world, int *sz_x, int *sz_y)
 t_env			*init_env(t_scene *world)
 {
 	t_env		*env;
-	int			sz_x;
-	int			sz_y;
+	int			width;
+	int			height;
 
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
 	env->world = world;
-	get_winsize(world, &sz_x, &sz_y);
-	if (!(env->cam = ft_init_camera_new(DFLT_VANGLE, DFLT_NEAR, DFLT_FAR)))
+	get_winsize(world, &width, &height);
+	if (!(env->cam = ft_init_cam_new(DFLT_VANGLE, (float)width / (float)height,
+										DFLT_NEAR, DFLT_FAR)))
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
 	if (!(env->m_env = init_mlxenv()))
 		end_session(env, "mlx: cannot connect with server", EXIT_FAILURE);
-	if (!(env->m_win = init_mlxwin(env->m_env->init_id, sz_x, sz_y, "> FDF <")))
+	if (!(env->m_win = init_mlxwin(env->m_env->init_id,
+									width, height, "> FDF <")))
 		end_session(env, "mlx: cannot create window", EXIT_FAILURE);
 	return (env);
 }

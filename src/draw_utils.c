@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/18 17:01:44 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/21 04:47:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,16 @@ static void		pixel_to_img(char *curr_pixel, t_env *env, int color)
 		if (env->m_img->endian == 0)
 		{
 			while (i--)
-				curr_pixel[i] = (unsigned char)((c >> (i * 8)) & 0xFF);
+				curr_pixel[i] = (c >> (i * 8) & 0xFF);
 		}
 		else
 		{
 			j = 0;
 			while (i--)
-				curr_pixel[i] = (unsigned char)((c >> (j++ * 8)) & 0xFF);
+			{
+				curr_pixel[i] = (c >> (j * 8)) & 0xFF;
+				j++;
+			}
 		}
 	}
 }
@@ -71,6 +74,8 @@ static void		draw_map(t_env *env)
 			curr_pixel += (int)(curr_point->x) * (img->bpp / 8);
 			curr_pixel += (int)(curr_point->y) * img->sz_line;
 			retina_pixel_to_img(curr_pixel, env, 0x00FFFFFF);
+			//mlx_pixel_put(env->m_env->init_id, env->m_win->id,
+			//				curr_point->x, curr_point->y, 0X0FFFFFF);
 		}
 	}
 }
@@ -83,7 +88,7 @@ int				refresh_window(t_env *env)
 
 	mlx = env->m_env;
 	win = env->m_win;
-	if (!(env->m_img = init_mlximg(mlx->init_id, win->sz_x, win->sz_y)))
+	if (!(env->m_img = init_mlximg(mlx->init_id, win->width, win->height)))
 		end_session(env, "mlx: cannot create image", EXIT_FAILURE);
 	img = env->m_img;
 	draw_map(env);
