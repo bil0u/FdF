@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#*   Updated: 2017/04/18 04:28:22 by upopee           ###   ########.fr       *#
+#    Updated: 2017/04/23 18:45:55 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME = fdf
 CC = gcc
 
 # Flags
-CFLAGS = -Wall -Wextra -Wall $(INCLUDES) -DDEBUG -g -O0
+CFLAGS = -Wall -Wextra -Wall $(INCLUDES) -DDEBUG
 LFLAGS = -lmlx -L $(MLX_DIR) -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
 # Library paths
 MLX_DIR = /usr/local/lib/
@@ -35,12 +35,13 @@ INCLUDES_DIR = ./inc
 INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_DIR)
 
 # Sources files
-FILES =		fdf \
+FILES =		debug \
+			fdf \
 			key_hook \
 			parse_input \
 			env_utils \
 			draw_utils \
-			matrix_utils \
+			world_utils \
 
 SOURCES = $(patsubst %,$(SRC_DIR)/%,$(FILES:=.c))
 SRC_DIR = ./src
@@ -61,7 +62,7 @@ debug: prep lib
 	$(CC) $(CFLAGS) $(LFLAGS) $(OBJECTS) -o $(NAME)
 	printf "\t\t\e[37;1m[\e[32;1mDONE\e[0m\e[37;1m]\e[0m\n"
 
-$(NAME): lib 
+$(NAME): lib
 	printf "> \e[31;33;1m$(NAME)\e[0m : \e[32mCreating objects \e[0m "
 	make obj
 	printf "\n"

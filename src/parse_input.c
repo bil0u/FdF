@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/21 06:27:25 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/26 17:31:44 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,79 +72,29 @@ static int			count_and_check(t_list *lst)
 		{
 			if ((ret = ft_strisnumber(str, MAP_SEPARATOR)) == 0)
 				return (ERROR);
-			str += str[ret] ? (ret + 1) : ret;
+			str += ret;
+			while (str[0] == MAP_SEPARATOR)
+				str++;
 		}
 		lst = lst->next;
 	}
 	return (ref_value);
 }
 
-static float		get_z_midvalue(t_scene *world)
+static t_vector3	*to_vec3tab(char *str, int width, int curr)
 {
-	t_quater	*curr;
-	float		z_min;
-	float		z_max;
-	int			i;
-	int			j;
-
-	z_min = (world->map[0][0]).z;
-	z_max = z_min;
-	i = world->height;
-	while (i--)
-	{
-		j = world->width;
-		while (j--)
-		{
-			curr = world->map[i] + j;
-			if (curr->z < z_min)
-				z_min = curr->z;
-			else if (curr->z > z_max)
-				z_max = curr->z;
-		}
-	}
-	return ((z_max - z_min) * Z_SCALE / 2.0f);
-}
-
-void			center_scene(t_scene *world)
-{
-	t_quater	center;
-	t_quater	*curr;
-	int			i;
-	int			j;
-
-	center.x = (float)(world->width - 1) * X_SCALE / 2.0f;
-	center.y = (float)(world->height - 1) * Y_SCALE / 2.0f;
-	center.z = get_z_midvalue(world);
-	center.w = 1.0;
-	i = world->height;
-	while (i--)
-	{
-		j = world->width;
-		while (j--)
-		{
-			curr = world->map[i] + j;
-			curr->x -= center.x;
-			curr->y -= center.y;
-			curr->z -= center.z;
-		}
-	}
-}
-
-static t_quater	*to_quattab(char *str, int width, int curr)
-{
-	t_quater		*line;
+	t_vector3		*line;
 	int				i;
 
-	if (!(line = (t_quater *)ft_memalloc(sizeof(t_quater) * width)))
+	if (!(line = (t_vector3 *)ft_memalloc(sizeof(t_vector3) * width)))
 		return (NULL);
 	i = 0;
 	while (i < width)
 	{
-		line[i] = ft_to_quat((float)(i * X_SCALE),
-							(float)(curr * Y_SCALE),
-							(float)(ft_atoi(str) * Z_SCALE),
-							1.0f);
-		str = ft_strchr(str, MAP_SEPARATOR) + 1;
+		line[i] = ft_to_vec3((float)(i), (float)(ft_atoi(str)), (float)(curr));
+		str = ft_strchr(str, MAP_SEPARATOR);
+		while (str && str[0] == MAP_SEPARATOR)
+			str++;
 		i++;
 	}
 	return (line);
@@ -166,12 +116,12 @@ t_scene				*input_to_scene(char *file)
 	if ((world->width = count_and_check(lst)) == ERROR)
 		end_error(&lst, &world, i, "fdf: file not valid");
 	i = world->height;
-	if (!(world->map = (t_quater **)malloc(sizeof(t_quater *) * i)))
+	if (!(world->map = (t_vector3 **)malloc(sizeof(t_vector3 *) * i)))
 		end_error(&lst, &world, i, "malloc: cannot allocate memory");
 	curr = lst;
 	while (i-- > 0)
 	{
-		if (!(world->map[i] = to_quattab(curr->content, world->width, i)))
+		if (!(world->map[i] = to_vec3tab(curr->content, world->width, i)))
 			end_error(&curr, &world, i, "malloc: cannot allocate memory");
 		curr = curr->next;
 	}

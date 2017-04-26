@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_utils.h                                     :+:      :+:    :+:   */
+/*   world_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:37:26 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/21 02:51:23 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/26 10:47:01 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATRIX_UTILS_H
-# define MATRIX_UTILS_H
+#ifndef WORLD_UTILS_H
+# define WORLD_UTILS_H
 
-void	apply_mat4_to_scene(t_matrix4 *m, t_scene *world,
-											t_quater (*mat4_mul)());
+void	center_scene(t_scene *world);
+void	get_cam_pos(t_scene *world);
+void	reset_modifiers(t_scene *world);
 
 #endif

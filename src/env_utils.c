@@ -6,12 +6,13 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/21 06:32:15 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/26 16:58:01 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libgraphic.h"
+#include "world_utils.h"
 
 void			end_session(t_env *env, char *msg, int status)
 {
@@ -41,15 +42,15 @@ void			end_session(t_env *env, char *msg, int status)
 	exit (status);
 }
 
-static void		get_winsize(t_scene *world, int *sz_x, int *sz_y)
+static void		get_winsize(t_scene *world, int *width, int *height)
 {
 	int		x;
 	int		y;
 
 	x = ((world->width * MLXWIN_DEFAULT_OFFSET) + MLXWIN_MARGEX + 1);
 	y = ((world->height * MLXWIN_DEFAULT_OFFSET) + MLXWIN_MARGEY + 1);
-	*sz_x = x > MLXWIN_SIZEX_MAX ? MLXWIN_SIZEX_MAX : x;
-	*sz_y = y > MLXWIN_SIZEY_MAX ? MLXWIN_SIZEY_MAX : y;
+	*width = x > MLXWIN_WIDTH_MAX ? MLXWIN_WIDTH_MAX : x;
+	*height = y > MLXWIN_HEIGHT_MAX ? MLXWIN_HEIGHT_MAX : y;
 }
 
 t_env			*init_env(t_scene *world)
@@ -61,7 +62,10 @@ t_env			*init_env(t_scene *world)
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
 	env->world = world;
+	center_scene(world);
 	get_winsize(world, &width, &height);
+	get_cam_pos(world);
+	reset_modifiers(world);
 	if (!(env->cam = ft_init_cam_new(DFLT_VANGLE, (float)width / (float)height,
 										DFLT_NEAR, DFLT_FAR)))
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);

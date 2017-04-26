@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix_utils.c                                     :+:      :+:    :+:   */
+/*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/21 06:32:31 by upopee           ###   ########.fr       */
+/*   Created: 2017/04/22 02:03:56 by upopee            #+#    #+#             */
+/*   Updated: 2017/04/26 11:04:53 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#ifndef DEBUG_H
+# define DEBUG_H
 
-void	apply_mat4_to_scene(t_matrix4 *m, t_scene *world,
-											t_quater (*mat4_mul)())
-{
-	int			i;
-	int			j;
+void		apply_mat4_to_scene(t_matrix4 *m, t_scene *world,
+										t_vector3 (*mat4_mul)());
+void		print_scene_values(char *name, t_scene *world);
+void		test(t_env *env);
 
-	i = world->height;
-	while (i--)
-	{
-		j = world->width;
-		while (j--)
-			world->map[i][j] = (*mat4_mul)(m, &(world->map[i][j]));
-	}
-}
+#endif

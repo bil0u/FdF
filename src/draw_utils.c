@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/21 06:26:29 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/26 17:47:31 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,40 +41,76 @@ static void		pixel_to_img(char *curr_pixel, t_env *env, int color)
 	}
 }
 
+static t_matrix4	get_model_matrix(t_scene *world)
+{
+	t_matrix4	scale;
+	t_matrix4	rotate;
+	t_matrix4	translate;
+	t_matrix4	model;
+
+	scale = ft_gen_scale_mat4(world->mod.scale);
+	rotate = ft_gen_rotation_mat4(world->mod.rot_angle, world->mod.rot_axis);
+	translate = ft_gen_translate_mat4(world->mod.translate);
+	model = ft_mat4_mul_mat4(scale, rotate);
+	model = ft_mat4_mul_mat4(model, translate);
+	return (model);
+}
+
+static t_matrix4	get_mvp_matrix(t_env *env)
+{
+	t_matrix4	model;
+	t_matrix4	view;
+	t_matrix4	projection;
+	t_matrix4	mvp;
+
+	model = get_model_matrix(env->world);
+	view = ft_lookat(env->cam, env->world->mod.cam_eye,
+					env->world->mod.cam_to, env->world->mod.cam_upv);
+	projection = ft_persproj_mat4(env->cam->view_angle, env->cam->near,
+									env->cam->far, env->cam->aspect_ratio);
+	mvp = ft_mat4_mul_mat4(view, model);
+	mvp = ft_mat4_mul_mat4(projection, mvp);
+	return (mvp);
+}
+
+static t_vertex2i	vertex_proj(t_mlximg *img, t_matrix4 mat,
+								t_vector3 vec, t_vertex2i origin)
+{
+	t_quater	hom_v;
+	t_vector3	ndc_v;
+	t_vertex2i	proj_v;
+
+	hom_v = ft_vec3_to_quat(vec, 1.0);
+	hom_v = ft_mat4_postmul_quat(hom_v, mat);
+	ndc_v = ft_quat_to_vec3(hom_v);
+	proj_v = ft_viewport_tlc(ndc_v, origin, img->width, img->height);
+	return(proj_v);
+}
+
 static void		draw_map(t_env *env)
 {
-	t_mlximg	*img;
-	t_quater	curr_point;
-	char		*curr_pixel;
+	t_matrix4	final_transform;
+	t_vertex2i	proj_v;
+	t_vertex2i	origin;
 	int			i;
 	int			j;
 
-	img = env->m_img;
+	origin.x = 0;
+	origin.y = 0;
+	final_transform = get_mvp_matrix(env);
 	i = env->world->height;
 	while (i--)
 	{
 		j = env->world->width;
 		while (j--)
 		{
-			float center_x = env->m_win->width * 0.5;
-			float center_y = env->m_win->height * 0.5;
-
-			curr_point = env->world->map[i][j];
-			//ft_quat_normalize(&curr_point);
-			if (curr_point.x < -env->cam->aspect_ratio || curr_point.x > env->cam->aspect_ratio || curr_point.y < -1 || curr_point.y > 1)
-				break;
-			float x = MIN(env->m_win->width - 1, (curr_point.x + 1) * 0.5 * env->m_win->width);
-			float y = MIN(env->m_win->height - 1, (1 - (curr_point.y + 1) * 0.5) * env->m_win->height);
-			mlx_pixel_put(env->m_env->init_id, env->m_win->id, x, y, 0X00FFFFFF);
-
-		//	curr_pixel = img->center;
-		//	curr_pixel += (int)(curr_point->x) * (img->bpp / 8);
-		//	curr_pixel += (int)(curr_point->y) * img->sz_line;
-		//	pixel_to_img(curr_pixel, env, 0x00FFFFFF);
-		//	mlx_pixel_put(env->m_env->init_id, env->m_win->id,
-		//					mid_x + curr_point->x, mid_y + curr_point->y, 0X0FFFFFF);
+			proj_v = vertex_proj(env->m_img, final_transform,
+									env->world->map[i][j], origin);
+			mlx_pixel_put(env->m_env->init_id, env->m_win->id,
+							proj_v.x, proj_v.y, 0X00FFFFFF);
 		}
 	}
+
 }
 
 int				refresh_window(t_env *env)
