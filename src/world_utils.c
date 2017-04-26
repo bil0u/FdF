@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/26 17:47:55 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/27 00:41:11 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,18 @@ void			get_cam_pos(t_scene *world)
 
 	width = (float)world->width;
 	height = (float)world->height;
-	world->mod.cam_eye.z = MAX(height, width) * DEFAULT_SCALE_Z * 0.75;
-	world->mod.cam_eye.x = MIN(height, width) * DEFAULT_SCALE_X * 0.75;
-	world->mod.cam_eye.y = MAX(height, width) * DEFAULT_SCALE_Y * 0.5;
-	world->mod.cam_to.x = 0.0;
-	world->mod.cam_to.y = 0.0;
-	world->mod.cam_to.z = 0.0;
-	world->mod.cam_upv.x = 0.0;
-	world->mod.cam_upv.y = 1.0;
-	world->mod.cam_upv.z = 0.0;
+	world->mod.cam_eye.z = -(MAX(height, width) * DEFAULT_SCALE_Z * 0.8);
+	world->mod.cam_eye.x = 0.0;
+	world->mod.cam_eye.y = MAX(height, width) * DEFAULT_SCALE_Y * 0.6;
+	world->mod.cam_to = ft_to_vec3(0.0, 0.0, 0.0);
+	world->mod.cam_upv = ft_to_vec3(0.0, 1.0, 0.0);
 }
 
 void			reset_modifiers(t_scene *world)
 {
-	world->mod.translate.x = 0.0;
-	world->mod.translate.y = 0.0;
-	world->mod.translate.z = 0.0;
-	world->mod.scale.x = DEFAULT_SCALE_X;
-	world->mod.scale.y = DEFAULT_SCALE_Y;
-	world->mod.scale.z = DEFAULT_SCALE_Z;
-	world->mod.rot_axis.x = 0.0;
-	world->mod.rot_axis.y = 1.0;
-	world->mod.rot_axis.z = 0.0;
+	world->mod.translate = ft_to_vec3(0.0, 0.0, 0.0);
+	world->mod.scale = ft_to_vec3(DEFAULT_SCALE_X,
+									DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);
+	world->mod.rot_axis = ft_to_vec3(0.0, 1.0, 0.0);
 	world->mod.rot_angle = DEFAULT_ROT_ANGLE;
 }

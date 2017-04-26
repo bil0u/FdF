@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/26 17:47:31 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/27 00:45:49 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_matrix4	get_model_matrix(t_scene *world)
 	rotate = ft_gen_rotation_mat4(world->mod.rot_angle, world->mod.rot_axis);
 	translate = ft_gen_translate_mat4(world->mod.translate);
 	model = ft_mat4_mul_mat4(scale, rotate);
-	model = ft_mat4_mul_mat4(model, translate);
+	model = ft_mat4_mul_mat4(translate, model);
 	return (model);
 }
 
@@ -91,12 +91,9 @@ static void		draw_map(t_env *env)
 {
 	t_matrix4	final_transform;
 	t_vertex2i	proj_v;
-	t_vertex2i	origin;
 	int			i;
 	int			j;
 
-	origin.x = 0;
-	origin.y = 0;
 	final_transform = get_mvp_matrix(env);
 	i = env->world->height;
 	while (i--)
@@ -105,7 +102,7 @@ static void		draw_map(t_env *env)
 		while (j--)
 		{
 			proj_v = vertex_proj(env->m_img, final_transform,
-									env->world->map[i][j], origin);
+									env->world->map[i][j], ft_to_ver2i(0, 0));
 			mlx_pixel_put(env->m_env->init_id, env->m_win->id,
 							proj_v.x, proj_v.y, 0X00FFFFFF);
 		}
@@ -124,6 +121,7 @@ int				refresh_window(t_env *env)
 	if (!(env->m_img = init_mlximg(mlx->init_id, win->width, win->height)))
 		end_session(env, "mlx: cannot create image", EXIT_FAILURE);
 	img = env->m_img;
+	mlx_clear_window(mlx->init_id, win->id);
 	draw_map(env);
 	//mlx_put_image_to_window(mlx->init_id, win->id, img->id, 10, 10);
 	del_mlximg(mlx->init_id, img);

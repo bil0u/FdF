@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:33:09 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/25 21:09:04 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/26 23:45:23 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@
 # define KEY_Y 16
 # define KEY_Z 13
 
-# define KEY_PLUS 69
-# define KEY_MINUS 78
+# define KEY_PLUS 44
+# define KEY_MINUS 24
 
 int		key_hook(int keycode, t_env *env);
 

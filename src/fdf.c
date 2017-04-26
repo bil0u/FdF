@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/26 17:17:48 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/27 00:10:36 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		main(int argc, char **argv)
 	env = init_env(world);
 
 	mlx_key_hook(env->m_win->id, &key_hook, env);
+	mlx_do_key_autorepeaton(env->m_win->id);
 	mlx_expose_hook(env->m_win->id, &refresh_window, env);
 	mlx_loop(env->m_env->init_id);
 	end_session(env, NULL, EXIT_SUCCESS);

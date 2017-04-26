@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/26 17:02:49 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/27 00:22:59 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define DEFAULT_SCALE_X 1.0
 # define DEFAULT_SCALE_Y 1.0
 # define DEFAULT_SCALE_Z 1.0
-# define DEFAULT_ROT_ANGLE 0.0
+# define DEFAULT_ROT_ANGLE 30.0
 # define DEFAULT_ZOOM 1.0
 
 typedef	struct	s_mod
