@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/27 00:45:49 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/27 09:42:11 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ static t_matrix4	get_mvp_matrix(t_env *env)
 	model = get_model_matrix(env->world);
 	view = ft_lookat(env->cam, env->world->mod.cam_eye,
 					env->world->mod.cam_to, env->world->mod.cam_upv);
-	projection = ft_persproj_mat4(env->cam->view_angle, env->cam->near,
-									env->cam->far, env->cam->aspect_ratio);
+	projection = ft_persproj_mat4(env->cam->view_angle * env->world->mod.zoom,
+						env->cam->near, env->cam->far, env->cam->aspect_ratio);
 	mvp = ft_mat4_mul_mat4(view, model);
 	mvp = ft_mat4_mul_mat4(projection, mvp);
 	return (mvp);

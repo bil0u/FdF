@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/26 16:58:01 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/27 09:38:11 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_env			*init_env(t_scene *world)
 	env->world = world;
 	center_scene(world);
 	get_winsize(world, &width, &height);
-	get_cam_pos(world);
 	reset_modifiers(world);
 	if (!(env->cam = ft_init_cam_new(DFLT_VANGLE, (float)width / (float)height,
 										DFLT_NEAR, DFLT_FAR)))

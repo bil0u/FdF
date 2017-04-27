@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/27 00:41:11 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/27 09:40:17 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ void			get_cam_pos(t_scene *world)
 	world->mod.cam_eye.y = MAX(height, width) * DEFAULT_SCALE_Y * 0.6;
 	world->mod.cam_to = ft_to_vec3(0.0, 0.0, 0.0);
 	world->mod.cam_upv = ft_to_vec3(0.0, 1.0, 0.0);
+	world->mod.zoom = DEFAULT_ZOOM;
 }
 
 void			reset_modifiers(t_scene *world)
 {
+	get_cam_pos(world);
 	world->mod.translate = ft_to_vec3(0.0, 0.0, 0.0);
 	world->mod.scale = ft_to_vec3(DEFAULT_SCALE_X,
 									DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);

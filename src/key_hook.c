@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/27 00:58:58 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/27 09:44:20 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 static void		scale_map(int key, t_env *env)
 {
 	if (key == KEY_PLUS)
-		env->cam->view_angle *= 0.9;
+		env->world->mod.zoom *= 0.9;
 	else
-		env->cam->view_angle *= 1.1;
+		env->world->mod.zoom *= 1.1;
 }
 
 static void		translate_map(int key, t_env *env)
