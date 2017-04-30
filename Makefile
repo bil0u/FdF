@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/04/23 18:45:55 by upopee           ###   ########.fr        #
+#    Updated: 2017/04/30 18:48:42 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME = fdf
 CC = gcc
 
 # Flags
-CFLAGS = -Wall -Wextra -Wall $(INCLUDES) -DDEBUG
+CFLAGS = -Wall -Wextra -Wall $(INCLUDES)
 LFLAGS = -lmlx -L $(MLX_DIR) -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
 # Library paths
 MLX_DIR = /usr/local/lib/
@@ -53,14 +53,6 @@ OBJ_DIR = ./obj
 # -- RULES --
 
 all: prep $(NAME)
-
-debug: prep lib
-	printf "> \e[31;33;1m$(NAME)\e[0m \e[37;1m[\e[0m\e[34;1mDEBUG MODE\e[0m\e[37;1m]\e[0m : \e[32mCreating objects \e[0m "
-	make obj
-	printf "\n"
-	printf "> \e[31;33;1m$(NAME)\e[0m \e[37;1m[\e[0m\e[34;1mDEBUG MODE\e[0m\e[37;1m]\e[0m : \e[32mCreating binary \e[0m "
-	$(CC) $(CFLAGS) $(LFLAGS) $(OBJECTS) -o $(NAME)
-	printf "\t\t\e[37;1m[\e[32;1mDONE\e[0m\e[37;1m]\e[0m\n"
 
 $(NAME): lib
 	printf "> \e[31;33;1m$(NAME)\e[0m : \e[32mCreating objects \e[0m "

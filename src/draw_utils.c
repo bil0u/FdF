@@ -6,35 +6,34 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/27 09:42:11 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/30 18:55:27 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libgraphic.h"
 #include "fdf.h"
 #include "env_utils.h"
 
-static void		pixel_to_img(char *curr_pixel, t_env *env, int color)
+static void		pixel_to_img(t_mlximg *img, int x, int y, unsigned int color)
 {
-	unsigned int	c;
+	char			*curr_pixel;
 	int				i;
 	int				j;
 
-	if (env->m_img->data <= curr_pixel && curr_pixel < env->m_img->limit)
+	i = img->bpp / 8;
+	curr_pixel = img->data + (x * i) + (y * img->sz_line);
+	if (img->data <= curr_pixel && (curr_pixel + i) < img->limit)
 	{
-		c = mlx_get_color_value(env->m_env->init_id, color);
-		i = env->m_img->bpp / 8;
-		if (env->m_img->endian == 0)
+		if (img->endian == 0)
 		{
 			while (i--)
-				curr_pixel[i] = (c >> (i * 8) & 0xFF);
+				curr_pixel[i] = (color >> (i * 8)) & 0xFF;
 		}
 		else
 		{
 			j = 0;
 			while (i--)
 			{
-				curr_pixel[i] = (c >> (j * 8)) & 0xFF;
+				curr_pixel[i] = (color >> (j * 8)) & 0xFF;
 				j++;
 			}
 		}
@@ -76,23 +75,24 @@ static t_matrix4	get_mvp_matrix(t_env *env)
 static t_vertex2i	vertex_proj(t_mlximg *img, t_matrix4 mat,
 								t_vector3 vec, t_vertex2i origin)
 {
-	t_quater	hom_v;
-	t_vector3	ndc_v;
-	t_vertex2i	proj_v;
+	t_quater	hom;
+	t_vector3	ndc;
+	t_vertex2i	proj;
 
-	hom_v = ft_vec3_to_quat(vec, 1.0);
-	hom_v = ft_mat4_postmul_quat(hom_v, mat);
-	ndc_v = ft_quat_to_vec3(hom_v);
-	proj_v = ft_viewport_tlc(ndc_v, origin, img->width, img->height);
-	return(proj_v);
+	hom = ft_vec3_to_quat(vec, 1.0);
+	hom = ft_mat4_postmul_quat(hom, mat);
+	ndc = ft_quat_to_vec3(hom);
+	proj = ft_viewport_tlc(ndc, origin, img->width, img->height);
+	return(proj);
 }
 
 static void		draw_map(t_env *env)
 {
-	t_matrix4	final_transform;
-	t_vertex2i	proj_v;
-	int			i;
-	int			j;
+	t_matrix4		final_transform;
+	t_vertex2i		proj;
+	unsigned int	color;
+	int				i;
+	int				j;
 
 	final_transform = get_mvp_matrix(env);
 	i = env->world->height;
@@ -101,10 +101,11 @@ static void		draw_map(t_env *env)
 		j = env->world->width;
 		while (j--)
 		{
-			proj_v = vertex_proj(env->m_img, final_transform,
+			proj = vertex_proj(env->m_img, final_transform,
 									env->world->map[i][j], ft_to_ver2i(0, 0));
-			mlx_pixel_put(env->m_env->init_id, env->m_win->id,
-							proj_v.x, proj_v.y, 0X00FFFFFF);
+			color = mlx_get_color_value(env->m_env->init_id, 0xFFFFFF);
+			if (proj.x >= 0 && proj.x < env->m_img->width && proj.y >= 0 && proj.y < env->m_img->height)
+				pixel_to_img(env->m_img, proj.x, proj.y, color);
 		}
 	}
 
@@ -121,9 +122,8 @@ int				refresh_window(t_env *env)
 	if (!(env->m_img = init_mlximg(mlx->init_id, win->width, win->height)))
 		end_session(env, "mlx: cannot create image", EXIT_FAILURE);
 	img = env->m_img;
-	mlx_clear_window(mlx->init_id, win->id);
 	draw_map(env);
-	//mlx_put_image_to_window(mlx->init_id, win->id, img->id, 10, 10);
+	mlx_put_image_to_window(mlx->init_id, win->id, img->id, 0, 0);
 	del_mlximg(mlx->init_id, img);
 	return (0);
 }

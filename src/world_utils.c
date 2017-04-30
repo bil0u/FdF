@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/27 09:40:17 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/30 19:01:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static void		get_alt_range(t_scene *world)
 
 void			center_scene(t_scene *world)
 {
-	t_vector3	center;
 	t_vector3	*curr;
+	float		x_mid;
+	float		z_mid;
 	int			i;
 	int			j;
 
 	get_alt_range(world);
-	center.x = (float)(world->width - 1) * 0.5;
-	center.y = world->alt_range == 0 ? world->alt_min : world->alt_range * 0.5;
-	center.z = (float)(world->height - 1) * 0.5;
+	x_mid = (float)(world->width - 1) * 0.5;
+	z_mid = (float)(world->height - 1) * 0.5;
 	i = world->height;
 	while (i--)
 	{
@@ -57,9 +57,8 @@ void			center_scene(t_scene *world)
 		while (j--)
 		{
 			curr = world->map[i] + j;
-			curr->x -= center.x;
-			curr->y -= center.y;
-			curr->z -= center.z;
+			curr->x -= x_mid;
+			curr->z -= z_mid;
 		}
 	}
 }
@@ -71,20 +70,22 @@ void			get_cam_pos(t_scene *world)
 
 	width = (float)world->width;
 	height = (float)world->height;
-	world->mod.cam_eye.z = -(MAX(height, width) * DEFAULT_SCALE_Z * 0.8);
+	world->mod.cam_eye.z = MAX(height, width) * 0.5;
 	world->mod.cam_eye.x = 0.0;
-	world->mod.cam_eye.y = MAX(height, width) * DEFAULT_SCALE_Y * 0.6;
+	world->mod.cam_eye.y = MAX(height, width) * 0.5;
 	world->mod.cam_to = ft_to_vec3(0.0, 0.0, 0.0);
 	world->mod.cam_upv = ft_to_vec3(0.0, 1.0, 0.0);
-	world->mod.zoom = DEFAULT_ZOOM;
 }
 
 void			reset_modifiers(t_scene *world)
 {
 	get_cam_pos(world);
+	world->mod.rot_bool = TRUE;
+	world->mod.zoom_bool = TRUE;
+	world->mod.rot_angle = DEFAULT_ROT_ANGLE;
+	world->mod.rot_axis = ft_to_vec3(0.0, 1.0, 0.0);
+	world->mod.zoom = DEFAULT_ZOOM;
 	world->mod.translate = ft_to_vec3(0.0, 0.0, 0.0);
 	world->mod.scale = ft_to_vec3(DEFAULT_SCALE_X,
 									DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);
-	world->mod.rot_axis = ft_to_vec3(0.0, 1.0, 0.0);
-	world->mod.rot_angle = DEFAULT_ROT_ANGLE;
 }

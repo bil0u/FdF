@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/27 09:42:23 by upopee           ###   ########.fr       */
+/*   Updated: 2017/04/30 19:03:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,16 @@
 # define DEFAULT_SCALE_Z 1.0
 # define DEFAULT_ROT_ANGLE 30.0
 # define DEFAULT_ZOOM 1.0
+# define MAX_ZOOM 0.01
+# define MIN_ZOOM 2.3
+
+# define KEY_PRESS 2
+# define KEY_PRESS_MASK (1L << 0)
 
 typedef	struct	s_mod
 {
+	int			rot_bool;
+	int			zoom_bool;
 	t_vector3	cam_eye;
 	t_vector3	cam_to;
 	t_vector3	cam_upv;
