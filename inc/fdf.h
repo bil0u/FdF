@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/30 19:03:14 by upopee           ###   ########.fr       */
+/*   Updated: 2017/05/01 18:56:05 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@
 # define DEFAULT_SCALE_X 1.0
 # define DEFAULT_SCALE_Y 1.0
 # define DEFAULT_SCALE_Z 1.0
-# define DEFAULT_ROT_ANGLE 30.0
+# define DEFAULT_ROT_X 0.0
+# define DEFAULT_ROT_Y -15.0
+# define DEFAULT_ROT_Z 0.0
 # define DEFAULT_ZOOM 1.0
 # define MAX_ZOOM 0.01
 # define MIN_ZOOM 2.3
+# define REDUCE_LIMIT 50.0
+# define REDUCE_FACTOR 0.03
 
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L << 0)
@@ -38,8 +42,9 @@ typedef	struct	s_mod
 	t_vector3	cam_upv;
 	t_vector3	translate;
 	t_vector3	scale;
-	t_vector3	rot_axis;
-	float		rot_angle;
+	float		rot_x;
+	float		rot_y;
+	float		rot_z;
 	float		zoom;
 }				t_mod;
 

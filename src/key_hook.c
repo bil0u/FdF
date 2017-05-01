@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/30 18:53:48 by upopee           ###   ########.fr       */
+/*   Updated: 2017/05/01 22:52:17 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "world_utils.h"
 #include "draw_utils.h"
 
-static void		scale_map(int key, t_mod *mod)
+static void		scale_alt_map(int key, t_mod *mod)
 {
 	if (key == KEY_PLUS)
 		mod->scale.y += 0.05;
@@ -35,21 +35,25 @@ static void		zoom_map(int key, t_mod *mod)
 static void		translate_map(int key, t_mod *mod)
 {
 	if (key == KEY_UP)
-		mod->translate.z -= 2.0;
-	else if (key == KEY_DOWN)
 		mod->translate.z += 2.0;
+	else if (key == KEY_DOWN)
+		mod->translate.z -= 2.0;
 	else if (key == KEY_LEFT)
-		mod->translate.x -= 2.0;
-	else
 		mod->translate.x += 2.0;
+	else
+		mod->translate.x -= 2.0;
 }
 
 static void		rotate_map(int key, t_mod *mod)
 {
 	if (key == KEY_LEFT)
-		mod->rot_angle += 1.0;
+		mod->rot_y += 1.0;
 	else if (key == KEY_RIGHT)
-		mod->rot_angle -= 1.0;
+		mod->rot_y -= 1.0;
+	else if (key == KEY_UP)
+		mod->rot_x += 1.0;
+	else
+		mod->rot_x -= 1.0;
 }
 
 int				key_hook(int key, t_env *env)
@@ -70,7 +74,7 @@ int				key_hook(int key, t_env *env)
 	else if (key == KEY_A)
 		mod->zoom_bool = FALSE;
 	else if (key == KEY_PLUS || key == KEY_MINUS)
-		mod->zoom_bool == TRUE ? zoom_map(key, mod) : scale_map(key, mod);
+		mod->zoom_bool == TRUE ? zoom_map(key, mod) : scale_alt_map(key, mod);
 	else if (key == KEY_UP || key == KEY_DOWN
 			|| key == KEY_LEFT || key == KEY_RIGHT)
 		mod->rot_bool == TRUE ? rotate_map(key, mod) : translate_map(key, mod);
