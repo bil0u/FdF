@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/05/01 22:52:17 by upopee           ###   ########.fr       */
+/*   Updated: 2017/05/04 10:41:45 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,19 @@ int				key_hook(int key, t_env *env)
 		mod->zoom_bool = TRUE;
 	else if (key == KEY_A)
 		mod->zoom_bool = FALSE;
+	else if (key == KEY_P)
+	{
+		mod->proj_type = PERSPECTIVE_PROJ;
+		mod->scale = ft_to_vec3(DEFAULT_SCALE_X,
+										DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);
+	}
+	else if (key == KEY_O)
+	{
+		mod->proj_type = ORTHOGRAPHIC_PROJ;
+		mod->scale = ft_to_vec3(DEFAULT_SCALE_X,
+										DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);
+		mod->scale = ft_vec3_muln(mod->scale, 0.01);
+	}
 	else if (key == KEY_PLUS || key == KEY_MINUS)
 		mod->zoom_bool == TRUE ? zoom_map(key, mod) : scale_alt_map(key, mod);
 	else if (key == KEY_UP || key == KEY_DOWN

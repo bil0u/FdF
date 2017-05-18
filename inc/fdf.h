@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/05/01 18:56:05 by upopee           ###   ########.fr       */
+/*   Updated: 2017/05/02 22:19:58 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,14 @@
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L << 0)
 
+# define ORTHOGRAPHIC_PROJ 1
+# define PERSPECTIVE_PROJ 2
+
 typedef	struct	s_mod
 {
 	int			rot_bool;
 	int			zoom_bool;
+	int			proj_type;
 	t_vector3	cam_eye;
 	t_vector3	cam_to;
 	t_vector3	cam_upv;

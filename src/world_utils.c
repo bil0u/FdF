@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/05/01 18:44:51 by upopee           ###   ########.fr       */
+/*   Updated: 2017/05/04 10:29:41 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void			reset_modifiers(t_scene *world)
 	get_cam_pos(world);
 	world->mod.rot_bool = TRUE;
 	world->mod.zoom_bool = TRUE;
+	world->mod.proj_type = PERSPECTIVE_PROJ;
 	world->mod.rot_x = DEFAULT_ROT_X;
 	world->mod.rot_y = DEFAULT_ROT_Y;
 	world->mod.rot_z = DEFAULT_ROT_Z;
