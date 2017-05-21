@@ -6,36 +6,12 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/05/04 10:29:21 by upopee           ###   ########.fr       */
+/*   Updated: 2017/05/20 00:12:09 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "env_utils.h"
-
-static void		pixel_to_img(t_mlximg *img, int x, int y, unsigned int color)
-{
-	char			*curr_pixel;
-	int				i;
-	int				j;
-
-	i = img->bpp / 8;
-	curr_pixel = img->data + (x * i) + (y * img->sz_line);
-	if (img->endian == 0)
-	{
-		while (i--)
-			curr_pixel[i] = (color >> (i * 8)) & 0xFF;
-	}
-	else
-	{
-		j = 0;
-		while (i--)
-		{
-			curr_pixel[i] = (color >> (j * 8)) & 0xFF;
-			j++;
-		}
-	}
-}
 
 static t_matrix4	get_model_matrix(t_mod mod)
 {
@@ -72,8 +48,7 @@ static t_matrix4	get_mvp_matrix(t_camera *cam, t_mod mod)
 	return (mvp);
 }
 
-static t_vertex2i	vertex_proj(t_mlximg *img, t_matrix4 mat,
-								t_vector3 vec, t_vertex2i origin)
+static t_vertex2i	v_proj(t_vector3 vec, t_matrix4 mat, int img_w, int img_h)
 {
 	t_quater	hom;
 	t_vector3	ndc;
@@ -82,34 +57,38 @@ static t_vertex2i	vertex_proj(t_mlximg *img, t_matrix4 mat,
 	hom = ft_vec3_to_quat(vec, 1.0);
 	hom = ft_mat4_postmul_quat(hom, mat);
 	ndc = ft_quat_to_vec3(hom);
-	proj = ft_viewport_tlc(ndc, origin, img->width, img->height);
+	proj = ft_viewport_tlc(ndc, ft_to_ver2i(0, 0), img_w, img_h);
 	return(proj);
+}
+
+static int		is_visible(t_vertex2i pt, int width, int heigt)
+{
+	return (pt.x >= 0 && pt.x < width
+			&& pt.y >= 0 && pt.y < heigt);
 }
 
 static void		draw_map(t_env *env, t_scene *world, t_mlximg *img)
 {
-	t_matrix4		final_transform;
-	t_vertex2i		proj;
-	unsigned int	color;
+	t_matrix4		final;
+	t_line			h;
+	t_line			v;
 	int				i;
 	int				j;
 
-	final_transform = get_mvp_matrix(env->cam, world->mod);
+	final = get_mvp_matrix(env->cam, world->mod);
 	i = world->height;
 	while (i--)
 	{
 		j = world->width;
-		while (j--)
+		h.b = v_proj(world->map[i][j], final, img->width, img->height);
+		while (j-- > 1)
 		{
-			proj = vertex_proj(img,
-								final_transform,
-								world->map[i][j],
-								ft_to_ver2i(0, 0));
-			color = mlx_get_color_value(env->m_env->init_id, 0x00FFFFFF);
-			if (proj.x >= 0 && proj.x < img->width
-				&& proj.y >= 0 && proj.y < img->height)
-				pixel_to_img(img, proj.x, proj.y, color);
+			h.a = h.b;
+			h.b = v_proj(world->map[i][j - 1], final, img->width, img->height);
+			mlx_bresenham(img, h.a, h.b);
 		}
+		if (is_visible(h.b, img->width, img->height))
+			pixel_to_img(img, h.b.x, h.b.y, 0x00FFFFFF);
 	}
 }
 

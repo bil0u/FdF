@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/05/02 22:19:58 by upopee           ###   ########.fr       */
+/*   Updated: 2017/05/19 22:53:06 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,11 @@ typedef struct	s_env
 	t_camera	*cam;
 	int			debug;
 }				t_env;
+
+typedef struct	s_line
+{
+	t_vertex2i	a;
+	t_vertex2i	b;
+}				t_line;
 
 #endif
