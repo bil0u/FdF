@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_utils.h                                       :+:      :+:    :+:   */
+/*   color_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/17 22:38:54 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/05 04:42:17 by upopee           ###   ########.fr       */
+/*   Created: 2017/06/05 08:43:16 by upopee            #+#    #+#             */
+/*   Updated: 2017/06/07 03:03:37 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_UTILS_H
-# define DRAW_UTILS_H
+#ifndef COLOR_SET_H
+# define COLOR_SET_H
 
-void	draw_lines(t_scene *w, t_mlximg *img, t_matrix4 f);
-void	draw_columns(t_scene *w, t_mlximg *img, t_matrix4 f);
-void	draw_points(t_scene *w, t_mlximg *img, t_matrix4 f);
+# include "fdf.h"
+
+void	apply_simple_color(t_scene *world, int color);
+void	apply_color_set(t_scene *wld, t_colors *set, int n);
+void	set_colors(t_colors *sets);
 
 #endif

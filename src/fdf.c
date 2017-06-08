@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/30 18:38:27 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/05 04:53:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "parse_input.h"
 #include "key_hook.h"
 #include "env_utils.h"
-#include "draw_utils.h"
+#include "refresh_window.h"
 #include "debug.h"
 #include "world_utils.h"
 

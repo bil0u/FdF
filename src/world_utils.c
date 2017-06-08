@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/05/04 10:29:41 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/07 02:57:00 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 static void		get_alt_range(t_scene *world)
 {
-	t_vector3	curr;
+	t_vertex3f	curr;
 	float		min;
 	float		max;
 	int			i;
 	int			j;
 
-	min = (world->map[0][0]).y;
+	min = world->map[0][0].y;
 	max = min;
 	i = world->height;
 	while (i--)
@@ -87,9 +87,9 @@ void			get_cam_pos(t_scene *world)
 
 	width = (float)world->width;
 	height = (float)world->height;
-	world->mod.cam_eye.z = MAX(height, width) * 0.8;
+	world->mod.cam_eye.z = MAX(height, width) * 1.0;
 	world->mod.cam_eye.x = 0.0;
-	world->mod.cam_eye.y = MAX(height, width) * 0.5;
+	world->mod.cam_eye.y = MAX(height, width) * 0.6;
 	world->mod.cam_to = ft_to_vec3(0.0, 0.0, 0.0);
 	world->mod.cam_upv = ft_to_vec3(0.0, 1.0, 0.0);
 }
@@ -99,6 +99,10 @@ void			reset_modifiers(t_scene *world)
 	get_cam_pos(world);
 	world->mod.rot_bool = TRUE;
 	world->mod.zoom_bool = TRUE;
+	world->mod.points_only = FALSE;
+	world->mod.col.full_set = TRUE;
+	world->mod.col.curr_set = 0;
+	world->mod.col.curr_color = 0;
 	world->mod.proj_type = PERSPECTIVE_PROJ;
 	world->mod.rot_x = DEFAULT_ROT_X;
 	world->mod.rot_y = DEFAULT_ROT_Y;

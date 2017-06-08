@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_utils.h                                       :+:      :+:    :+:   */
+/*   refresh_window.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:38:54 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/05 04:42:17 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/05 03:58:21 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_UTILS_H
-# define DRAW_UTILS_H
+#ifndef REFRESH_WINDOW_H
+# define REFRESH_WINDOW_H
 
-void	draw_lines(t_scene *w, t_mlximg *img, t_matrix4 f);
-void	draw_columns(t_scene *w, t_mlximg *img, t_matrix4 f);
-void	draw_points(t_scene *w, t_mlximg *img, t_matrix4 f);
+int		refresh_window(t_env *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/05/19 22:53:06 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/07 03:01:08 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "libgraphic.h"
+# include "rgb_colors.h"
 
 # define MAP_SEPARATOR ' '
 
@@ -36,10 +37,31 @@
 # define ORTHOGRAPHIC_PROJ 1
 # define PERSPECTIVE_PROJ 2
 
+# define NB_COLORSETS 2
+# define MAX_COLORS 8
+
+typedef int		t_colorset[MAX_COLORS];
+
+typedef struct	s_colors
+{
+	int			full_set;
+	int			curr_set;
+	int			curr_color;
+	t_colorset	colors[NB_COLORSETS];
+	int			nb_colors[NB_COLORSETS];
+	float		marked_alt[NB_COLORSETS];
+	int			marked_color[NB_COLORSETS];
+	float		slice_up;
+	float		slice_down;
+}				t_colors;
+
+
 typedef	struct	s_mod
 {
 	int			rot_bool;
 	int			zoom_bool;
+	int			points_only;
+	t_colors	col;
 	int			proj_type;
 	t_vector3	cam_eye;
 	t_vector3	cam_to;
@@ -54,7 +76,7 @@ typedef	struct	s_mod
 
 typedef	struct	s_scene
 {
-	t_vector3	**map;;
+	t_vertex3f	**map;
 	int			width;
 	int			height;
 	int			alt_range;
@@ -77,6 +99,8 @@ typedef struct	s_line
 {
 	t_vertex2i	a;
 	t_vertex2i	b;
+	int			long_len;
+	int			increment;
 }				t_line;
 
 #endif

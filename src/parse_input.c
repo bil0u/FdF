@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/27 09:37:39 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/05 03:49:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,17 @@ static int			count_and_check(t_list *lst)
 	return (ref_value);
 }
 
-static t_vector3	*to_vec3tab(char *str, int width, int curr)
+static t_vertex3f	*to_vertices(char *str, int width, int curr)
 {
-	t_vector3		*line;
-	int				i;
+	t_vertex3f		*line;
+	int			i;
 
-	if (!(line = (t_vector3 *)ft_memalloc(sizeof(t_vector3) * width)))
+	if (!(line = (t_vertex3f *)ft_memalloc(sizeof(t_vertex3f) * width)))
 		return (NULL);
 	i = 0;
 	while (i < width)
 	{
-		line[i] = ft_to_vec3((float)(i), (float)(ft_atoi(str)), (float)(curr));
+		line[i] = ft_to_ver3f((float)(i), (float)(ft_atoi(str)), (float)(curr));
 		str = ft_strchr(str, MAP_SEPARATOR);
 		while (str && str[0] == MAP_SEPARATOR)
 			str++;
@@ -116,12 +116,12 @@ t_scene				*input_to_scene(char *file)
 	if ((world->width = count_and_check(lst)) == ERROR)
 		end_error(&lst, &world, i, "fdf: file not valid");
 	i = world->height;
-	if (!(world->map = (t_vector3 **)malloc(sizeof(t_vector3 *) * i)))
+	if (!(world->map = (t_vertex3f **)malloc(sizeof(t_vertex3f *) * i)))
 		end_error(&lst, &world, i, "malloc: cannot allocate memory");
 	curr = lst;
 	while (i-- > 0)
 	{
-		if (!(world->map[i] = to_vec3tab(curr->content, world->width, i)))
+		if (!(world->map[i] = to_vertices(curr->content, world->width, i)))
 			end_error(&curr, &world, i, "malloc: cannot allocate memory");
 		curr = curr->next;
 	}

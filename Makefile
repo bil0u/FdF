@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/04/30 18:48:42 by upopee           ###   ########.fr        #
+#    Updated: 2017/06/07 03:04:03 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME = fdf
 CC = gcc
 
 # Flags
-CFLAGS = -Wall -Wextra -Wall $(INCLUDES)
+CFLAGS = -Wall -Wextra -Wall $(INCLUDES) -g -O0
 LFLAGS = -lmlx -L $(MLX_DIR) -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
 # Library paths
 MLX_DIR = /usr/local/lib/
@@ -41,7 +41,11 @@ FILES =		debug \
 			parse_input \
 			env_utils \
 			draw_utils \
+			color_utils \
+			colorsets \
 			world_utils \
+			refresh_window \
+			fastline_fdf_one_color \
 
 SOURCES = $(patsubst %,$(SRC_DIR)/%,$(FILES:=.c))
 SRC_DIR = ./src
