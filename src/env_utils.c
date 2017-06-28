@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/08 18:00:57 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/28 01:35:57 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_env			*init_env(t_scene *world)
 	get_winsize(world, &width, &height);
 	reset_modifiers(world);
 	set_colors(&(world->mod.col));
-//	apply_color_set(world, &(world->mod.col), 0);
+	apply_color_set(world, world->mod.col);
 	if (!(env->cam = ft_init_cam_new(DFLT_VANGLE, (float)width / (float)height,
 										DFLT_NEAR, DFLT_FAR)))
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);

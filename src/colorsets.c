@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 01:16:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/07 03:05:13 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/28 02:51:38 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ static void		set_default(t_colors *sets)
 	sets->colors[i][5] = RGB_BROWN_EARTH;
 	sets->colors[i][6] = RGB_WHITE;
 	sets->nb_colors[i] = 7;
-	sets->marked_alt[i] = -0.01;
-	sets->marked_color[i] = 1;
+	sets->curr_color[i] = 0;
+	sets->marked_alt[i] = 0.000001;
+	sets->marked_colorup[i] = 2;
 }
 
 static void		set_test(t_colors *sets)
@@ -42,8 +43,9 @@ static void		set_test(t_colors *sets)
 	sets->colors[i][5] = RGB_PINK;
 	sets->colors[i][6] = RGB_GREY50;
 	sets->nb_colors[i] = 7;
-	sets->marked_alt[i] = -0.01;
-	sets->marked_color[i] = 3;
+	sets->curr_color[i] = 0;
+	sets->marked_alt[i] = 0.000001;
+	sets->marked_colorup[i] = 3;
 }
 
 void			set_colors(t_colors *sets)

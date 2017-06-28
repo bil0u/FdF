@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/07 02:57:00 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/28 02:49:51 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,33 +51,20 @@ void			reduce_alt(t_scene *world)
 		while (j--)
 			world->map[i][j].y *= REDUCE_FACTOR;
 	}
+	get_alt_range(world);
 }
 
 void			center_scene(t_scene *world)
 {
-	float		x_mid;
-	float		y_mid;
-	float		z_mid;
-	int			i;
-	int			j;
+	t_vector3	center;
 
 	get_alt_range(world);
-	x_mid = (float)(world->width - 1) * 0.5;
-	y_mid = world->alt_min > 0.0 ? world->alt_min : -(world->alt_min);
-	z_mid = (float)(world->height - 1) * 0.5;
-	i = world->height;
-	while (i--)
-	{
-		j = world->width;
-		while (j--)
-		{
-			world->map[i][j].x -= x_mid;
-			world->map[i][j].y -= y_mid;
-			world->map[i][j].z -= z_mid;
-		}
-	}
 	if (world->alt_range > 50.0)
 		reduce_alt(world);
+	center.x = (float)(world->width - 1) * 0.5;
+	center.y = world->alt_min > 0.0 ? world->alt_min : -(world->alt_min);
+	center.z = (float)(world->height - 1) * 0.5;
+	world->center_matrix = ft_gen_translate_mat4(ft_vec3_opp(center));
 }
 
 void			get_cam_pos(t_scene *world)
@@ -102,7 +89,6 @@ void			reset_modifiers(t_scene *world)
 	world->mod.points_only = FALSE;
 	world->mod.col.full_set = TRUE;
 	world->mod.col.curr_set = 0;
-	world->mod.col.curr_color = 0;
 	world->mod.proj_type = PERSPECTIVE_PROJ;
 	world->mod.rot_x = DEFAULT_ROT_X;
 	world->mod.rot_y = DEFAULT_ROT_Y;

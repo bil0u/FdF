@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/07 03:01:08 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/28 02:57:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,20 @@
 # define MAP_SEPARATOR ' '
 
 # define DEFAULT_SCALE_X 1.0
-# define DEFAULT_SCALE_Y 1.0
+# define DEFAULT_SCALE_Y 0.1
 # define DEFAULT_SCALE_Z 1.0
 # define DEFAULT_ROT_X 0.0
 # define DEFAULT_ROT_Y -15.0
 # define DEFAULT_ROT_Z 0.0
 # define DEFAULT_ZOOM 1.0
+# define ROT_SPEED 1.5
+# define ZOOM_PLUS_SPEED 0.8
+# define ZOOM_MINUS_SPEED 1.2
 # define MAX_ZOOM 0.01
 # define MIN_ZOOM 2.3
 # define REDUCE_LIMIT 50.0
-# define REDUCE_FACTOR 0.03
+# define REDUCE_FACTOR 0.5
+# define ALT_FACTOR 0.05
 
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L << 0)
@@ -46,13 +50,11 @@ typedef struct	s_colors
 {
 	int			full_set;
 	int			curr_set;
-	int			curr_color;
 	t_colorset	colors[NB_COLORSETS];
 	int			nb_colors[NB_COLORSETS];
+	int			curr_color[NB_COLORSETS];
 	float		marked_alt[NB_COLORSETS];
-	int			marked_color[NB_COLORSETS];
-	float		slice_up;
-	float		slice_down;
+	int			marked_colorup[NB_COLORSETS];
 }				t_colors;
 
 
@@ -79,9 +81,10 @@ typedef	struct	s_scene
 	t_vertex3f	**map;
 	int			width;
 	int			height;
-	int			alt_range;
-	int			alt_min;
-	int			alt_max;
+	float		alt_range;
+	float		alt_min;
+	float		alt_max;
+	t_matrix4	center_matrix;
 	t_mod		mod;
 }				t_scene;
 
