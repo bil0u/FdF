@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/06/07 03:04:03 by upopee           ###   ########.fr        #
+#    Updated: 2017/06/28 21:48:50 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ FILES =		debug \
 			colorsets \
 			world_utils \
 			refresh_window \
-			fastline_fdf_one_color \
+			fastline_fdf \
 
 SOURCES = $(patsubst %,$(SRC_DIR)/%,$(FILES:=.c))
 SRC_DIR = ./src
