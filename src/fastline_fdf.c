@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fastline_fdf_one_color.c                           :+:      :+:    :+:   */
+/*   fastline_fdf.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 16:57:17 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/05 04:51:40 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/29 01:07:39 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void		case_one(t_mlximg *img, t_line line, int color)
+static void		case_one(t_mlximg *img, t_line line, int i, float step)
 {
 	int		index;
 
@@ -22,7 +22,8 @@ static void		case_one(t_mlximg *img, t_line line, int color)
 		line.long_len += line.a.y;
 		while (line.a.y <= line.long_len)
 		{
-			pixel_to_img(img, (index >> 16), line.a.y, color);
+			pixel_to_img(img, (index >> 16), line.a.y,
+					ft_icolor_lerp(line.a.color, line.b.color, i++ * step));
 			index += line.increment;
 			(line.a.y)++;
 		}
@@ -32,14 +33,15 @@ static void		case_one(t_mlximg *img, t_line line, int color)
 		line.long_len += line.a.y;
 		while (line.a.y >= line.long_len)
 		{
-			pixel_to_img(img, (index >> 16), line.a.y, color);
+			pixel_to_img(img, (index >> 16), line.a.y,
+					ft_icolor_lerp(line.a.color, line.b.color, i++ * step));
 			index -= line.increment;
 			(line.a.y)--;
 		}
 	}
 }
 
-static void		case_two(t_mlximg *img, t_line line, int color)
+static void		case_two(t_mlximg *img, t_line line, int i, float step)
 {
 	int		index;
 
@@ -49,7 +51,8 @@ static void		case_two(t_mlximg *img, t_line line, int color)
 		line.long_len += line.a.x;
 		while (line.a.x <= line.long_len)
 		{
-			pixel_to_img(img, line.a.x, (index >> 16), color);
+			pixel_to_img(img, line.a.x, (index >> 16),
+					ft_icolor_lerp(line.a.color, line.b.color, i++ * step));
 			index += line.increment;
 			(line.a.x)++;
 		}
@@ -59,18 +62,20 @@ static void		case_two(t_mlximg *img, t_line line, int color)
 		line.long_len += line.a.x;
 		while (line.a.x >= line.long_len)
 		{
-			pixel_to_img(img, line.a.x, (index >> 16), color);
+			pixel_to_img(img, line.a.x, (index >> 16),
+					ft_icolor_lerp(line.a.color, line.b.color, i++ * step));
 			index -= line.increment;
 			(line.a.x)--;
 		}
 	}
 }
 
-void			fastline_fdf_one_color(t_mlximg *img, t_line line, int color)
+void			fastline_fdf(t_mlximg *img, t_line line)
 {
    	int		y_longer;
 	int		short_len;
 	int		swap;
+	float	step;
 
 	y_longer = 0;
 	short_len = line.b.y - line.a.y;
@@ -82,9 +87,10 @@ void			fastline_fdf_one_color(t_mlximg *img, t_line line, int color)
 		line.long_len = swap;
 		y_longer = 1;
 	}
+	step = 1.0 / ABS(line.long_len);
 	line.increment = line.long_len == 0 ? 0 : (short_len << 16) / line.long_len;
 	if (y_longer)
-		case_one(img, line, color);
+		case_one(img, line, 0, step);
 	else
-		case_two(img, line, color);
+		case_two(img, line, 0, step);
 }

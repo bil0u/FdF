@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/28 02:33:03 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/29 02:03:18 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ static t_matrix4	get_mvp_matrix(t_camera *cam, t_scene *w)
 int				refresh_window(t_env *env)
 {
 	t_matrix4		final;
+	t_mlximg		*img;
+	t_scene			*wld;
 
-	if (!(env->m_img = init_mlximg(env->m_env->init_id,
-									env->m_win->width, env->m_win->height)))
-		end_session(env, "mlx: cannot create image", EXIT_FAILURE);
-	final = get_mvp_matrix(env->cam, env->world);
-	if (env->world->mod.points_only == FALSE)
+	img = env->m_img;
+	wld = env->world;
+	final = get_mvp_matrix(env->cam, wld);
+	if (wld->mod.points_only == FALSE)
 	{
-		draw_lines(env->world, env->m_img, final);
-		draw_columns(env->world, env->m_img, final);
+		draw_lines(wld, img, final);
+		draw_columns(wld, img, final);
 	}
 	else
-		draw_points(env->world, env->m_img, final);
-	mlx_put_image_to_window(env->m_env->init_id,
-								env->m_win->id, env->m_img->id, 0, 0);
-	del_mlximg(env->m_env->init_id, env->m_img);
+		draw_points(wld, img, final);
+	mlx_put_image_to_window(env->m_env->init_id, env->m_win->id, img->id, 0, 0);
+	ft_bzero((void *)img->data, img->sz_line * img->height);
 	return (0);
 }

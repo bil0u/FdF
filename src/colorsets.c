@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 01:16:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/28 02:51:38 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/29 02:05:54 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void		set_default(t_colors *sets)
 	i = 0;
 	sets->colors[i][0] = RGB_NAVY_BLUE;
 	sets->colors[i][1] = RGB_ROYAL_BLUE;
-	sets->colors[i][2] = RGB_GREEN3;
-	sets->colors[i][3] = RGB_FOREST_GREEN;
-	sets->colors[i][4] = RGB_SPRINGGREEN4;
-	sets->colors[i][5] = RGB_BROWN_EARTH;
+	sets->colors[i][2] = RGB_SPRINGGREEN4;
+	sets->colors[i][3] = RGB_BROWN_EARTH;
+	sets->colors[i][4] = RGB_GREY50;
+	sets->colors[i][5] = RGB_WHITE;
 	sets->colors[i][6] = RGB_WHITE;
 	sets->nb_colors[i] = 7;
 	sets->curr_color[i] = 0;
