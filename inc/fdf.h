@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/28 02:57:14 by upopee           ###   ########.fr       */
+/*   Updated: 2017/06/29 00:53:15 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct	s_line
 	t_vertex2i	b;
 	int			long_len;
 	int			increment;
+	float		step;
 }				t_line;
 
 #endif
