@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/06/28 21:48:50 by upopee           ###   ########.fr        #
+#    Updated: 2017/07/01 18:24:45 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CC = gcc
 
 # Flags
 CFLAGS = -Wall -Wextra -Wall $(INCLUDES) -g -O0
-LFLAGS = -lmlx -L $(MLX_DIR) -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR)
+LFLAGS = -lmlx -L $(MLX_DIR) -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR) -lpthread
 # Library paths
 MLX_DIR = /usr/local/lib/
 LIB_DIR = ./libft
@@ -37,7 +37,7 @@ INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_D
 # Sources files
 FILES =		debug \
 			fdf \
-			key_hook \
+			key_hook2 \
 			parse_input \
 			env_utils \
 			draw_utils \

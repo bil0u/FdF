@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:33:09 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/26 23:45:23 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/01 18:31:52 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@
 # define KEY_PLUS 44
 # define KEY_MINUS 24
 
-int		key_hook(int keycode, t_env *env);
+int		key_press(int keycode, t_keymod *key);
+int		key_release(int keycode, t_keymod *key);
+int		loop_hook(t_env *env);
 
 #endif

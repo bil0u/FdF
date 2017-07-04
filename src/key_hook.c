@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/28 02:53:55 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/01 14:07:43 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int				key_hook(int key, t_env *env)
 {
 	t_mod	*mod;
 
+	ft_printf("key %d\n", key);
 	mod = &(env->world->mod);
 	if (key == KEY_ESC || key == KEY_Q)
 		end_session(env, NULL, EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/29 01:40:02 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/01 15:27:20 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			end_session(t_env *env, char *msg, int status)
 		if (env->cam)
 			free(env->cam);
 		del_mlxwin(env->m_env->init_id, env->m_win);
-		del_mlximg(env->m_env->init_id, env->m_img);
+		del_mlxfbuf(env->m_env->init_id, env->m_fbuf);
 		del_mlxenv(env->m_env);
 		free(env);
 	}
@@ -67,14 +67,12 @@ t_env			*init_env(t_scene *world)
 	center_scene(world);
 	get_winsize(world, &width, &height);
 	reset_modifiers(world);
-	set_colors(&(world->mod.col));
-	apply_color_set(world, world->mod.col);
 	if (!(env->cam = ft_init_cam_new(DFLT_VANGLE, (float)width / (float)height,
 										DFLT_NEAR, DFLT_FAR)))
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
 	if (!(env->m_env = init_mlxenv()))
 		end_session(env, "mlx: cannot connect with server", EXIT_FAILURE);
-	if (!(env->m_img = init_mlximg(env->m_env->init_id,
+	if (!(env->m_fbuf = init_mlxfbuf(env->m_env->init_id, FPS_MAX,
 									width, height)))
 		end_session(env, "mlx: cannot create image", EXIT_FAILURE);
 	if (!(env->m_win = init_mlxwin(env->m_env->init_id,

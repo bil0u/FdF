@@ -6,12 +6,13 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/28 02:49:51 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/02 05:40:23 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "fdf.h"
+#include "color_utils.h"
 
 static void		get_alt_range(t_scene *world)
 {
@@ -81,13 +82,15 @@ void			get_cam_pos(t_scene *world)
 	world->mod.cam_upv = ft_to_vec3(0.0, 1.0, 0.0);
 }
 
-void			reset_modifiers(t_scene *world)
+void			reset_modifiers(t_scene *world, t_keymod *km)
 {
 	get_cam_pos(world);
-	world->mod.rot_bool = TRUE;
-	world->mod.zoom_bool = TRUE;
-	world->mod.points_only = FALSE;
-	world->mod.col.full_set = TRUE;
+	set_colors(&(world->mod.col));
+	apply_color_set(world, world->mod.col);
+	km->rotate = TRUE;
+	km->zoom = TRUE;
+	km->pts_only = FALSE;
+	km->full_colorset = TRUE;
 	world->mod.col.curr_set = 0;
 	world->mod.proj_type = PERSPECTIVE_PROJ;
 	world->mod.rot_x = DEFAULT_ROT_X;

@@ -6,15 +6,16 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/29 02:03:18 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/02 05:42:11 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "draw_utils.h"
 #include "env_utils.h"
+#include <pthread.h>
 
-static t_matrix4	get_model_matrix(t_mod mod, t_matrix4 center_matrix)
+static t_matrix4	get_model_matrix(t_wldmod mod, t_matrix4 center_matrix)
 {
 	t_matrix4	scale;
 	t_matrix4	rotate;
@@ -57,10 +58,10 @@ int				refresh_window(t_env *env)
 	t_mlximg		*img;
 	t_scene			*wld;
 
-	img = env->m_img;
+	img = &env->m_fbuf->frame[env->m_fbuf->curr];
 	wld = env->world;
 	final = get_mvp_matrix(env->cam, wld);
-	if (wld->mod.points_only == FALSE)
+	if (env->keymod.pts_only == FALSE)
 	{
 		draw_lines(wld, img, final);
 		draw_columns(wld, img, final);
@@ -69,5 +70,7 @@ int				refresh_window(t_env *env)
 		draw_points(wld, img, final);
 	mlx_put_image_to_window(env->m_env->init_id, env->m_win->id, img->id, 0, 0);
 	ft_bzero((void *)img->data, img->sz_line * img->height);
+	env->m_fbuf->curr = env->m_fbuf->curr + 1 == env->m_fbuf->nb_frames ? 0
+													: env->m_fbuf->curr + 1;
 	return (0);
 }
