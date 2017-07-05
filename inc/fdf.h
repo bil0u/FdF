@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 02:51:56 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 20:47:07 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,25 @@
 # include "libft.h"
 # include "libgraphic.h"
 # include "rgb_colors.h"
+# include <time.h>
 
 # define MAP_SEPARATOR ' '
 
-# define FPS_MAX 60
+# define FPS_BUFF_SIZE 60
+# define FPS_REFRESH_TIME 1.0
+
+# define STR_BUFF_SIZE 8
+# define STR_COLOR 0xFFFFFF
 
 # define NB_PROJS 2
 # define ORTHOGRAPHIC_PROJ 0
 # define PERSPECTIVE_PROJ 1
 
-# define NB_COLORSETS 2
-# define MAX_COLORS 15
+# define NB_COLORSETS 4
+# define MAX_COLORS 256
 
 # define DEFAULT_SCALE_X 1.0
-# define DEFAULT_SCALE_Y 0.1
+# define DEFAULT_SCALE_Y 0.8
 # define DEFAULT_SCALE_Z 1.0
 # define REDUCE_LIMIT 50.0
 
@@ -39,7 +44,7 @@
 # define R_SPEED 1.5
 
 # define DEFAULT_ZOOM 1.0
-# define MAX_ZOOM 0.01
+# define MAX_ZOOM 0.1
 # define MIN_ZOOM 2.3
 # define Z_PSPEED 0.8
 # define Z_MSPEED 1.2
@@ -52,11 +57,9 @@
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
 # define EXPOSE 12
-# define DESTROYNOTIFY 17
 # define KEY_PRESS_MASK (1L << 0)
 # define KEY_RELEASE_MASK (1L << 1)
 # define EXPOSE_MASK (1L << 15)
-# define NOEVENT_MASK 0L
 
 typedef int		t_colorset[MAX_COLORS];
 
@@ -71,7 +74,7 @@ typedef struct	s_colors
 }				t_colors;
 
 
-typedef	struct	s_wldmod
+typedef	struct	s_mod
 {
 	t_colors	col;
 	t_vector3	cam_eye;
@@ -84,27 +87,48 @@ typedef	struct	s_wldmod
 	float		rot_z;
 	float		zoom;
 	int			proj_type;
-}				t_wldmod;
+	int			keymod;
+}				t_mod;
 
-typedef struct	s_keymod
-{
-	int			quit;
-	int			reset;
-	int			rotate;
-	int			zoom;
-	int			pts_only;
-	int			next_proj;
-	int			next_color;
-	int			up_marked_alt;
-	int			low_marked_alt;
-	int			full_colorset;
-	int			plus;
-	int			minus;
-	int			up;
-	int			down;
-	int			left;
-	int			right;
-}				t_keymod;
+# define QUIT (1)
+# define RESET (1 << 1)
+# define ROTATE (1 << 2)
+# define ZOOM (1 << 3)
+# define PTS_ONLY (1 << 4)
+# define NEXT_PROJ (1 << 5)
+# define NEXT_COLOR (1 << 6)
+# define MARKED_UP (1 << 7)
+# define MARKED_LOW (1 << 8)
+# define FULL_SET (1 << 9)
+# define PLUS (1 << 10)
+# define MINUS (1 << 11)
+# define UP (1 << 12)
+# define DOWN (1 << 13)
+# define LEFT (1 << 14)
+# define RIGHT (1 << 15)
+# define DEBUG (1 << 16)
+# define HELP (1 << 17)
+
+# define QUIT_SET(x) (x & 1)
+# define RESET_SET(x) ((x >> 1) & 1)
+# define ROTATE_SET(x) ((x >> 2) & 1)
+# define ZOOM_SET(x) ((x >> 3) & 1)
+# define PTS_ONLY_SET(x) ((x >> 4) & 1)
+# define NEXT_PROJ_SET(x) ((x >> 5) & 1)
+# define NEXT_COLOR_SET(x) ((x >> 6) & 1)
+# define MARKED_UP_SET(x) ((x >> 7) & 1)
+# define MARKED_LOW_SET(x) ((x >> 8) & 1)
+# define FULL_SET_SET(x) ((x >> 9) & 1)
+# define PLUS_SET(x) ((x >> 10) & 1)
+# define MINUS_SET(x) ((x >> 11) & 1)
+# define UP_SET(x) ((x >> 12) & 1)
+# define DOWN_SET(x) ((x >> 13) & 1)
+# define LEFT_SET(x) ((x >> 14) & 1)
+# define RIGHT_SET(x) ((x >> 15) & 1)
+# define DEBUG_SET(x) ((x >> 16) & 1)
+# define HELP_SET(x) ((x >> 17) & 1)
+
+# define OFF(x) (~(x))
 
 typedef	struct	s_scene
 {
@@ -115,7 +139,7 @@ typedef	struct	s_scene
 	float		alt_min;
 	float		alt_max;
 	t_matrix4	center_matrix;
-	t_wldmod	mod;
+	t_mod	mod;
 }				t_scene;
 
 typedef struct	s_env
@@ -125,8 +149,9 @@ typedef struct	s_env
 	t_mlxfbuf	*m_fbuf;
 	t_scene		*world;
 	t_camera	*cam;
-	t_keymod	keymod;
-	int			debug;
+	float		last_time;
+	int			nb_frames;
+	char		sbuff[STR_BUFF_SIZE];
 }				t_env;
 
 typedef struct	s_line

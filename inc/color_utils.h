@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 08:43:16 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/28 00:45:33 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 17:40:27 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@
 
 void	apply_simple_color(t_scene *world, int color);
 void	apply_color_set(t_scene *world, t_colors set);
-void	set_colors(t_colors *sets);
+void	init_colorsets(t_colors *sets);
 
 #endif

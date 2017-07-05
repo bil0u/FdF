@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/05 03:49:25 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 13:56:17 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static int			count_and_check(t_list *lst)
 
 	if (!lst)
 		return (ERROR);
-	ref_value = ft_nbwords(lst->content, MAP_SEPARATOR);
+	if ((ref_value = ft_nbwords(lst->content, MAP_SEPARATOR)) == 1)
+		return (ERROR);
 	while (lst)
 	{
 		str = lst->content;

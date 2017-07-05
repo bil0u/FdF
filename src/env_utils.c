@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 03:10:34 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 20:57:43 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libgraphic.h"
 #include "world_utils.h"
 #include "color_utils.h"
+#include "hook_utils.h"
 
 void			end_session(t_env *env, char *msg, int status)
 {
@@ -55,6 +56,28 @@ static void		get_winsize(t_scene *world, int *width, int *height)
 	*height = y > MLXWIN_HEIGHT_MAX ? MLXWIN_HEIGHT_MAX : y;
 }
 
+void			reset_modifiers(t_scene *world)
+{
+	t_mod		m;
+
+	get_cam_pos(world);
+	m = world->mod;
+	init_colorsets(&m.col);
+	apply_color_set(world, m.col);
+	m.keymod = 0;
+	m.keymod |= ROTATE;
+	m.keymod |= ZOOM;
+	m.keymod |= FULL_SET;
+	m.proj_type = PERSPECTIVE_PROJ;
+	m.rot_x = DEFAULT_ROT_X;
+	m.rot_y = DEFAULT_ROT_Y;
+	m.rot_z = DEFAULT_ROT_Z;
+	m.zoom = DEFAULT_ZOOM;
+	m.translate = ft_to_vec3(0.0, 0.0, 0.0);
+	m.scale = ft_to_vec3(DEFAULT_SCALE_X, DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);
+	world->mod = m;
+}
+
 t_env			*init_env(t_scene *world)
 {
 	t_env		*env;
@@ -66,13 +89,13 @@ t_env			*init_env(t_scene *world)
 	env->world = world;
 	center_scene(world);
 	get_winsize(world, &width, &height);
-	reset_modifiers(world, &(env->keymod));
+	reset_modifiers(world);
 	if (!(env->cam = ft_init_cam_new(DFLT_VANGLE, (float)width / (float)height,
 										DFLT_NEAR, DFLT_FAR)))
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
 	if (!(env->m_env = init_mlxenv()))
 		end_session(env, "mlx: cannot connect with server", EXIT_FAILURE);
-	if (!(env->m_fbuf = init_mlxfbuf(env->m_env->init_id, FPS_MAX,
+	if (!(env->m_fbuf = init_mlxfbuf(env->m_env->init_id, FPS_BUFF_SIZE,
 									width, height)))
 		end_session(env, "mlx: cannot create image", EXIT_FAILURE);
 	if (!(env->m_win = init_mlxwin(env->m_env->init_id,

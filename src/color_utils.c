@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 08:54:11 by upopee            #+#    #+#             */
-/*   Updated: 2017/06/28 02:09:51 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 04:39:50 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int		color_from_set(t_colors set, int alt, float amin, float amax)
 		out.max = out.max <= 0.0 ? 0.0 : out.max;
 	}
 	color_index = ft_to_frange(in, out, (float)alt);
-	return (set.colors[set.curr_set][(int)roundf(color_index)]);
+	return (set.colors[set.curr_set][(int)color_index]);
 }
 
 void			apply_color_set(t_scene *world, t_colors set)

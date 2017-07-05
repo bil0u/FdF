@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/07/01 18:24:45 by upopee           ###   ########.fr        #
+#    Updated: 2017/07/05 20:51:15 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,14 +35,16 @@ INCLUDES_DIR = ./inc
 INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_DIR)
 
 # Sources files
-FILES =		debug \
-			fdf \
-			key_hook2 \
+FILES =		fdf \
+			key_hook \
 			parse_input \
 			env_utils \
 			draw_utils \
 			color_utils \
-			colorsets \
+			help_utils \
+			debug_utils \
+			hook_utils \
+			init_colorsets \
 			world_utils \
 			refresh_window \
 			fastline_fdf \
@@ -52,7 +54,7 @@ SRC_DIR = ./src
 
 # Objects files
 OBJECTS = $(patsubst %,$(OBJ_DIR)/%,$(FILES:=.o))
-OBJ_DIR = ./obj
+OBJ_DIR = ./.obj
 
 # -- RULES --
 

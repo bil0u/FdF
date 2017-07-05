@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 03:11:29 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 17:44:08 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,4 @@ void			get_cam_pos(t_scene *world)
 	world->mod.cam_eye.y = MAX(height, width) * 0.6;
 	world->mod.cam_to = ft_to_vec3(0.0, 0.0, 0.0);
 	world->mod.cam_upv = ft_to_vec3(0.0, 1.0, 0.0);
-}
-
-void			reset_modifiers(t_scene *world, t_keymod *km)
-{
-	get_cam_pos(world);
-	set_colors(&(world->mod.col));
-	apply_color_set(world, world->mod.col);
-	ft_bzero(km, sizeof(*km));
-	km->rotate = TRUE;
-	km->zoom = TRUE;
-	km->pts_only = FALSE;
-	km->full_colorset = TRUE;
-	world->mod.col.curr_set = 0;
-	world->mod.proj_type = PERSPECTIVE_PROJ;
-	world->mod.rot_x = DEFAULT_ROT_X;
-	world->mod.rot_y = DEFAULT_ROT_Y;
-	world->mod.rot_z = DEFAULT_ROT_Z;
-	world->mod.zoom = DEFAULT_ZOOM;
-	world->mod.translate = ft_to_vec3(0.0, 0.0, 0.0);
-	world->mod.scale = ft_to_vec3(DEFAULT_SCALE_X,
-									DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);
 }

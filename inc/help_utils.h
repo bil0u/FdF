@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.h                                            :+:      :+:    :+:   */
+/*   help_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/22 02:03:56 by upopee            #+#    #+#             */
-/*   Updated: 2017/04/26 11:04:53 by upopee           ###   ########.fr       */
+/*   Created: 2017/07/05 17:16:30 by upopee            #+#    #+#             */
+/*   Updated: 2017/07/05 20:51:06 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEBUG_H
-# define DEBUG_H
+#ifndef HELP_UTILS_H
+# define HELP_UTILS_H
 
-void		apply_mat4_to_scene(t_matrix4 *m, t_scene *world,
-										t_vector3 (*mat4_mul)());
-void		print_scene_values(char *name, t_scene *world);
-void		test(t_env *env);
+void		help_less(void *init_id, t_mlxwin *win);
+void		help_more(void *init_id, t_mlxwin *win);
 
 #endif

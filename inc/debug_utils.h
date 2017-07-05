@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   world_utils.h                                      :+:      :+:    :+:   */
+/*   debug_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/11 06:37:26 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 17:44:27 by upopee           ###   ########.fr       */
+/*   Created: 2017/07/05 17:16:30 by upopee            #+#    #+#             */
+/*   Updated: 2017/07/05 20:51:00 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WORLD_UTILS_H
-# define WORLD_UTILS_H
+#ifndef DEBUG_UTILS_H
+# define DEBUG_UTILS_H
 
-void	center_scene(t_scene *world);
-void	get_cam_pos(t_scene *world);
+void		fps_count(t_env *e, void *init_id, void *win_id);
 
 #endif

@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   world_utils.h                                      :+:      :+:    :+:   */
+/*   hook_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/11 06:37:26 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 17:44:27 by upopee           ###   ########.fr       */
+/*   Created: 2017/07/05 17:34:53 by upopee            #+#    #+#             */
+/*   Updated: 2017/07/05 19:26:17 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WORLD_UTILS_H
-# define WORLD_UTILS_H
+#ifndef HOOK_UTILS_H
+# define HOOK_UTILS_H
 
-void	center_scene(t_scene *world);
-void	get_cam_pos(t_scene *world);
+void		zoom(t_mod *mod, float zoom_value);
+void		next_proj(t_mod *mod);
+void		next_color(t_scene *w, t_colors *c, int *keys);
 
 #endif
