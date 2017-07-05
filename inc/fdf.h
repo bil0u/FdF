@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/01 18:29:59 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 02:51:56 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,13 @@
 # define ALT_FACTOR 0.05
 
 # define KEY_PRESS 2
-# define KEY_PRESS_MASK (1L << 0)
 # define KEY_RELEASE 3
+# define EXPOSE 12
+# define DESTROYNOTIFY 17
+# define KEY_PRESS_MASK (1L << 0)
 # define KEY_RELEASE_MASK (1L << 1)
+# define EXPOSE_MASK (1L << 15)
+# define NOEVENT_MASK 0L
 
 typedef int		t_colorset[MAX_COLORS];
 
@@ -84,22 +88,22 @@ typedef	struct	s_wldmod
 
 typedef struct	s_keymod
 {
-	int			quit : 1;
-	int			reset : 1;
-	int			rotate : 1;
-	int			zoom : 1;
-	int			pts_only : 1;
-	int			next_proj : 1;
-	int			next_color : 1;
-	int			up_marked_alt : 1;
-	int			low_marked_alt : 1;
-	int			full_colorset : 1;
-	int			plus : 1;
-	int			minus : 1;
-	int			up : 1;
-	int			down : 1;
-	int			left : 1;
-	int			right : 1;
+	int			quit;
+	int			reset;
+	int			rotate;
+	int			zoom;
+	int			pts_only;
+	int			next_proj;
+	int			next_color;
+	int			up_marked_alt;
+	int			low_marked_alt;
+	int			full_colorset;
+	int			plus;
+	int			minus;
+	int			up;
+	int			down;
+	int			left;
+	int			right;
 }				t_keymod;
 
 typedef	struct	s_scene

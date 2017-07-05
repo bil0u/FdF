@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:33:09 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/01 18:31:52 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 02:53:49 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@
 
 int		key_press(int keycode, t_keymod *key);
 int		key_release(int keycode, t_keymod *key);
+int		destroy_event(t_env *env);
 int		loop_hook(t_env *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/02 05:42:11 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/05 02:27:54 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int				refresh_window(t_env *env)
 	t_mlximg		*img;
 	t_scene			*wld;
 
-	img = &env->m_fbuf->frame[env->m_fbuf->curr];
+	img = &(env->m_fbuf->frame[env->m_fbuf->curr]);
 	wld = env->world;
 	final = get_mvp_matrix(env->cam, wld);
 	if (env->keymod.pts_only == FALSE)
