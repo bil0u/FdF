@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/07/05 20:51:15 by upopee           ###   ########.fr        #
+#    Updated: 2017/07/06 20:17:49 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,13 @@ CC = gcc
 
 # Flags
 CFLAGS = -Wall -Wextra -Wall $(INCLUDES) -g -O0
-LFLAGS = -lmlx -L $(MLX_DIR) -framework OpenGL -framework AppKit -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR) -lpthread
+LFLAGS = -framework OpenGL -framework AppKit -lmlx -L $(MLX_DIR) -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR) -lpthread
 # Library paths
-MLX_DIR = /usr/local/lib/
+MLX_DIR = ./minilibx
+
 LIB_DIR = ./libft
 LIB_INCLUDES_DIR = $(LIB_DIR)/inc
+
 LIB_GRAPHIC_DIR = ./libgraphic
 LIB_GRAPHIC_INCLUDES_DIR = $(LIB_GRAPHIC_DIR)/inc
 # Sources paths
@@ -47,6 +49,7 @@ FILES =		fdf \
 			init_colorsets \
 			world_utils \
 			refresh_window \
+			clear_frame \
 			fastline_fdf \
 
 SOURCES = $(patsubst %,$(SRC_DIR)/%,$(FILES:=.c))
