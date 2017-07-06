@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 20:47:07 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/06 21:19:42 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libgraphic.h"
 # include "rgb_colors.h"
 # include <time.h>
+# include <pthread.h>
 
 # define MAP_SEPARATOR ' '
 
@@ -162,5 +163,27 @@ typedef struct	s_line
 	int			increment;
 	float		step;
 }				t_line;
+
+typedef struct	s_threads4
+{
+	pthread_t	t0;
+	pthread_t	t1;
+	pthread_t	t2;
+	pthread_t	t3;
+}				t_threads4;
+
+typedef struct	s_dataseg
+{
+	char		*start;
+	char		*stop;
+}				t_dataseg;
+
+typedef struct	s_imgdata
+{
+	t_dataseg	t0;
+	t_dataseg	t1;
+	t_dataseg	t2;
+	t_dataseg	t3;
+}				t_imgdata;
 
 #endif
