@@ -6,13 +6,14 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 20:23:55 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/06 21:37:48 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "draw_utils.h"
 #include "env_utils.h"
+#include "clear_frame.h"
 
 static t_matrix4	get_model_matrix(t_mod mod, t_matrix4 center_matrix)
 {
@@ -50,16 +51,11 @@ static t_matrix4	get_mvp_matrix(t_camera *cam, t_scene *wld)
 	return (mvp);
 }
 
-
-int				refresh_window(t_env *env)
+static void		fill_frame(t_env *env, t_mlximg *img)
 {
 	t_matrix4		final;
-	t_mlxfbuf		*fbuf;
-	t_mlximg		*img;
 	t_scene			*wld;
 
-	fbuf = env->m_fbuf;
-	img = &(fbuf->frame[fbuf->curr]);
 	wld = env->world;
 	final = get_mvp_matrix(env->cam, wld);
 	if (!PTS_ONLY_SET(wld->mod.keymod))
@@ -69,8 +65,22 @@ int				refresh_window(t_env *env)
 	}
 	else
 		draw_points(wld, img, final);
-	mlx_put_image_to_window(env->m_env->init_id, env->m_win->id, img->id, 0, 0);
-	ft_bzero((void *)img->data, img->sz_line * img->height);
-	fbuf->curr = (fbuf->curr + 1) % fbuf->nb_frames;
+}
+
+int				refresh_window(t_env *env)
+{
+	t_mlxfbuf		*fbuf;
+	t_mlxwin		*win;
+	t_mlximg		*img;
+	int				curr_frame;
+
+	fbuf = env->m_fbuf;
+	win = env->m_win;
+	curr_frame = fbuf->curr;
+	img = &(fbuf->frame[curr_frame]);
+	fill_frame(env, img);
+	mlx_put_image_to_window(env->m_env->init_id, win->id, img->id, 0, 0);
+	clear_frame(img->data, img->sz_line * img->height);
+	fbuf->curr = (curr_frame + 1) == fbuf->nb_frames ? 0 : (curr_frame + 1);
 	return (0);
 }
