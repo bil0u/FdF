@@ -6,14 +6,15 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:34:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 19:48:24 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 04:30:33 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "color_utils.h"
+#include "env_utils.h"
 
-void		zoom(t_mod *mod, float zoom_value)
+void			zoom(t_mod *mod, float zoom_value)
 {
 	t_mod	m;
 
@@ -24,7 +25,7 @@ void		zoom(t_mod *mod, float zoom_value)
 	*mod = m;
 }
 
-void		next_proj(t_mod *mod)
+void			next_proj(t_mod *mod)
 {
 	t_mod	m;
 
@@ -37,7 +38,7 @@ void		next_proj(t_mod *mod)
 	*mod = m;
 }
 
-void		next_color(t_scene *w, t_colors *c, int *keys)
+void			next_color(t_scene *w, t_colors *c, int *keys)
 {
 	int		i;
 	int		k;
@@ -56,4 +57,43 @@ void		next_color(t_scene *w, t_colors *c, int *keys)
 	}
 	k &= OFF(NEXT_COLOR);
 	*keys = k;
+}
+
+static void		apply_actions(int k, t_mod *mod)
+{
+	t_mod	m;
+
+	m = *mod;
+	if (PLUS_SET(k))
+		ZOOM_SET(k) ? zoom(&m, Z_PSPEED) : (m.scale.y += ALT_FACTOR);
+	if (MINUS_SET(k))
+		ZOOM_SET(k) ? zoom(&m, Z_MSPEED) : (m.scale.y -= ALT_FACTOR);
+	if (UP_SET(k))
+		ROTATE_SET(k) ? (m.rot_x += R_SPEED) : (m.translate.z += T_SPEED);
+	if (DOWN_SET(k))
+		ROTATE_SET(k) ? (m.rot_x -= R_SPEED) : (m.translate.z -= T_SPEED);
+	if (LEFT_SET(k))
+		ROTATE_SET(k) ? (m.rot_y += R_SPEED) : (m.translate.x += T_SPEED);
+	if (RIGHT_SET(k))
+		ROTATE_SET(k) ? (m.rot_y -= R_SPEED) : (m.translate.x -= T_SPEED);
+	*mod = m;
+}
+
+void			apply_mods(t_env *e, t_scene *w, t_mod *m)
+{
+	int			k;
+	int			curr_set;
+	t_colors	*c;
+
+	c = &m->col;
+	curr_set = c->curr_set;
+	k = m->keymod;
+	QUIT_SET(k) ? end_session(e, NULL, EXIT_SUCCESS) : (void)k;
+	RESET_SET(k) ? reset_modifiers(w) : (void)k;
+	NEXT_PROJ_SET(k) ? next_proj(m) : (void)k;
+	NEXT_COLOR_SET(k) && !m->force_c ? next_color(w, c, &m->keymod) : (void)k;
+	MARKED_UP_SET(k) ? (c->marked_alt[curr_set] += ALT_FACTOR) : (void)k;
+	MARKED_LOW_SET(k) ? (c->marked_alt[curr_set] -= ALT_FACTOR) : (void)k;
+	UNFORCE_COLOR_SET(k) ? m->force_c = 0 : (void)k;
+	apply_actions(k, m);
 }

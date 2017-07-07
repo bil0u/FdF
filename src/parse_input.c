@@ -6,35 +6,16 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 13:56:17 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 04:58:06 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "libft.h"
-#include "libgraphic.h"
 #include "fdf.h"
+#include "parse_utils.h"
 
-static void			end_error(t_list **lst, t_scene **world, int i, char *msg)
-{
-	if (world && *world
-				&& (*world)->height != ERROR && (*world)->width != ERROR)
-	{
-		while (i < (*world)->height)
-		{
-			ft_memdel((void **)&((*world)->map[i]));
-			i++;
-		}
-		ft_memdel((void **)world);
-	}
-	ft_lstdel(lst, &ft_delcontent);
-	ft_putendl_fd(msg, 2);
-	exit(EXIT_FAILURE);
-}
-
-static int			file_to_lst(char *file, t_list **dst)
+int			file_to_lst(char *file, t_list **dst)
 {
 	int				height;
 	int				fd;
@@ -54,78 +35,48 @@ static int			file_to_lst(char *file, t_list **dst)
 	return (height);
 }
 
-static int			count_and_check(t_list *lst)
+void		end_error(t_list **lst, t_scene **world, int i, char *msg)
 {
-	char			*str;
-	int				ref_value;
-	int				ret;
-
-	if (!lst)
-		return (ERROR);
-	if ((ref_value = ft_nbwords(lst->content, MAP_SEPARATOR)) == 1)
-		return (ERROR);
-	while (lst)
+	if (world && *world
+				&& (*world)->height != ERROR && (*world)->width != ERROR)
 	{
-		str = lst->content;
-		if (ft_nbwords(str, MAP_SEPARATOR) != (size_t)ref_value)
-			return (ERROR);
-		while (*str)
+		while (i < (*world)->height)
 		{
-			if ((ret = ft_strisnumber(str, MAP_SEPARATOR)) == 0)
-				return (ERROR);
-			str += ret;
-			while (str[0] == MAP_SEPARATOR)
-				str++;
+			ft_memdel((void **)&((*world)->map[i]));
+			i++;
 		}
-		lst = lst->next;
+		ft_memdel((void **)world);
 	}
-	return (ref_value);
-}
-
-static t_vertex3f	*to_vertices(char *str, int width, int curr)
-{
-	t_vertex3f		*line;
-	int			i;
-
-	if (!(line = (t_vertex3f *)ft_memalloc(sizeof(t_vertex3f) * width)))
-		return (NULL);
-	i = 0;
-	while (i < width)
-	{
-		line[i] = ft_to_ver3f((float)(i), (float)(ft_atoi(str)), (float)(curr));
-		str = ft_strchr(str, MAP_SEPARATOR);
-		while (str && str[0] == MAP_SEPARATOR)
-			str++;
-		i++;
-	}
-	return (line);
+	ft_lstdel(lst, &ft_delcontent);
+	ft_putendl_fd(msg, 2);
+	exit(EXIT_FAILURE);
 }
 
 t_scene				*input_to_scene(char *file)
 {
-	t_list			*lst;
-	t_list			*curr;
-	t_scene			*world;
+	t_list			*l;
+	t_list			*c;
+	t_scene			*w;
 	int				i;
 
-	lst = NULL;
-	i = 0;
-	if (!(world = (t_scene *)malloc(sizeof(t_scene))))
-		end_error(&lst, &world, i, "malloc: cannot allocate memory");
-	if ((world->height = file_to_lst(file, &lst)) == ERROR)
-		end_error(&lst, &world, i, "open: file does not exist");
-	if ((world->width = count_and_check(lst)) == ERROR)
-		end_error(&lst, &world, i, "fdf: file not valid");
-	i = world->height;
-	if (!(world->map = (t_vertex3f **)malloc(sizeof(t_vertex3f *) * i)))
-		end_error(&lst, &world, i, "malloc: cannot allocate memory");
-	curr = lst;
+	l = NULL;
+	if (!(w = (t_scene *)malloc(sizeof(t_scene))))
+		end_error(&l, &w, 0, "malloc: cannot allocate memory");
+	if ((w->height = file_to_lst(file, &l)) == ERROR)
+		end_error(&l, &w, 0, "open: file does not exist");
+	w->mod.force_c = 0;
+	if ((w->width = count_and_check(l, &w->mod.force_c)) == ERROR)
+		end_error(&l, &w, 0, "fdf: file not valid");
+	i = w->height;
+	if (!(w->map = (t_vertex3f **)malloc(sizeof(t_vertex3f *) * i)))
+		end_error(&l, &w, 0, "malloc: cannot allocate memory");
+	c = l;
 	while (i-- > 0)
 	{
-		if (!(world->map[i] = to_vertices(curr->content, world->width, i)))
-			end_error(&curr, &world, i, "malloc: cannot allocate memory");
-		curr = curr->next;
+		if (!(w->map[i] = to_vertices(c->content, w->width, i, w->mod.force_c)))
+			end_error(&c, &w, i, "malloc: cannot allocate memory");
+		c = c->next;
 	}
-	ft_lstdel(&lst, &ft_delcontent);
-	return (world);
+	ft_lstdel(&l, &ft_delcontent);
+	return (w);
 }

@@ -6,19 +6,18 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 20:55:11 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 04:24:58 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "env_utils.h"
 #include "help_utils.h"
 #include "debug_utils.h"
 #include "hook_utils.h"
 #include "keyboard_fr.h"
 #include "refresh_window.h"
 
-int		key_press(int key, int *keymod)
+static void		press_1(int key, int *keymod)
 {
 	int		k;
 
@@ -43,7 +42,13 @@ int		key_press(int key, int *keymod)
 	key == KEY_RIGHT ? k |= RIGHT : (void)key;
 	key == KEY_D ? k ^= DEBUG : (void)key;
 	key == KEY_H ? k ^= HELP : (void)key;
+	key == KEY_F ? k |= UNFORCE_COLOR : (void)key;
 	*keymod = k;
+}
+
+int		key_press(int key, int *keymod)
+{
+	press_1(key, keymod);
 	return (0);
 }
 
@@ -63,44 +68,6 @@ int		key_release(int key, int *keymod)
 	key == KEY_RIGHT ? k &= OFF(RIGHT) : (void)key;
 	*keymod = k;
 	return (0);
-}
-
-static void		apply_actions(int k, t_mod *mod)
-{
-	t_mod	m;
-
-	m = *mod;
-	if (PLUS_SET(k))
-		ZOOM_SET(k) ? zoom(&m, Z_PSPEED) : (m.scale.y += ALT_FACTOR);
-	if (MINUS_SET(k))
-		ZOOM_SET(k) ? zoom(&m, Z_MSPEED) : (m.scale.y -= ALT_FACTOR);
-	if (UP_SET(k))
-		ROTATE_SET(k) ? (m.rot_x += R_SPEED) : (m.translate.z += T_SPEED);
-	if (DOWN_SET(k))
-		ROTATE_SET(k) ? (m.rot_x -= R_SPEED) : (m.translate.z -= T_SPEED);
-	if (LEFT_SET(k))
-		ROTATE_SET(k) ? (m.rot_y += R_SPEED) : (m.translate.x += T_SPEED);
-	if (RIGHT_SET(k))
-		ROTATE_SET(k) ? (m.rot_y -= R_SPEED) : (m.translate.x -= T_SPEED);
-	*mod = m;
-}
-
-static void		apply_mods(t_env *e, t_scene *wld, t_mod *mod)
-{
-	int			k;
-	int			curr_set;
-	t_colors	*c;
-
-	c = &mod->col;
-	curr_set = c->curr_set;
-	k = mod->keymod;
-	QUIT_SET(k) ? end_session(e, NULL, EXIT_SUCCESS) : (void)k;
-	RESET_SET(k) ? reset_modifiers(wld) : (void)k;
-	NEXT_PROJ_SET(k) ? next_proj(mod) : (void)k;
-	NEXT_COLOR_SET(k) ? next_color(wld, c, &mod->keymod) : (void)k;
-	MARKED_UP_SET(k) ? (c->marked_alt[curr_set] += ALT_FACTOR) : (void)k;
-	MARKED_LOW_SET(k) ? (c->marked_alt[curr_set] -= ALT_FACTOR) : (void)k;
-	apply_actions(k, mod);
 }
 
 int		loop_hook(t_env *env)

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 20:57:43 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 04:46:02 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ void			reset_modifiers(t_scene *world)
 	get_cam_pos(world);
 	m = world->mod;
 	init_colorsets(&m.col);
-	apply_color_set(world, m.col);
 	m.keymod = 0;
+	if (m.force_c == FALSE)
+		apply_color_set(world, m.col);
 	m.keymod |= ROTATE;
 	m.keymod |= ZOOM;
 	m.keymod |= FULL_SET;

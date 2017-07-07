@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/06 21:19:42 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 04:24:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <pthread.h>
 
 # define MAP_SEPARATOR ' '
+# define COLOR_SEPARATOR ','
 
 # define FPS_BUFF_SIZE 60
 # define FPS_REFRESH_TIME 1.0
@@ -89,6 +90,7 @@ typedef	struct	s_mod
 	float		zoom;
 	int			proj_type;
 	int			keymod;
+	int			force_c;
 }				t_mod;
 
 # define QUIT (1)
@@ -109,6 +111,7 @@ typedef	struct	s_mod
 # define RIGHT (1 << 15)
 # define DEBUG (1 << 16)
 # define HELP (1 << 17)
+# define UNFORCE_COLOR (1 << 18)
 
 # define QUIT_SET(x) (x & 1)
 # define RESET_SET(x) ((x >> 1) & 1)
@@ -128,6 +131,7 @@ typedef	struct	s_mod
 # define RIGHT_SET(x) ((x >> 15) & 1)
 # define DEBUG_SET(x) ((x >> 16) & 1)
 # define HELP_SET(x) ((x >> 17) & 1)
+# define UNFORCE_COLOR_SET(x) ((x >> 18) & 1)
 
 # define OFF(x) (~(x))
 
@@ -140,7 +144,7 @@ typedef	struct	s_scene
 	float		alt_min;
 	float		alt_max;
 	t_matrix4	center_matrix;
-	t_mod	mod;
+	t_mod		mod;
 }				t_scene;
 
 typedef struct	s_env
