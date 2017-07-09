@@ -6,77 +6,86 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 03:17:18 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 20:21:27 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 19:16:41 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "pixel_shader.h"
 
-void				draw_lines(t_scene *w, t_mlximg *img, t_matrix4 f)
+void				*draw_lines(void *arg)
 {
+	t_drawdata	tenv;
 	int			i;
 	int			j;
 	t_vertex3f	tmp;
 	t_line		line;
 
-	i = w->height;
+	tenv = *((t_drawdata *)arg);
+	i = tenv.wld_h;
 	while (i--)
 	{
-		j = w->width;
-		tmp = w->map[i][j - 1];
-		line.a = ft_ver3f_proj(tmp, f, img->width, img->height);
+		j = tenv.wld_w;
+		tmp = tenv.wld_map[i][j - 1];
+		line.a = ft_ver3f_proj(tmp, tenv.final, tenv.frm_w, tenv.frm_h);
 		while (--j)
 		{
-			tmp = w->map[i][j - 1];
-			line.b = ft_ver3f_proj(tmp, f, img->width, img->height);
-			fastline_fdf(img, line);
+			tmp = tenv.wld_map[i][j - 1];
+			line.b = ft_ver3f_proj(tmp, tenv.final, tenv.frm_w, tenv.frm_h);
+			fastline_fdf(tenv.frame, line);
 			line.a = line.b;
 		}
 	}
+	pthread_exit(NULL);
 }
 
-void				draw_columns(t_scene *w, t_mlximg *img, t_matrix4 f)
+void				*draw_columns(void *arg)
 {
+	t_drawdata	tenv;
 	int			i;
 	int			j;
 	t_vertex3f	tmp;
 	t_line		line;
 
-	j = w->width;
+	tenv = *((t_drawdata *)arg);
+	j = tenv.wld_w;
 	while (j--)
 	{
-		i = w->height;
-		tmp = w->map[i - 1][j];
-		line.a = ft_ver3f_proj(tmp, f, img->width, img->height);
+		i = tenv.wld_h;
+		tmp = tenv.wld_map[i - 1][j];
+		line.a = ft_ver3f_proj(tmp, tenv.final, tenv.frm_w, tenv.frm_h);
 		line.a.color = tmp.color;
 		while (--i)
 		{
-			tmp = w->map[i - 1][j];
-			line.b = ft_ver3f_proj(tmp, f, img->width, img->height);
+			tmp = tenv.wld_map[i - 1][j];
+			line.b = ft_ver3f_proj(tmp, tenv.final, tenv.frm_w, tenv.frm_h);
 			line.b.color = tmp.color;
-			fastline_fdf(img, line);
+			fastline_fdf(tenv.frame, line);
 			line.a = line.b;
 		}
 	}
+	pthread_exit(NULL);
 }
 
-void				draw_points(t_scene *w, t_mlximg *img, t_matrix4 f)
+void				*draw_points(void *arg)
 {
+	t_drawdata	tenv;
 	int			i;
 	int			j;
 	t_vertex3f	tmp;
 	t_vertex2i	pt;
 
-	j = w->width;
+	tenv = *((t_drawdata *)arg);
+	j = tenv.wld_w;
 	while (j--)
 	{
-		i = w->height;
+		i = tenv.wld_h;
 		while (i--)
 		{
-			tmp = w->map[i][j];
-			pt = ft_ver3f_proj(tmp, f, img->width, img->height);
-			pixel_to_img(img, pt.x, pt.y, tmp.color);
+			tmp = tenv.wld_map[i][j];
+			pt = ft_ver3f_proj(tmp, tenv.final, tenv.frm_w, tenv.frm_h);
+			pixel_to_img(tenv.frame, pt.x, pt.y, tmp.color);
 		}
 	}
+	pthread_exit(NULL);
 }

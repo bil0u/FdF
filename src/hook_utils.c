@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:34:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/07 04:30:33 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/09 22:29:58 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void			apply_mods(t_env *e, t_scene *w, t_mod *m)
 	NEXT_COLOR_SET(k) && !m->force_c ? next_color(w, c, &m->keymod) : (void)k;
 	MARKED_UP_SET(k) ? (c->marked_alt[curr_set] += ALT_FACTOR) : (void)k;
 	MARKED_LOW_SET(k) ? (c->marked_alt[curr_set] -= ALT_FACTOR) : (void)k;
+	if ((MARKED_UP_SET(k) || MARKED_LOW_SET(k)) && FULL_SET_SET(k))
+		apply_color_set(w, *c);
 	UNFORCE_COLOR_SET(k) ? m->force_c = 0 : (void)k;
 	apply_actions(k, m);
 }

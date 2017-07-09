@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 17:44:08 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/09 23:34:12 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "fdf.h"
 #include "color_utils.h"
 
-static void		get_alt_range(t_scene *world)
+void		get_alt_range(t_scene *world)
 {
 	t_vertex3f	curr;
 	float		min;
@@ -40,30 +40,34 @@ static void		get_alt_range(t_scene *world)
 	world->alt_range = max - min;
 }
 
-void			reduce_alt(t_scene *world)
+float		alt_reducer(float alt_range)
 {
-	int			i;
-	int			j;
+	float	factor;
 
-	i = world->height;
-	while (i--)
-	{
-		j = world->width;
-		while (j--)
-			world->map[i][j].y *= REDUCE_FACTOR;
-	}
-	get_alt_range(world);
+	if (alt_range > ALT_EXTREME)
+		factor = REDUCE_FACTOR_EXTREME;
+	else if (alt_range > ALT_VERYHIGH)
+		factor = REDUCE_FACTOR_VERYHIGH;
+	else if (alt_range > ALT_HIGH)
+		factor = REDUCE_FACTOR_HIGH;
+	else if (alt_range > ALT_MID)
+		factor = REDUCE_FACTOR_MID;
+	else if (alt_range > ALT_LOW)
+		factor = REDUCE_FACTOR_LOW;
+	else
+		factor = REDUCE_FACTOR_VERYLOW;
+	return (factor);
 }
 
-void			center_scene(t_scene *world)
+void		center_scene(t_scene *world)
 {
 	t_vector3	center;
 
-	get_alt_range(world);
-	if (world->alt_range > 50.0)
-		reduce_alt(world);
 	center.x = (float)(world->width - 1) * 0.5;
-	center.y = world->alt_min > 0.0 ? world->alt_min : -(world->alt_min);
+	if (world->alt_min <= 0.0 && world->alt_max > 0.0)
+		center.y = 0.0;
+	else
+		center.y = world->alt_min + (world->alt_range * 0.5);
 	center.z = (float)(world->height - 1) * 0.5;
 	world->center_matrix = ft_gen_translate_mat4(ft_vec3_opp(center));
 }
@@ -72,12 +76,15 @@ void			get_cam_pos(t_scene *world)
 {
 	float	width;
 	float	height;
+	t_mod	m;
 
+	m = world->mod;
 	width = (float)world->width;
 	height = (float)world->height;
-	world->mod.cam_eye.z = MAX(height, width) * 1.0;
-	world->mod.cam_eye.x = 0.0;
-	world->mod.cam_eye.y = MAX(height, width) * 0.6;
-	world->mod.cam_to = ft_to_vec3(0.0, 0.0, 0.0);
-	world->mod.cam_upv = ft_to_vec3(0.0, 1.0, 0.0);
+	m.cam_eye.z = MAX(height, width) * 1.0;
+	m.cam_eye.x = 0.0;
+	m.cam_eye.y = MAX(height, width) * 0.6;
+	m.cam_to = ft_to_vec3(0.0, 0.0, 0.0);
+	m.cam_upv = ft_to_vec3(0.0, 1.0, 0.0);
+	world->mod = m;
 }

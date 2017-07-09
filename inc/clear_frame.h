@@ -6,13 +6,13 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 20:16:16 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/06 20:17:13 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 08:14:45 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CLEAR_FRAME_H
 # define CLEAR_FRAME_H
 
-void			clear_frame(char *frame, int nb_bytes);
+void			clear_frame(char *frame, uint64_t nb_bytes);
 
 #endif

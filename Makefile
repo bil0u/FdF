@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/07/07 01:06:48 by upopee           ###   ########.fr        #
+#    Updated: 2017/07/07 18:36:19 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,19 +37,19 @@ INCLUDES_DIR = ./inc
 INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_DIR)
 
 # Sources files
-FILES =		fdf \
-			key_hook \
+FILES =		main_fdf \
+			hook_mlx \
+			hook_utils \
 			parse_input \
+			parse_utils \
 			env_utils \
 			draw_utils \
+			color_init \
 			color_utils \
 			help_utils \
 			debug_utils \
-			hook_utils \
-			parse_utils \
-			init_colorsets \
 			world_utils \
-			refresh_window \
+			window_utils \
 			clear_frame \
 			fastline_fdf \
 

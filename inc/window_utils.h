@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   refresh_window.h                                   :+:      :+:    :+:   */
+/*   window_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:38:54 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 03:08:01 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 17:33:17 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REFRESH_WINDOW_H
-# define REFRESH_WINDOW_H
+#ifndef WINDOW_UTILS_H
+# define WINDOW_UTILS_H
 
 int		refresh_window(t_env *env);
 

@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   main_fdf.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/07 04:59:34 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/07 17:26:16 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "parse_input.h"
-#include "key_hook.h"
+#include "hook_mlx.h"
 #include "env_utils.h"
-#include "refresh_window.h"
+#include "window_utils.h"
 
 int		main(int argc, char **argv)
 {

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/07 04:24:25 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/09 23:32:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,18 @@
 
 # define T_SPEED 2.0
 
-# define REDUCE_FACTOR 0.5
+# define ALT_VERYLOW 20.0
+# define ALT_LOW 50.0
+# define ALT_MID 90.0
+# define ALT_HIGH 150.0
+# define ALT_VERYHIGH 250.0
+# define ALT_EXTREME 400.0
+# define REDUCE_FACTOR_VERYLOW 0.90
+# define REDUCE_FACTOR_LOW 0.75
+# define REDUCE_FACTOR_MID 0.5
+# define REDUCE_FACTOR_HIGH 0.25
+# define REDUCE_FACTOR_VERYHIGH 0.1
+# define REDUCE_FACTOR_EXTREME 0.05
 # define ALT_FACTOR 0.05
 
 # define KEY_PRESS 2
@@ -189,5 +200,18 @@ typedef struct	s_imgdata
 	t_dataseg	t2;
 	t_dataseg	t3;
 }				t_imgdata;
+
+typedef struct	s_drawdata
+{
+	t_mlximg 	*frame;
+	int			frm_w;
+	int			frm_h;
+	t_mlxwin	*win;
+	t_scene		*world;
+	t_vertex3f	**wld_map;
+	int			wld_w;
+	int			wld_h;
+	t_matrix4	final;
+}				t_drawdata;
 
 #endif

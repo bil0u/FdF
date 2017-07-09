@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_hook.c                                         :+:      :+:    :+:   */
+/*   hook_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/07 04:24:58 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/09 22:06:31 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 #include "debug_utils.h"
 #include "hook_utils.h"
 #include "keyboard_fr.h"
-#include "refresh_window.h"
+#include "window_utils.h"
 
 static void		press_1(int key, int *keymod)
 {
 	int		k;
 
 	k = *keymod;
+	(key == KEY_ALT_LEFT || key == KEY_ALT_RIGHT) ? k ^= PTS_ONLY : (void)key;
+	key == KEY_C ? k ^= FULL_SET : (void)key;
 	(key == KEY_ESC || key == KEY_Q) ? k |= QUIT : (void)key;
 	key == KEY_DEL ? k |= RESET : (void)key;
 	key == KEY_R ? k |= ROTATE : (void)key;
 	key == KEY_T ? k &= OFF(ROTATE) : (void)key;
 	key == KEY_Z ? k |= ZOOM : (void)key;
 	key == KEY_A ? k &= OFF(ZOOM) : (void)key;
-	(key == KEY_ALT_LEFT || key == KEY_ALT_RIGHT) ? k ^= PTS_ONLY : (void)key;
 	key == KEY_P ? k |= NEXT_PROJ : (void)key;
 	key == KEY_SPACE ? k |= NEXT_COLOR : (void)key;
-	key == KEY_C ? k ^= FULL_SET : (void)key;
-	key == KEY_X ? k |= MARKED_UP : (void)key;
-	key == KEY_V ? k |= MARKED_LOW : (void)key;
+	key == KEY_V ? k |= MARKED_UP : (void)key;
+	key == KEY_X ? k |= MARKED_LOW : (void)key;
 	key == KEY_PLUS ? k |= PLUS : (void)key;
 	key == KEY_MINUS ? k |= MINUS : (void)key;
 	key == KEY_UP ? k |= UP : (void)key;
@@ -42,7 +42,7 @@ static void		press_1(int key, int *keymod)
 	key == KEY_RIGHT ? k |= RIGHT : (void)key;
 	key == KEY_D ? k ^= DEBUG : (void)key;
 	key == KEY_H ? k ^= HELP : (void)key;
-	key == KEY_F ? k |= UNFORCE_COLOR : (void)key;
+	key == KEY_U ? k |= UNFORCE_COLOR : (void)key;
 	*keymod = k;
 }
 
@@ -58,8 +58,8 @@ int		key_release(int key, int *keymod)
 
 	k = *keymod;
 	key == KEY_DEL ? k &= OFF(RESET) : (void)key;
-	key == KEY_X ? k &= OFF(MARKED_UP) : (void)key;
-	key == KEY_V ? k &= OFF(MARKED_LOW) : (void)key;
+	key == KEY_X ? k &= OFF(MARKED_LOW) : (void)key;
+	key == KEY_V ? k &= OFF(MARKED_UP) : (void)key;
 	key == KEY_PLUS ? k &= OFF(PLUS) : (void)key;
 	key == KEY_MINUS ? k &= OFF(MINUS) : (void)key;
 	key == KEY_UP ? k &= OFF(UP) : (void)key;

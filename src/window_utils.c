@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   refresh_window.c                                   :+:      :+:    :+:   */
+/*   window_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/06 21:37:48 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/09 23:32:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,36 +51,54 @@ static t_matrix4	get_mvp_matrix(t_camera *cam, t_scene *wld)
 	return (mvp);
 }
 
-static void		fill_frame(t_env *env, t_mlximg *img)
+static void		fill_frame(t_drawdata tenv)
 {
-	t_matrix4		final;
-	t_scene			*wld;
+	t_threads4		thds;
 
-	wld = env->world;
-	final = get_mvp_matrix(env->cam, wld);
-	if (!PTS_ONLY_SET(wld->mod.keymod))
+	if (!PTS_ONLY_SET((tenv.world->mod.keymod)))
 	{
-		draw_lines(wld, img, final);
-		draw_columns(wld, img, final);
+		pthread_create(&thds.t0, NULL, &draw_lines, &tenv);
+		pthread_create(&thds.t1, NULL, &draw_columns, &tenv);
+		pthread_join(thds.t0, NULL);
+		pthread_join(thds.t1, NULL);
 	}
 	else
-		draw_points(wld, img, final);
+	{
+		pthread_create(&thds.t0, NULL, &draw_points, &tenv);
+		pthread_join(thds.t0, NULL);
+	}
+}
+
+static t_drawdata	init_threadenv(t_env e, t_scene w)
+{
+	t_drawdata		tenv;
+
+	tenv.win = e.m_win;
+	tenv.world = e.world;
+	tenv.wld_map = w.map;
+	tenv.wld_w = w.width;
+	tenv.wld_h = w.height;
+	tenv.final = get_mvp_matrix(e.cam, tenv.world);
+	return (tenv);
 }
 
 int				refresh_window(t_env *env)
 {
-	t_mlxfbuf		*fbuf;
-	t_mlxwin		*win;
-	t_mlximg		*img;
-	int				curr_frame;
+	t_mlxfbuf	*fbuf;
+	t_mlximg	frm;
+	int			i;
+	t_drawdata	tenv;
 
+	tenv = init_threadenv(*env, *(env->world));
 	fbuf = env->m_fbuf;
-	win = env->m_win;
-	curr_frame = fbuf->curr;
-	img = &(fbuf->frame[curr_frame]);
-	fill_frame(env, img);
-	mlx_put_image_to_window(env->m_env->init_id, win->id, img->id, 0, 0);
-	clear_frame(img->data, img->sz_line * img->height);
-	fbuf->curr = (curr_frame + 1) == fbuf->nb_frames ? 0 : (curr_frame + 1);
+	i = fbuf->curr;
+	tenv.frame = &(fbuf->frame[i]);
+	frm = fbuf->frame[i];
+	tenv.frm_w = frm.width;
+	tenv.frm_h = frm.height;
+	fill_frame(tenv);
+	mlx_put_image_to_window(env->m_env->init_id, env->m_win->id, frm.id, 0, 0);
+	clear_frame(frm.data, frm.sz_line * frm.height);
+	fbuf->curr = (i + 1) == FPS_BUFF_SIZE ? 0 : i + 1;
 	return (0);
 }

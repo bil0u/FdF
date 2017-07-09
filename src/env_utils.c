@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/07 04:46:02 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/09 23:33:05 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void			reset_modifiers(t_scene *world)
 	m.zoom = DEFAULT_ZOOM;
 	m.translate = ft_to_vec3(0.0, 0.0, 0.0);
 	m.scale = ft_to_vec3(DEFAULT_SCALE_X, DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);
+	m.scale.y *= alt_reducer(world->alt_range);
 	world->mod = m;
 }
 
@@ -88,6 +89,7 @@ t_env			*init_env(t_scene *world)
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
 	env->world = world;
+	get_alt_range(world);
 	center_scene(world);
 	get_winsize(world, &width, &height);
 	reset_modifiers(world);
