@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/09 23:32:25 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/09 23:45:35 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 # define DEFAULT_ZOOM 1.0
 # define MAX_ZOOM 0.1
 # define MIN_ZOOM 2.3
-# define Z_PSPEED 0.8
-# define Z_MSPEED 1.2
+# define Z_PSPEED 0.9
+# define Z_MSPEED 1.1
 
 # define T_SPEED 2.0
 
@@ -66,6 +66,7 @@
 # define REDUCE_FACTOR_VERYHIGH 0.1
 # define REDUCE_FACTOR_EXTREME 0.05
 # define ALT_FACTOR 0.05
+# define ALT_MOD_SPEED 0.03
 
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
