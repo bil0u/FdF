@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/09 23:45:35 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/10 02:53:01 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef	struct	s_mod
 # define DEBUG (1 << 16)
 # define HELP (1 << 17)
 # define UNFORCE_COLOR (1 << 18)
+# define APPLY_COLORS (1 << 19)
 
 # define QUIT_SET(x) (x & 1)
 # define RESET_SET(x) ((x >> 1) & 1)
@@ -144,6 +145,7 @@ typedef	struct	s_mod
 # define DEBUG_SET(x) ((x >> 16) & 1)
 # define HELP_SET(x) ((x >> 17) & 1)
 # define UNFORCE_COLOR_SET(x) ((x >> 18) & 1)
+# define APPLY_COLORS_SET(x) ((x >> 19) & 1)
 
 # define OFF(x) (~(x))
 

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:34:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/09 23:42:49 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/10 03:32:05 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,26 @@ void			next_proj(t_scene *wld, t_mod *mod)
 	*mod = m;
 }
 
-void			next_color(t_scene *w, t_colors *c, int *keys)
+void			col_tool(char f, t_scene *w, t_colors *c, int *keymod)
 {
 	int		i;
 	int		k;
 
 	i = c->curr_set;
-	k = *keys;
-	if (FULL_SET_SET(k))
+	k = *keymod;
+	if (f == 0)
 	{
-		c->curr_set = (i + 1) % NB_COLORSETS;
-		apply_color_set(w, *c);
+		FULL_SET_SET(k) ? (c->curr_set = (i + 1) % NB_COLORSETS)
+				: (c->curr_color[i] = (c->curr_color[i] + 1) % c->nb_colors[i]);
+		k &= OFF(NEXT_COLOR);
 	}
-	else
+	else if (f == 1)
 	{
-		c->curr_color[i] = (c->curr_color[i] + 1) % c->nb_colors[i];
-		apply_simple_color(w, c->colors[i][c->curr_color[i]]);
+		FULL_SET_SET(k) ? apply_color_set(w, *c)
+				: apply_simple_color(w, c->colors[i][c->curr_color[i]]);
+		k &= OFF(APPLY_COLORS);
 	}
-	k &= OFF(NEXT_COLOR);
-	*keys = k;
+	*keymod = k;
 }
 
 static void		apply_actions(int k, t_mod *mod)
@@ -93,11 +94,10 @@ void			apply_mods(t_env *e, t_scene *w, t_mod *m)
 	QUIT_SET(k) ? end_session(e, NULL, EXIT_SUCCESS) : (void)k;
 	RESET_SET(k) ? reset_modifiers(w) : (void)k;
 	NEXT_PROJ_SET(k) ? next_proj(w, m) : (void)k;
-	NEXT_COLOR_SET(k) && !m->force_c ? next_color(w, c, &m->keymod) : (void)k;
+	UNFORCE_COLOR_SET(k) ? m->force_c = 0 : (void)k;
+	NEXT_COLOR_SET(k) && !m->force_c ? col_tool(0, w, c, &m->keymod) : (void)k;
 	MARKED_UP_SET(k) ? (c->marked_alt[curr_set] += ALT_FACTOR) : (void)k;
 	MARKED_LOW_SET(k) ? (c->marked_alt[curr_set] -= ALT_FACTOR) : (void)k;
-	if ((MARKED_UP_SET(k) || MARKED_LOW_SET(k)) && FULL_SET_SET(k))
-		apply_color_set(w, *c);
-	UNFORCE_COLOR_SET(k) ? m->force_c = 0 : (void)k;
+	APPLY_COLORS_SET(k) ? col_tool(1, w, c, &m->keymod) : (void)k;
 	apply_actions(k, m);
 }

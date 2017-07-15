@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/09 22:06:31 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/10 05:08:44 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,35 @@
 #include "keyboard_fr.h"
 #include "window_utils.h"
 
+static void		press_2(int key, int *keymod)
+{
+	int		k;
+
+	k = *keymod;
+	if (key == KEY_C)
+	{
+		k ^= FULL_SET;
+		k |= APPLY_COLORS;
+	}
+	else if (key == KEY_SPACE)
+	{
+		k |= NEXT_COLOR;
+		k |= APPLY_COLORS;
+	}
+	else if (key == KEY_V || key == KEY_X)
+	{
+		k |= (key == KEY_V ? MARKED_UP : MARKED_LOW);
+		k |= APPLY_COLORS;
+	}
+	*keymod = k;
+}
+
 static void		press_1(int key, int *keymod)
 {
 	int		k;
 
 	k = *keymod;
 	(key == KEY_ALT_LEFT || key == KEY_ALT_RIGHT) ? k ^= PTS_ONLY : (void)key;
-	key == KEY_C ? k ^= FULL_SET : (void)key;
 	(key == KEY_ESC || key == KEY_Q) ? k |= QUIT : (void)key;
 	key == KEY_DEL ? k |= RESET : (void)key;
 	key == KEY_R ? k |= ROTATE : (void)key;
@@ -31,7 +53,6 @@ static void		press_1(int key, int *keymod)
 	key == KEY_Z ? k |= ZOOM : (void)key;
 	key == KEY_A ? k &= OFF(ZOOM) : (void)key;
 	key == KEY_P ? k |= NEXT_PROJ : (void)key;
-	key == KEY_SPACE ? k |= NEXT_COLOR : (void)key;
 	key == KEY_V ? k |= MARKED_UP : (void)key;
 	key == KEY_X ? k |= MARKED_LOW : (void)key;
 	key == KEY_PLUS ? k |= PLUS : (void)key;
@@ -49,6 +70,7 @@ static void		press_1(int key, int *keymod)
 int		key_press(int key, int *keymod)
 {
 	press_1(key, keymod);
+	press_2(key, keymod);
 	return (0);
 }
 
@@ -75,15 +97,15 @@ int		loop_hook(t_env *env)
 	t_mlxwin	*win;
 	t_scene		*wld;
 	void		*eid;
-	t_mod		*mod;
+	int			*kmod;
 
 	eid = env->m_env->init_id;
 	win = env->m_win;
 	wld = env->world;
-	mod = &(wld->mod);
-	apply_mods(env, wld, mod);
+	kmod = &wld->mod.keymod;
+	apply_mods(env, wld, &wld->mod);
 	refresh_window(env);
-	HELP_SET(mod->keymod) ? help_more(eid, win) : help_less(eid, win);
-	DEBUG_SET(mod->keymod) ? fps_count(env, eid, win->id) : (void)env;
+	DEBUG_SET(*kmod) ? print_debug(env, eid, win->id) : (void)env;
+	HELP_SET(*kmod) ? handle_help(eid, win, kmod) : help_less(eid, win);
 	return (0);
 }

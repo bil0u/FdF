@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/07/07 18:36:19 by upopee           ###   ########.fr        #
+#    Updated: 2017/07/10 04:13:50 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ FILES =		main_fdf \
 			color_init \
 			color_utils \
 			help_utils \
+			help_texts \
 			debug_utils \
 			world_utils \
 			window_utils \

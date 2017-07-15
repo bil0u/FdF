@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 01:16:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/09 21:32:28 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/10 02:38:42 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void		set_rainbow(t_colors *sets)
 	sets->colors[i][17] = 0xf80c12;
 	sets->nb_colors[i] = 18;
 	sets->curr_color[i] = 0;
-	sets->marked_alt[i] = 0.0;
+	sets->marked_alt[i] = 3.15;
 	sets->marked_colorup[i] = 9;
 }
 
