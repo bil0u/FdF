@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/10 02:53:01 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/15 23:51:08 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@
 # define R_SPEED 1.5
 
 # define DEFAULT_ZOOM 1.0
-# define MAX_ZOOM 0.1
-# define MIN_ZOOM 2.3
+# define MAX_ZOOM 0.01
+# define MIN_ZOOM 2.9
 # define Z_PSPEED 0.9
 # define Z_MSPEED 1.1
 
