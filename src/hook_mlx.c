@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/10 05:08:44 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 01:14:19 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static void		press_1(int key, int *keymod)
 	key == KEY_D ? k ^= DEBUG : (void)key;
 	key == KEY_H ? k ^= HELP : (void)key;
 	key == KEY_U ? k |= UNFORCE_COLOR : (void)key;
+	key == KEY_SHIFT_LEFT ? k |= SPEED_DOWN : (void)key;
+	key == KEY_SHIFT_RIGHT ? k |= SPEED_UP : (void)key;
 	*keymod = k;
 }
 
@@ -88,6 +90,8 @@ int		key_release(int key, int *keymod)
 	key == KEY_DOWN ? k &= OFF(DOWN) : (void)key;
 	key == KEY_LEFT ? k &= OFF(LEFT) : (void)key;
 	key == KEY_RIGHT ? k &= OFF(RIGHT) : (void)key;
+	key == KEY_SHIFT_LEFT ? k &= OFF(SPEED_DOWN) : (void)key;
+	key == KEY_SHIFT_RIGHT ? k &= OFF(SPEED_UP) : (void)key;
 	*keymod = k;
 	return (0);
 }

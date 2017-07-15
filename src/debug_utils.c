@@ -6,11 +6,12 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 20:50:18 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/10 05:06:57 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 00:07:20 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
 static void		fps_count(t_env *e, void *init_id, void *win_id)
 {
@@ -48,13 +49,13 @@ static void		mod_values(char f, t_env *e, void *init_id, void *win_id)
 													mod.col.curr_set);
 		printf("| Pinned altitude             %8.3f  |\n",
 													mod.col.marked_alt[i]);
-		printf("| Zoom                            %4.2f  |\n", mod.zoom);
+		printf("| Zoom                            %.3f   |\n", mod.zoom);
 		ft_putstr("+---------------------------------------+\n");
 		return ;
 	}
-	format = "Current set: %d |  Pinned alt: %.3f |  Zoom: %.1f";
+	format = "Current set: %d |  Pinned alt: %.3f |  Zoom: %.3f";
 	sprintf(buff, format, mod.col.curr_set, mod.col.marked_alt[i], mod.zoom);
-	mlx_string_put(init_id, win_id, e->m_win->width - 480, 10, STR_COLOR, buff);
+	mlx_string_put(init_id, win_id, e->m_win->width - 500, 10, STR_COLOR, buff);
 }
 
 void			print_debug(t_env *e, void *init_id, void *win_id)

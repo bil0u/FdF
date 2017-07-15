@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/07/10 04:13:50 by upopee           ###   ########.fr        #
+#    Updated: 2017/07/16 01:02:40 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME = fdf
 CC = gcc
 
 # Flags
-CFLAGS = -Wall -Wextra -Wall $(INCLUDES) -g -O0
+CFLAGS = -Wall -Wextra -Wall $(INCLUDES)
 LFLAGS = -framework OpenGL -framework AppKit -lmlx -L $(MLX_DIR) -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR) -lpthread
 # Library paths
 MLX_DIR = ./minilibx

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/10 02:53:01 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 02:32:55 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,16 @@
 # define DEFAULT_ROT_X 0.0
 # define DEFAULT_ROT_Y -15.0
 # define DEFAULT_ROT_Z 0.0
-# define R_SPEED 1.5
+# define R_SPEED 1.1
 
 # define DEFAULT_ZOOM 1.0
-# define MAX_ZOOM 0.1
-# define MIN_ZOOM 2.3
-# define Z_PSPEED 0.9
-# define Z_MSPEED 1.1
+# define MAX_ZOOM 0.001
+# define MIN_ZOOM 2.6
+# define Z_SPEED 0.0075
+# define Z_FAST 0.015
+# define Z_SLOW 0.002
 
-# define T_SPEED 2.0
+# define T_SPEED 2.5
 
 # define ALT_VERYLOW 20.0
 # define ALT_LOW 50.0
@@ -66,7 +67,12 @@
 # define REDUCE_FACTOR_VERYHIGH 0.1
 # define REDUCE_FACTOR_EXTREME 0.05
 # define ALT_FACTOR 0.05
-# define ALT_MOD_SPEED 0.03
+# define ALT_MOD_SPEED 0.01
+
+# define SPEED_UP_FACTOR 1.5
+# define ZOOM_UP_FACTOR 0.9
+# define SPEED_DOWN_FACTOR 0.25
+# define ZOOM_DOWN_FACTOR 1.1
 
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
@@ -94,7 +100,7 @@ typedef	struct	s_mod
 	t_vector3	cam_eye;
 	t_vector3	cam_to;
 	t_vector3	cam_upv;
-	t_vector3	translate;
+	t_vector3	trans;
 	t_vector3	scale;
 	float		rot_x;
 	float		rot_y;
@@ -125,6 +131,8 @@ typedef	struct	s_mod
 # define HELP (1 << 17)
 # define UNFORCE_COLOR (1 << 18)
 # define APPLY_COLORS (1 << 19)
+# define SPEED_UP (1 << 20)
+# define SPEED_DOWN (1 << 21)
 
 # define QUIT_SET(x) (x & 1)
 # define RESET_SET(x) ((x >> 1) & 1)
@@ -146,6 +154,8 @@ typedef	struct	s_mod
 # define HELP_SET(x) ((x >> 17) & 1)
 # define UNFORCE_COLOR_SET(x) ((x >> 18) & 1)
 # define APPLY_COLORS_SET(x) ((x >> 19) & 1)
+# define SPEED_UP_SET(x) ((x >> 20) & 1)
+# define SPEED_DOWN_SET(x) ((x >> 21) & 1)
 
 # define OFF(x) (~(x))
 

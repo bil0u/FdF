@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:34:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/10 03:32:05 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 02:34:06 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@
 void			zoom(t_mod *mod, float zoom_value)
 {
 	t_mod	m;
-
 	m = *mod;
-	if ((m.zoom * zoom_value) <= MIN_ZOOM
-		&& (m.zoom * zoom_value) >= MAX_ZOOM)
-		m.zoom *= zoom_value;
+	if ((m.zoom + zoom_value) <= MIN_ZOOM
+		&& (m.zoom + zoom_value) >= MAX_ZOOM)
+		m.zoom += zoom_value;
 	*mod = m;
 }
 
@@ -65,20 +64,28 @@ void			col_tool(char f, t_scene *w, t_colors *c, int *keymod)
 static void		apply_actions(int k, t_mod *mod)
 {
 	t_mod	m;
+	float	n;
+	float	z;
 
 	m = *mod;
+	n = 1.0;
+	SPEED_UP_SET(k) ? (n *= SPEED_UP_FACTOR) : (void)k;
+	SPEED_DOWN_SET(k) ? (n *= SPEED_DOWN_FACTOR) : (void)k;
+	z = Z_SPEED;
+	SPEED_UP_SET(k) ? (z = Z_FAST) : (void)k;
+	SPEED_DOWN_SET(k) ? (z = Z_SLOW) : (void)k;
 	if (PLUS_SET(k))
-		ZOOM_SET(k) ? zoom(&m, Z_PSPEED) : (m.scale.y += ALT_MOD_SPEED);
+		ZOOM_SET(k) ? zoom(&m, -(z)) : (m.scale.y += ALT_MOD_SPEED * n);
 	if (MINUS_SET(k))
-		ZOOM_SET(k) ? zoom(&m, Z_MSPEED) : (m.scale.y -= ALT_MOD_SPEED);
+		ZOOM_SET(k) ? zoom(&m, z) : (m.scale.y -= ALT_MOD_SPEED * n);
 	if (UP_SET(k))
-		ROTATE_SET(k) ? (m.rot_x += R_SPEED) : (m.translate.z += T_SPEED);
+		ROTATE_SET(k) ? (m.rot_x += R_SPEED * n) : (m.trans.z += T_SPEED * n);
 	if (DOWN_SET(k))
-		ROTATE_SET(k) ? (m.rot_x -= R_SPEED) : (m.translate.z -= T_SPEED);
+		ROTATE_SET(k) ? (m.rot_x -= R_SPEED * n) : (m.trans.z -= T_SPEED * n);
 	if (LEFT_SET(k))
-		ROTATE_SET(k) ? (m.rot_y += R_SPEED) : (m.translate.x += T_SPEED);
+		ROTATE_SET(k) ? (m.rot_y += R_SPEED * n) : (m.trans.x += T_SPEED * n);
 	if (RIGHT_SET(k))
-		ROTATE_SET(k) ? (m.rot_y -= R_SPEED) : (m.translate.x -= T_SPEED);
+		ROTATE_SET(k) ? (m.rot_y -= R_SPEED * n) : (m.trans.x -= T_SPEED * n);
 	*mod = m;
 }
 

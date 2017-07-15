@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/07 17:26:16 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 01:03:05 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "hook_mlx.h"
 #include "env_utils.h"
 #include "window_utils.h"
+#include <math.h>
 
 int		main(int argc, char **argv)
 {

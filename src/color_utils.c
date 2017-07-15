@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 08:54:11 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/10 04:00:51 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 00:38:57 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void			apply_simple_color(t_scene *world, int color)
 static int		color_from_set(t_colors set, int alt, float amin, float amax)
 {
 	int			color_index;
+	float		percent;
 	t_frange	in;
 	t_frange	out;
 

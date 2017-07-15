@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/09 23:32:14 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 01:39:17 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_matrix4	get_model_matrix(t_mod mod, t_matrix4 center_matrix)
 
 	scale = ft_gen_scale_mat4(mod.scale);
 	rotate = ft_gen_euler_rotation_mat4(mod.rot_x, mod.rot_y, mod.rot_z);
-	translate = ft_gen_translate_mat4(mod.translate);
+	translate = ft_gen_translate_mat4(mod.trans);
 	model = ft_mat4_mul_mat4(scale, center_matrix);
 	model = ft_mat4_mul_mat4(rotate, model);
 	model = ft_mat4_mul_mat4(translate, model);

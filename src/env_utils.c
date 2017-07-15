@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/09 23:38:16 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 01:39:04 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void			reset_modifiers(t_scene *world)
 	m.rot_y = DEFAULT_ROT_Y;
 	m.rot_z = DEFAULT_ROT_Z;
 	m.zoom = DEFAULT_ZOOM;
-	m.translate = ft_to_vec3(0.0, 0.0, 0.0);
+	m.trans = ft_to_vec3(0.0, 0.0, 0.0);
 	m.scale = ft_to_vec3(DEFAULT_SCALE_X, DEFAULT_SCALE_Y, DEFAULT_SCALE_Z);
 	m.scale.y *= alt_reducer(world->alt_range);
 	world->mod = m;
