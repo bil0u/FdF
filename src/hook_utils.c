@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:34:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 02:34:06 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/16 03:20:47 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,12 @@ void			col_tool(char f, t_scene *w, t_colors *c, int *keymod)
 	*keymod = k;
 }
 
-static void		apply_actions(int k, t_mod *mod)
+static void		apply_actions(int k, t_mod *mod, float n)
 {
 	t_mod	m;
-	float	n;
 	float	z;
 
 	m = *mod;
-	n = 1.0;
-	SPEED_UP_SET(k) ? (n *= SPEED_UP_FACTOR) : (void)k;
-	SPEED_DOWN_SET(k) ? (n *= SPEED_DOWN_FACTOR) : (void)k;
 	z = Z_SPEED;
 	SPEED_UP_SET(k) ? (z = Z_FAST) : (void)k;
 	SPEED_DOWN_SET(k) ? (z = Z_SLOW) : (void)k;
@@ -94,17 +90,21 @@ void			apply_mods(t_env *e, t_scene *w, t_mod *m)
 	int			k;
 	int			curr_set;
 	t_colors	*c;
+	float		n;
 
 	c = &m->col;
 	curr_set = c->curr_set;
 	k = m->keymod;
+	n = 1.0;
+	SPEED_UP_SET(k) ? (n *= SPEED_UP_FACTOR) : (void)k;
+	SPEED_DOWN_SET(k) ? (n *= SPEED_DOWN_FACTOR) : (void)k;
 	QUIT_SET(k) ? end_session(e, NULL, EXIT_SUCCESS) : (void)k;
 	RESET_SET(k) ? reset_modifiers(w) : (void)k;
 	NEXT_PROJ_SET(k) ? next_proj(w, m) : (void)k;
 	UNFORCE_COLOR_SET(k) ? m->force_c = 0 : (void)k;
 	NEXT_COLOR_SET(k) && !m->force_c ? col_tool(0, w, c, &m->keymod) : (void)k;
-	MARKED_UP_SET(k) ? (c->marked_alt[curr_set] += ALT_FACTOR) : (void)k;
-	MARKED_LOW_SET(k) ? (c->marked_alt[curr_set] -= ALT_FACTOR) : (void)k;
-	APPLY_COLORS_SET(k) ? col_tool(1, w, c, &m->keymod) : (void)k;
-	apply_actions(k, m);
+	MARKED_UP_SET(k) ? (c->marked_alt[curr_set] += ALT_FACTOR * n) : (void)k;
+	MARKED_LOW_SET(k) ? (c->marked_alt[curr_set] -= ALT_FACTOR * n) : (void)k;
+	APPLY_COLORS_SET(k) && !m->force_c ? col_tool(1, w, c, &m->keymod) : (void)k;
+	apply_actions(k, m, n);
 }
