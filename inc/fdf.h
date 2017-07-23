@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 02:40:54 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/19 15:40:15 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,18 +121,19 @@ typedef	struct	s_mod
 # define MARKED_UP (1 << 7)
 # define MARKED_LOW (1 << 8)
 # define FULL_SET (1 << 9)
-# define PLUS (1 << 10)
-# define MINUS (1 << 11)
-# define UP (1 << 12)
-# define DOWN (1 << 13)
-# define LEFT (1 << 14)
-# define RIGHT (1 << 15)
-# define DEBUG (1 << 16)
-# define HELP (1 << 17)
-# define UNFORCE_COLOR (1 << 18)
-# define APPLY_COLORS (1 << 19)
-# define SPEED_UP (1 << 20)
-# define SPEED_DOWN (1 << 21)
+# define MARKED_SET (1 << 10)
+# define PLUS (1 << 11)
+# define MINUS (1 << 12)
+# define UP (1 << 13)
+# define DOWN (1 << 14)
+# define LEFT (1 << 15)
+# define RIGHT (1 << 16)
+# define DEBUG (1 << 17)
+# define HELP (1 << 18)
+# define UNFORCE_COLOR (1 << 19)
+# define APPLY_COLORS (1 << 20)
+# define SPEED_UP (1 << 21)
+# define SPEED_DOWN (1 << 22)
 
 # define QUIT_SET(x) (x & 1)
 # define RESET_SET(x) ((x >> 1) & 1)
@@ -144,18 +145,19 @@ typedef	struct	s_mod
 # define MARKED_UP_SET(x) ((x >> 7) & 1)
 # define MARKED_LOW_SET(x) ((x >> 8) & 1)
 # define FULL_SET_SET(x) ((x >> 9) & 1)
-# define PLUS_SET(x) ((x >> 10) & 1)
-# define MINUS_SET(x) ((x >> 11) & 1)
-# define UP_SET(x) ((x >> 12) & 1)
-# define DOWN_SET(x) ((x >> 13) & 1)
-# define LEFT_SET(x) ((x >> 14) & 1)
-# define RIGHT_SET(x) ((x >> 15) & 1)
-# define DEBUG_SET(x) ((x >> 16) & 1)
-# define HELP_SET(x) ((x >> 17) & 1)
-# define UNFORCE_COLOR_SET(x) ((x >> 18) & 1)
-# define APPLY_COLORS_SET(x) ((x >> 19) & 1)
-# define SPEED_UP_SET(x) ((x >> 20) & 1)
-# define SPEED_DOWN_SET(x) ((x >> 21) & 1)
+# define MARKED_SET_SET(x) ((x >> 10) & 1)
+# define PLUS_SET(x) ((x >> 11) & 1)
+# define MINUS_SET(x) ((x >> 12) & 1)
+# define UP_SET(x) ((x >> 13) & 1)
+# define DOWN_SET(x) ((x >> 14) & 1)
+# define LEFT_SET(x) ((x >> 15) & 1)
+# define RIGHT_SET(x) ((x >> 16) & 1)
+# define DEBUG_SET(x) ((x >> 17) & 1)
+# define HELP_SET(x) ((x >> 18) & 1)
+# define UNFORCE_COLOR_SET(x) ((x >> 19) & 1)
+# define APPLY_COLORS_SET(x) ((x >> 20) & 1)
+# define SPEED_UP_SET(x) ((x >> 21) & 1)
+# define SPEED_DOWN_SET(x) ((x >> 22) & 1)
 
 # define OFF(x) (~(x))
 

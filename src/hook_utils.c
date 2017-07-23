@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:34:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 03:20:47 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/19 15:43:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ void			col_tool(char f, t_scene *w, t_colors *c, int *keymod)
 	}
 	else if (f == 1)
 	{
-		FULL_SET_SET(k) ? apply_color_set(w, *c)
-				: apply_simple_color(w, c->colors[i][c->curr_color[i]]);
+		if (FULL_SET_SET(k))
+		 	MARKED_SET_SET(k) ? apply_markedset(w, *c) : apply_colorset(w, *c);
+		else
+			apply_color(w, c->colors[i][c->curr_color[i]]);
 		k &= OFF(APPLY_COLORS);
 	}
 	*keymod = k;

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 20:50:18 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 00:07:20 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/19 16:15:34 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,32 @@ static void		fps_count(t_env *e, void *init_id, void *win_id)
 	mlx_string_put(init_id, win_id, 10, 10, STR_COLOR, buff);
 }
 
-static void		mod_values(char f, t_env *e, void *init_id, void *win_id)
+static void		terminal_debug(t_env *e)
+{
+	char		*format;
+	t_mod		mod;
+	int			i;
+
+	mod = e->world->mod;
+	i = mod.col.curr_set;
+	if (FULL_SET_SET(mod.keymod))
+	{
+		if (MARKED_SET_SET(mod.keymod))
+			format = "| Pinned altitude             %8.3f  |\n";
+		else
+			format = "| Full colorset mode                    |\n";
+	}
+	else
+		format = "| Single color mode                     |\n";
+	ft_putstr("+---------------------------------------+\n");
+	ft_putstr("| >> DEBUG VALUES                       |\n");
+	printf("| Current color set                 %2d  |\n", mod.col.curr_set);
+	printf(format, mod.col.marked_alt[i]);
+	printf("| Zoom                            %.3f   |\n", mod.zoom);
+	ft_putstr("+---------------------------------------+\n");
+}
+
+static void		window_debug(t_env *e, void *init_id, void *win_id)
 {
 	char		*format;
 	char		buff[64];
@@ -41,19 +66,15 @@ static void		mod_values(char f, t_env *e, void *init_id, void *win_id)
 
 	mod = e->world->mod;
 	i = mod.col.curr_set;
-	if (f == 1)
+	if (FULL_SET_SET(mod.keymod))
 	{
-		ft_putstr("+---------------------------------------+\n");
-		ft_putstr("| >> DEBUG VALUES                       |\n");
-		printf("| Current color set                 %2d  |\n",
-													mod.col.curr_set);
-		printf("| Pinned altitude             %8.3f  |\n",
-													mod.col.marked_alt[i]);
-		printf("| Zoom                            %.3f   |\n", mod.zoom);
-		ft_putstr("+---------------------------------------+\n");
-		return ;
+		if (MARKED_SET_SET(mod.keymod))
+			format = "Current set: %1$d |  Pinned alt: %2$.3f |  Zoom: %3$.3f";
+		else
+			format = "Current set: %1$d |    Full colorset   |  Zoom: %3$.3f";
 	}
-	format = "Current set: %d |  Pinned alt: %.3f |  Zoom: %.3f";
+	else
+		format = "Current set: %1$d |   Single color    |  Zoom: %3$.3f";
 	sprintf(buff, format, mod.col.curr_set, mod.col.marked_alt[i], mod.zoom);
 	mlx_string_put(init_id, win_id, e->m_win->width - 500, 10, STR_COLOR, buff);
 }
@@ -61,8 +82,8 @@ static void		mod_values(char f, t_env *e, void *init_id, void *win_id)
 void			print_debug(t_env *e, void *init_id, void *win_id)
 {
 	if (e->m_win->width > 550)
-		mod_values(0, e, init_id, win_id);
+		window_debug(e, init_id, win_id);
 	else
-		mod_values(1, e, init_id, win_id);
+		terminal_debug(e);
 	fps_count(e, init_id, win_id);
 }

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 01:14:19 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/19 15:48:07 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ static void		press_2(int key, int *keymod)
 		k |= (key == KEY_V ? MARKED_UP : MARKED_LOW);
 		k |= APPLY_COLORS;
 	}
+	else if (key == KEY_ALT_LEFT)
+	{
+		k ^= MARKED_SET;
+		k |= APPLY_COLORS;
+	}
 	*keymod = k;
 }
 
@@ -45,9 +50,9 @@ static void		press_1(int key, int *keymod)
 	int		k;
 
 	k = *keymod;
-	(key == KEY_ALT_LEFT || key == KEY_ALT_RIGHT) ? k ^= PTS_ONLY : (void)key;
 	(key == KEY_ESC || key == KEY_Q) ? k |= QUIT : (void)key;
 	key == KEY_DEL ? k |= RESET : (void)key;
+	key == KEY_ALT_RIGHT ? k ^= PTS_ONLY : (void)key;
 	key == KEY_R ? k |= ROTATE : (void)key;
 	key == KEY_T ? k &= OFF(ROTATE) : (void)key;
 	key == KEY_Z ? k |= ZOOM : (void)key;
