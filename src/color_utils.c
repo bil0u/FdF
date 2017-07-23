@@ -6,38 +6,24 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 08:54:11 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 03:08:05 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/19 15:35:12 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "fdf.h"
 
-void			apply_simple_color(t_scene *world, int color)
-{
-	int		i;
-	int		j;
+//static int		color_shade(t_colorset s, float c, int nb_colors)
+//{
+//	int		c1;
+//	int		c2;
 
-	j = world->width;
-	while (j--)
-	{
-		i = world->height;
-		while (i--)
-			world->map[i][j].color = color;
-	}
-}
+//	c1 = s[(int)c];
+//	c2 = (((int)c >= (nb_colors - 1)) ? s[(int)c] : s[(int)c + 1]);
+//	return (ft_icolor_lerp(c1, c2, (c - floorf(c))));
+//}
 
-static int		color_shade(t_colorset s, float c, int nb_colors)
-{
-	int		c1;
-	int		c2;
-
-	c1 = s[(int)c];
-	c2 = (((int)c >= (nb_colors - 1)) ? s[(int)c] : s[(int)c + 1]);
-	return (ft_icolor_lerp(c1, c2, (c - floorf(c))));
-}
-
-static int		color_from_set(t_colors set, int alt, float amin, float amax)
+static int		color_from_mset(t_colors set, int alt, float amin, float amax)
 {
 	float		c;
 	int			i;
@@ -61,10 +47,30 @@ static int		color_from_set(t_colors set, int alt, float amin, float amax)
 		out.max = out.max <= 0.0 ? 0.0 : out.max;
 	}
 	c = ft_to_frange(in, out, (float)alt);
-	return (color_shade(set.colors[i], c, set.nb_colors[i]));
+	alt = (int)c == set.nb_colors[i] - 1 ? (int)c : (int)c + 1;
+	return (ft_icolor_lerp(set.colors[i][(int)c], set.colors[i][alt],
+																c - floorf(c)));
 }
 
-void			apply_color_set(t_scene *world, t_colors set)
+static int		color_from_fset(t_colors set, int alt, float amin, float amax)
+{
+	float		c;
+	int			i;
+	t_frange	in;
+	t_frange	out;
+
+	i = set.curr_set;
+	in.min = amin;
+	in.max = amax;
+	out.min = 0.0;
+	out.max = set.nb_colors[i] - 1;
+	c = ft_to_frange(in, out, (float)alt);
+	alt = (int)c == set.nb_colors[i] - 1 ? (int)c : (int)c + 1;
+	return (ft_icolor_lerp(set.colors[i][(int)c], set.colors[i][alt],
+																c - floorf(c)));
+}
+
+void			apply_markedset(t_scene *world, t_colors set)
 {
 	int			i;
 	int			j;
@@ -74,7 +80,36 @@ void			apply_color_set(t_scene *world, t_colors set)
 	{
 		i = world->height;
 		while (i--)
-			world->map[i][j].color = color_from_set(set, world->map[i][j].y,
+			world->map[i][j].color = color_from_mset(set, world->map[i][j].y,
 												world->alt_min, world->alt_max);
+	}
+}
+
+void			apply_colorset(t_scene *world, t_colors set)
+{
+	int			i;
+	int			j;
+
+	j = world->width;
+	while (j--)
+	{
+		i = world->height;
+		while (i--)
+			world->map[i][j].color = color_from_fset(set, world->map[i][j].y,
+												world->alt_min, world->alt_max);
+	}
+}
+
+void			apply_color(t_scene *world, int color)
+{
+	int		i;
+	int		j;
+
+	j = world->width;
+	while (j--)
+	{
+		i = world->height;
+		while (i--)
+			world->map[i][j].color = color;
 	}
 }

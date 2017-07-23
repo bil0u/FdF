@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 01:16:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/10 02:38:42 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/19 15:09:06 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static void		set_worldmap(t_colors *sets)
 	sets->colors[i][2] = RGB_ROYAL_BLUE;
 	sets->colors[i][3] = RGB_ROYAL_BLUE;
 	sets->colors[i][4] = RGB_LIGHT_SEA_GREEN;
-	sets->colors[i][5] = RGB_YELLOW_GREEN;
-	sets->colors[i][6] = RGB_SPRINGGREEN4;
-	sets->colors[i][7] = RGB_SPRINGGREEN4;
+	sets->colors[i][5] = RGB_SPRINGGREEN4;
+	sets->colors[i][6] = RGB_YELLOW_GREEN;
+	sets->colors[i][7] = RGB_YELLOW_GREEN;
 	sets->colors[i][8] = RGB_BROWN_EARTH;
 	sets->colors[i][9] = RGB_BROWN_EARTH;
 	sets->colors[i][10] = RGB_WHITE;
@@ -100,7 +100,7 @@ static void		set_rainbow(t_colors *sets)
 	sets->marked_colorup[i] = 9;
 }
 
-void			init_colorsets(t_colors *sets)
+void			init_colors(t_colors *sets)
 {
 	set_default(sets);
 	set_worldmap(sets);
