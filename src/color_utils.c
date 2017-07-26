@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 08:54:11 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/26 20:01:15 by lduval           ###   ########.fr       */
+/*   Updated: 2017/07/26 22:50:05 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static int		color_from_fset(t_colors set, int alt, float amin, float amax)
 	t_frange	out;
 
 	i = set.curr_set;
+	if (amin == amax)
+		return (set.colors[i][0]);
 	in.min = amin;
 	in.max = amax;
 	out.min = 0.0;
