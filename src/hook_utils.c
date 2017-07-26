@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:34:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/19 15:43:25 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 19:59:57 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 void			zoom(t_mod *mod, float zoom_value)
 {
 	t_mod	m;
+
 	m = *mod;
 	if ((m.zoom + zoom_value) <= MIN_ZOOM
 		&& (m.zoom + zoom_value) >= MAX_ZOOM)
@@ -55,7 +56,7 @@ void			col_tool(char f, t_scene *w, t_colors *c, int *keymod)
 	else if (f == 1)
 	{
 		if (FULL_SET_SET(k))
-		 	MARKED_SET_SET(k) ? apply_markedset(w, *c) : apply_colorset(w, *c);
+			MARKED_SET_SET(k) ? apply_markedset(w, *c) : apply_colorset(w, *c);
 		else
 			apply_color(w, c->colors[i][c->curr_color[i]]);
 		k &= OFF(APPLY_COLORS);
@@ -107,6 +108,7 @@ void			apply_mods(t_env *e, t_scene *w, t_mod *m)
 	NEXT_COLOR_SET(k) && !m->force_c ? col_tool(0, w, c, &m->keymod) : (void)k;
 	MARKED_UP_SET(k) ? (c->marked_alt[curr_set] += ALT_FACTOR * n) : (void)k;
 	MARKED_LOW_SET(k) ? (c->marked_alt[curr_set] -= ALT_FACTOR * n) : (void)k;
-	APPLY_COLORS_SET(k) && !m->force_c ? col_tool(1, w, c, &m->keymod) : (void)k;
+	APPLY_COLORS_SET(k) && !m->force_c ? col_tool(1, w, c, &m->keymod) :
+	(void)k;
 	apply_actions(k, m, n);
 }

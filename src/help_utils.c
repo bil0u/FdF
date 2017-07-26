@@ -6,14 +6,14 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:15:59 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/10 04:55:07 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 19:54:11 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "help_texts.h"
 
-static void			help_more(void *init_id, t_mlxwin *win)
+static void		help_more(void *init_id, t_mlxwin *win)
 {
 	void	*win_id;
 	int		width;

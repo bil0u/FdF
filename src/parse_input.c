@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/07 04:58:06 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 19:57:26 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		end_error(t_list **lst, t_scene **world, int i, char *msg)
 	exit(EXIT_FAILURE);
 }
 
-t_scene				*input_to_scene(char *file)
+t_scene		*input_to_scene(char *file)
 {
 	t_list			*l;
 	t_list			*c;

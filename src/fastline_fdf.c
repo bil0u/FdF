@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 16:57:17 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 03:06:06 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 19:56:04 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void		case_two(t_mlximg *img, t_line line, int i, float step)
 
 void			fastline_fdf(t_mlximg *img, t_line line)
 {
-   	int		y_longer;
+	int		y_longer;
 	int		short_len;
 	int		swap;
 	float	step;

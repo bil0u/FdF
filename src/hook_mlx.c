@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/19 15:48:07 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 19:58:30 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ static void		press_1(int key, int *keymod)
 	*keymod = k;
 }
 
-int		key_press(int key, int *keymod)
+int				key_press(int key, int *keymod)
 {
 	press_1(key, keymod);
 	press_2(key, keymod);
 	return (0);
 }
 
-int		key_release(int key, int *keymod)
+int				key_release(int key, int *keymod)
 {
 	int		k;
 
@@ -101,7 +101,7 @@ int		key_release(int key, int *keymod)
 	return (0);
 }
 
-int		loop_hook(t_env *env)
+int				loop_hook(t_env *env)
 {
 	t_mlxwin	*win;
 	t_scene		*wld;

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 19:27:26 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/07 19:21:54 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 19:53:24 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			clear_frame(char *frame, int nb_bytes)
 	data.t1.start = data.t0.stop;
 	data.t1.stop = data.t1.start + quarter;
 	data.t2.start = data.t1.stop;
-	data.t2.stop =  data.t2.start + quarter;
+	data.t2.stop = data.t2.start + quarter;
 	data.t3.start = data.t2.stop;
 	data.t3.stop = data.t3.start + quarter + left;
 	launch_threads(data);

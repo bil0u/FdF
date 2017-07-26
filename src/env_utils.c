@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/19 15:42:08 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 19:56:32 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void			end_session(t_env *env, char *msg, int status)
 	}
 	if (msg)
 		ft_putendl_fd(msg, 2);
-	exit (status);
+	exit(status);
 }
 
 static void		get_winsize(t_scene *world, int *width, int *height)

@@ -6,22 +6,12 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/05 08:54:11 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/19 15:35:12 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 20:01:15 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "fdf.h"
-
-//static int		color_shade(t_colorset s, float c, int nb_colors)
-//{
-//	int		c1;
-//	int		c2;
-
-//	c1 = s[(int)c];
-//	c2 = (((int)c >= (nb_colors - 1)) ? s[(int)c] : s[(int)c + 1]);
-//	return (ft_icolor_lerp(c1, c2, (c - floorf(c))));
-//}
 
 static int		color_from_mset(t_colors set, int alt, float amin, float amax)
 {

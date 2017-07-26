@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 22:08:57 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 01:39:17 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 20:00:40 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_matrix4	get_mvp_matrix(t_camera *cam, t_scene *wld)
 	return (mvp);
 }
 
-static void		fill_frame(t_drawdata tenv)
+static void			fill_frame(t_drawdata tenv)
 {
 	t_threads4		thds;
 
@@ -82,7 +82,7 @@ static t_drawdata	init_threadenv(t_env e, t_scene w)
 	return (tenv);
 }
 
-int				refresh_window(t_env *env)
+int					refresh_window(t_env *env)
 {
 	t_mlxfbuf	*fbuf;
 	t_mlximg	frm;

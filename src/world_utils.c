@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 06:19:25 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/09 23:34:12 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 19:58:54 by lduval           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void		center_scene(t_scene *world)
 	world->center_matrix = ft_gen_translate_mat4(ft_vec3_opp(center));
 }
 
-void			get_cam_pos(t_scene *world)
+void		get_cam_pos(t_scene *world)
 {
 	float	width;
 	float	height;
