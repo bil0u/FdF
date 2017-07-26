@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/17 20:31:41 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/26 19:58:30 by lduval           ###   ########.fr       */
+/*   Updated: 2017/07/26 20:39:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "help_utils.h"
 #include "debug_utils.h"
 #include "hook_utils.h"
-#include "keyboard_fr.h"
+#include "keyboard_us.h"
 #include "window_utils.h"
 
 static void		press_2(int key, int *keymod)
@@ -60,8 +60,8 @@ static void		press_1(int key, int *keymod)
 	key == KEY_P ? k |= NEXT_PROJ : (void)key;
 	key == KEY_V ? k |= MARKED_UP : (void)key;
 	key == KEY_X ? k |= MARKED_LOW : (void)key;
-	key == KEY_PLUS ? k |= PLUS : (void)key;
-	key == KEY_MINUS ? k |= MINUS : (void)key;
+	key == KEY_PLUS || key == KEY_PAD_PLUS ? k |= PLUS : (void)key;
+	key == KEY_MINUS || key == KEY_PAD_MINUS ? k |= MINUS : (void)key;
 	key == KEY_UP ? k |= UP : (void)key;
 	key == KEY_DOWN ? k |= DOWN : (void)key;
 	key == KEY_LEFT ? k |= LEFT : (void)key;
@@ -89,8 +89,8 @@ int				key_release(int key, int *keymod)
 	key == KEY_DEL ? k &= OFF(RESET) : (void)key;
 	key == KEY_X ? k &= OFF(MARKED_LOW) : (void)key;
 	key == KEY_V ? k &= OFF(MARKED_UP) : (void)key;
-	key == KEY_PLUS ? k &= OFF(PLUS) : (void)key;
-	key == KEY_MINUS ? k &= OFF(MINUS) : (void)key;
+	key == KEY_PLUS || key == KEY_PAD_PLUS ? k &= OFF(PLUS) : (void)key;
+	key == KEY_MINUS || key == KEY_PAD_MINUS ? k &= OFF(MINUS) : (void)key;
 	key == KEY_UP ? k &= OFF(UP) : (void)key;
 	key == KEY_DOWN ? k &= OFF(DOWN) : (void)key;
 	key == KEY_LEFT ? k &= OFF(LEFT) : (void)key;
