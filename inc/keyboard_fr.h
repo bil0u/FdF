@@ -6,12 +6,12 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:38:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/05 17:38:38 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 20:20:54 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEYBOARD_FR
-# define KEYBOARD_FR
+#ifndef KEYBOARD_FR_H
+# define KEYBOARD_FR_H
 
 # define KEY_0 29
 # define KEY_1 18

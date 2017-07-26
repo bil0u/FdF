@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:08 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/19 15:40:15 by upopee           ###   ########.fr       */
+/*   Updated: 2017/07/26 20:22:07 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ typedef struct	s_colors
 	float		marked_alt[NB_COLORSETS];
 	int			marked_colorup[NB_COLORSETS];
 }				t_colors;
-
 
 typedef	struct	s_mod
 {
@@ -218,7 +217,7 @@ typedef struct	s_imgdata
 
 typedef struct	s_drawdata
 {
-	t_mlximg 	*frame;
+	t_mlximg	*frame;
 	int			frm_w;
 	int			frm_h;
 	t_mlxwin	*win;
