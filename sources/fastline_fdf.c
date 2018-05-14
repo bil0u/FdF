@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 16:57:17 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/26 19:56:04 by lduval           ###   ########.fr       */
+/*   Updated: 2018/05/14 02:14:05 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ void			fastline_fdf(t_mlximg *img, t_line line)
 	y_longer = 0;
 	short_len = line.b.y - line.a.y;
 	line.long_len = line.b.x - line.a.x;
-	if (ABS(short_len) > ABS(line.long_len))
+	if (ft_abs(short_len) > ft_abs(line.long_len))
 	{
 		swap = short_len;
 		short_len = line.long_len;
 		line.long_len = swap;
 		y_longer = 1;
 	}
-	step = 1.0 / ABS(line.long_len);
+	step = 1.0 / ft_abs(line.long_len);
 	line.increment = line.long_len == 0 ? 0 : (short_len << 16) / line.long_len;
 	if (y_longer)
 		case_one(img, line, 0, step);
