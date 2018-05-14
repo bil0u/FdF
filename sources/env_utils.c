@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/26 19:56:32 by lduval           ###   ########.fr       */
+/*   Updated: 2018/05/14 02:07:59 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_env			*init_env(t_scene *world)
 	int			height;
 
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
-		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
+		end_session(env, "malloc: cannot allocate memory", FAILURE);
 	env->world = world;
 	get_alt_range(world);
 	center_scene(world);
@@ -96,14 +96,14 @@ t_env			*init_env(t_scene *world)
 	reset_modifiers(world);
 	if (!(env->cam = ft_init_cam_new(DFLT_VANGLE, (float)width / (float)height,
 										DFLT_NEAR, DFLT_FAR)))
-		end_session(env, "malloc: cannot allocate memory", EXIT_FAILURE);
+		end_session(env, "malloc: cannot allocate memory", FAILURE);
 	if (!(env->m_env = init_mlxenv()))
-		end_session(env, "mlx: cannot connect with server", EXIT_FAILURE);
+		end_session(env, "mlx: cannot connect with server", FAILURE);
 	if (!(env->m_fbuf = init_mlxfbuf(env->m_env->init_id, FPS_BUFF_SIZE,
 									width, height)))
-		end_session(env, "mlx: cannot create image", EXIT_FAILURE);
+		end_session(env, "mlx: cannot create image", FAILURE);
 	if (!(env->m_win = init_mlxwin(env->m_env->init_id,
 									width, height, "> FDF <")))
-		end_session(env, "mlx: cannot create window", EXIT_FAILURE);
+		end_session(env, "mlx: cannot create window", FAILURE);
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/05 17:34:14 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/26 19:59:57 by lduval           ###   ########.fr       */
+/*   Updated: 2018/05/14 02:08:09 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void			apply_mods(t_env *e, t_scene *w, t_mod *m)
 	n = 1.0;
 	SPEED_UP_SET(k) ? (n *= SPEED_UP_FACTOR) : (void)k;
 	SPEED_DOWN_SET(k) ? (n *= SPEED_DOWN_FACTOR) : (void)k;
-	QUIT_SET(k) ? end_session(e, NULL, EXIT_SUCCESS) : (void)k;
+	QUIT_SET(k) ? end_session(e, NULL, SUCCESS) : (void)k;
 	RESET_SET(k) ? reset_modifiers(w) : (void)k;
 	NEXT_PROJ_SET(k) ? next_proj(w, m) : (void)k;
 	UNFORCE_COLOR_SET(k) ? m->force_c = 0 : (void)k;

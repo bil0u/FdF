@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/03 21:02:39 by upopee            #+#    #+#             */
-/*   Updated: 2017/07/16 01:03:05 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/14 02:08:13 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		main(int argc, char **argv)
 	void		*wid;
 
 	if (argc != 2)
-		end_session(NULL, "usage : ./fdf [path/to/file]", EXIT_FAILURE);
+		end_session(NULL, "usage : ./fdf [path/to/file]", FAILURE);
 	wld = input_to_scene(argv[1]);
 	env = init_env(wld);
 	eid = env->m_env->init_id;
