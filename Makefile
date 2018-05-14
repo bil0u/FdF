@@ -54,12 +54,11 @@ OBJECTS = $(patsubst %,$(OBJ_DIR)/%,$(FILES:=.o))
 # -- IMPLICIT RULES  / LINKING --
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
-
 	@$(eval DONE=$(shell echo $$(($(INDEX)*20/$(NB)))))
 	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/$(NB)))))
 	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
 	@$(eval COLOR=$(shell list=(160 196 202 208 215 221 226 227 190 154 118 82 46); index=$$(($(PERCENT) * $${#list[@]} / 100)); echo "$${list[$$index]}"))
-	@printf "\r> $(YELLOW)$(NAME)$(EOC) : Creating binary...  %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
+	@printf "\r> $(YELLOW)$(NAME)$(EOC) : Building objects...    %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s%s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
 	@$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
@@ -70,7 +69,7 @@ all: $(LIBFT_LIB) $(LIBGR_LIB)
 
 $(NAME): $(LIBFT_LIB) $(LIBGR_LIB) $(OBJ_DIR) $(OBJECTS)
 	@$(CC) $(LDLIBS) $(LDFLAGS) $(OBJECTS) -o $@
-	@printf "\r$(ERASELN)> $(YELLOW)$(NAME)$(EOC) : Binary created !\t$(GREEN_B)✓$(EOC)\n"
+	@printf "\r$(ERASELN)$(GREEN_B)✓$(EOC) $(YELLOW)$(NAME)$(EOC) : Binary created\n"
 
 $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_DIR)
@@ -85,14 +84,14 @@ clean: libclean
 	@if [ -e $(OBJ_DIR) ]; \
 	then \
 		$(RMDIR) $(OBJ_DIR); \
-		printf "> $(YELLOW)$(NAME)$(EOC) : Objects deleted\t$(RED_B)✗$(EOC)\n"; \
+		printf "$(RED_B)✗$(EOC) $(YELLOW)$(NAME)$(EOC) : Objects deleted\n"; \
 	fi;
 
 fclean: clean libfclean
 	@if [ -e $(NAME) ]; \
 	then \
 		$(RM) $(NAME); \
-		printf "> $(YELLOW)$(NAME)$(EOC) : Binary deleted\t$(RED_B)✗$(EOC)\n"; \
+		printf "$(RED_B)✗$(EOC) $(YELLOW)$(NAME)$(EOC) : Binary deleted\n"; \
 	fi;
 
 re: fclean all
