@@ -1,42 +1,37 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2017/07/16 01:02:40 by upopee           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# -- PROJECT VARIABLES & COMMANDS --
 
-# -- VARIABLES --
+NAME =		fdf
+CC =		gcc
+CFLAGS =	-Wall -Werror -Wextra
+CPPFLAGS =	-I $(INC_DIR) -I $(LIBFT_DIR) -I $(LIBGR_DIR)
+DEPFLAGS =	-MMD
 
-# Name
-NAME = fdf
+SHELL =		/bin/bash
+LDMAKE =	make -C
+MKDIR =		mkdir -p
+RMDIR =		rm -rf
+RM =		rm -f
+NORM =		norminette
 
-# Compiler
-CC = gcc
+# -- LIBRARIES --
 
-# Flags
-CFLAGS = -Wall -Wextra -Wall $(INCLUDES)
-LFLAGS = -framework OpenGL -framework AppKit -lmlx -L $(MLX_DIR) -lft -L $(LIB_DIR) -lgraphic -L $(LIB_GRAPHIC_DIR) -lpthread
-# Library paths
-MLX_DIR = ./minilibx
+LDLIBS =	-lft -lgraphic -lpthread -framework OpenGL -framework AppKit
+LDFLAGS =	-L $(LIBFT_DIR) -L $(LIBGR_DIR)
 
-LIB_DIR = ./libft
-LIB_INCLUDES_DIR = $(LIB_DIR)/inc
+LIBFT_DIR =	libft
+LIBFT_LIB =	$(LIBFT_DIR)/libft.a
 
-LIB_GRAPHIC_DIR = ./libgraphic
-LIB_GRAPHIC_INCLUDES_DIR = $(LIB_GRAPHIC_DIR)/inc
-# Sources paths
-VPATH = ./src
-INCLUDES_DIR = ./inc
+LIBGR_DIR =	libgraphic
+LIBGR_LIB =	$(LIBGR_DIR)/libgraphic.a
 
-# Includes paths
-INCLUDES = -I $(INCLUDES_DIR) -I $(LIB_INCLUDES_DIR) -I $(LIB_GRAPHIC_INCLUDES_DIR)
+# -- PATHS NAMES --
 
-# Sources files
+SRC_DIR =	sources
+INC_DIR =	includes
+OBJ_DIR =	.objects
+
+# -- PROJECT FILES --
+
 FILES =		main_fdf \
 			hook_mlx \
 			hook_utils \
@@ -54,62 +49,96 @@ FILES =		main_fdf \
 			clear_frame \
 			fastline_fdf \
 
-SOURCES = $(patsubst %,$(SRC_DIR)/%,$(FILES:=.c))
-SRC_DIR = ./src
-
-# Objects files
 OBJECTS = $(patsubst %,$(OBJ_DIR)/%,$(FILES:=.o))
-OBJ_DIR = ./.obj
+
+# -- IMPLICIT RULES  / LINKING --
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
+
+	@$(eval DONE=$(shell echo $$(($(INDEX)*20/$(NB)))))
+	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/$(NB)))))
+	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
+	@$(eval COLOR=$(shell list=(160 196 202 208 215 221 226 227 190 154 118 82 46); index=$$(($(PERCENT) * $${#list[@]} / 100)); echo "$${list[$$index]}"))
+	@printf "\r> $(YELLOW)$(NAME)$(EOC) : Creating binary...  %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
+	@$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
+	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 # -- RULES --
 
-all: prep $(NAME)
+all: $(LIBFT_LIB) $(LIBGR_LIB)
+	@$(MAKE) -j $(NAME)
 
-$(NAME): lib
-	printf "> \e[31;33;1m$(NAME)\e[0m : \e[32mCreating objects \e[0m "
-	make obj
-	printf "\n"
-	printf "> \e[31;33;1m$(NAME)\e[0m : \e[32mCreating binary\e[0m "
-	$(CC) $(CFLAGS) $(LFLAGS) $(OBJECTS) -o $(NAME)
-	printf "\t\t\e[37;1m[\e[32;1mDONE\e[0m\e[37;1m]\e[0m\n"
+$(NAME): $(LIBFT_LIB) $(LIBGR_LIB) $(OBJ_DIR) $(OBJECTS)
+	@$(CC) $(LDLIBS) $(LDFLAGS) $(OBJECTS) -o $@
+	@printf "\r$(ERASELN)> $(YELLOW)$(NAME)$(EOC) : Binary created !\t$(GREEN_B)✓$(EOC)\n"
 
-obj: $(OBJECTS)
-	echo >> /dev/null
+$(LIBFT_LIB):
+	@$(MAKE) -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS)
-	printf "\e[32m.\e[0m"
+$(LIBGR_LIB):
+	@$(MAKE) -C $(LIBGR_DIR)
 
-lib:
-	make -C $(LIB_DIR)
-	make -C $(LIB_GRAPHIC_DIR)
+$(OBJ_DIR):
+	@$(MKDIR) $(OBJ_DIR)
 
-clean:
-	printf "> \e[31;33;1m$(NAME)\e[0m : \e[31mDeleting objects\e[0m "
-	rm -rf $(OBJ_DIR)
-	printf "\t\t\e[37;1m[\e[31;1mX\e[0m\e[37;1m]\e[0m\n"
-	make -C $(LIB_DIR) $@
-	make -C $(LIB_GRAPHIC_DIR) $@
+clean: libclean
+	@if [ -e $(OBJ_DIR) ]; \
+	then \
+		$(RMDIR) $(OBJ_DIR); \
+		printf "> $(YELLOW)$(NAME)$(EOC) : Objects deleted\t$(RED_B)✗$(EOC)\n"; \
+	fi;
 
-fclean: clean
-	printf "> \e[31;33;1m$(NAME)\e[0m : \e[31mDeleting binary\e[0m "
-	rm -f $(NAME)
-	printf "\t\t\e[37;1m[\e[31;1mX\e[0m\e[37;1m]\e[0m\n"
-	make -C $(LIB_DIR) $@
-	make -C $(LIB_GRAPHIC_DIR) $@
+fclean: clean libfclean
+	@if [ -e $(NAME) ]; \
+	then \
+		$(RM) $(NAME); \
+		printf "> $(YELLOW)$(NAME)$(EOC) : Binary deleted\t$(RED_B)✗$(EOC)\n"; \
+	fi;
 
 re: fclean all
 
-prep:
-	mkdir -p $(OBJ_DIR)
+norm:
+	@$(NORM) $(SRC_DIR)
+	@$(NORM) $(INC_DIR)
 
-sandwich: re
-	make clean
-	echo "Sandwich ready !"
-# This rule allow the library build process to complete even if there are
-# files named 'all, clean, fclean, re' in the working directory
+lib:
+	@$(MAKE) $(LIBFT_LIB)
+	@$(MAKE) $(LIBGR_LIB)
 
+libclean:
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(LIBGR_DIR) clean
 
-.PHONY: all obj lib clean fclean re sandwich prep debug
+libfclean:
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(LIBGR_DIR) fclean
 
-.SILENT: all obj lib clean fclean re sandwich prep debug $(NAME) $(OBJECTS)
+libre: libfclean lib
+
+libnorm:
+	@$(MAKE) -C $(LIBFT_DIR) norm
+	@$(MAKE) -C $(LIBGR_DIR) norm
+
+.PHONY: all clean libclean fclean libfclean re libre norm libnorm
+
+-include $(OBJECTS:.o=.d)
+
+# -- DISPLAY --
+
+LEN_NAME =	`printf "%s" $(NAME) |wc -c`
+DELTA =		$$(echo "$$(tput cols)-51-$(LEN_NAME)"|bc)
+NB =		$(words $(FILES))
+INDEX=		0
+
+ERASELN =	\033[K
+CNO =		\033[38;5;%dm
+
+YELLOW =	\e[31;33m
+YELLOW_B =	\e[31;33;1m
+GREEN =		\e[32m
+GREEN_B =	\e[32;1m
+RED =		\e[31m
+RED_B =		\e[31;1m
+WHITE =		\e[37m
+WHITE_B =	\e[37;1m
+EOC =		\e[0m
