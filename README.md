@@ -14,6 +14,18 @@ A basic 3D rendering engine for height maps, represented as wireframes
 * Circular frame-buffering
 * Multithreaded drawing & frame cleaning
 
+## Screen captures
+
+![Main demo](./demo/main.gif)
+
+![Rotate and translate](./demo/rot_trans.gif)
+
+![Fancy colors](./demo/colors.gif)
+
+![Modify zoom and altitude values](./demo/zoom_alt.gif)
+
+![Line and dot modes](./demo/line_dot.gif)
+
 ## Usage
 
 First, clone
@@ -40,11 +52,11 @@ Keyboard control only (Default mapped to US). Mouse is not supported for the mom
 * `R / T`  
    Respectively switch beetween rotate (default) & translate modes  
 * `Arrows`  
-   Controls rotation & translation  
+   Control rotation & translation  
 * `Z / A`  
    Respectively switch beetween zoom (default) & altitude modes  
 * `+ / -`  
-   Controls zoom & altitude values  
+   Control zoom & altitude values  
 ---
 * `C`  
    Switch beetween gradient (default) & mono color mode
@@ -64,7 +76,7 @@ Keyboard control only (Default mapped to US). Mouse is not supported for the mom
    Show/hide FPS counter & debug infos  
 ---
 * `Shift left / right`  
-   Respectively slows down & speed up the controls sensitivity  
+   Respectively slow down & speed up the controls sensitivity  
 * `Command + <key>`  
    Locks the `<key`, useful for rotations/zoom. When locked, repress the `<key` once to unlock  
 ---
