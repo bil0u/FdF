@@ -125,7 +125,7 @@ libnorm:
 # -- DISPLAY --
 
 LEN_NAME =	`printf "%s" $(NAME) |wc -c`
-DELTA =		$$(echo "$$(tput cols)-51-$(LEN_NAME)"|bc)
+DELTA =		$$(echo "$$(tput cols)-54-$(LEN_NAME)"|bc)
 NB =		$(words $(FILES))
 INDEX=		0
 
