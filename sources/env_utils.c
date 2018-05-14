@@ -6,10 +6,11 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 02:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2018/05/14 02:07:59 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/14 02:12:04 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "fdf.h"
 #include "libgraphic.h"
 #include "world_utils.h"

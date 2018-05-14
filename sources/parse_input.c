@@ -6,11 +6,12 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2018/05/14 02:10:36 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/14 02:11:57 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "fdf.h"
 #include "parse_utils.h"
