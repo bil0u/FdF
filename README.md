@@ -1,12 +1,12 @@
 # Fdf
 
-A basic 3D rendering engine for height maps
+A basic 3D rendering engine for height maps, represented as wireframes
 
 ## Features
 
-* Supports colors in map files
 * Camera controls (zoom, rotation & translation)
 * Color gradient & single color modes
+* Supports colors in map files
 * Dots-only mode
 * Perspective (default) & orthographic projections
 * Line clipping
@@ -45,24 +45,29 @@ Keyboard control only (Default mapped to US). Mouse is not supported for the mom
    Respectively switch beetween zoom (default) & altitude modes  
 * `+ / -`  
    Controls zoom & altitude values  
+---
 * `C`  
    Switch beetween gradient (default) & mono color mode
 * `V / X`  
    Respectively increase & decrease the pinned altitude for current color set
 * `Space`  
    Select next color or color gradient depending on the actual mode  
+---
+* `Alt left`  
+   Switch between wireframe (default) & dot modes  
 * `P`  
    Switch beetween perspective (default) & orthographic projections  
-* `A`  
-   Switch to altitude mode  
+---
 * `H`  
    Show/hide help panel  
 * `D`  
    Show/hide FPS counter & debug infos  
+---
 * `Shift left / right`  
    Respectively slows down & speed up the controls sensitivity  
 * `Command + <key>`  
    Locks the `<key`, useful for rotations/zoom. When locked, repress the `<key` once to unlock  
+---
 * `Delete`  
    Reset view to original position  
 * `Q / Escape`  
