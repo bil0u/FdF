@@ -1,92 +1,72 @@
-# Libft
+# Fdf
 
-This is my personal toolkit for C programming based on the Standard C Library.  
+A basic 3D rendering engine for height maps
 
-Note: this code has only been tested on macOS and ArchLinux  
+## Features
+
+* Supports colors in map files
+* Camera controls (zoom, rotation & translation)
+* Color gradient & single color modes
+* Dots-only mode
+* Perspective (default) & orthographic projections
+* Line clipping
+* FPS Counter and help/debug panels
+* Circular frame-buffering
+* Multithreaded drawing & frame cleaning
 
 ## Usage
 
 First, clone
 ```sh
-$ git clone https://github.com/bil0u/libft.git
+$ git clone https://github.com/bil0u/fdf.git
 ```
-
-You have to specify the include path `-I ./libft` and the library flags `-lft -Llibft`  
-
-Don't forget to `#include "libft.h"` or `"libft_macros.h"`
-(Note that `libft.h` already includes `libft_macros.h`)  
 
 A Makefile is provided, just run in your shell
 ```sh
 $ make
 ```
-or call it from a parent one with the rule `make -C ./<libft_path>`
+or call it from a parent one with the rule `make -C ./<fdf_path>`
 
-## Components
+To run, just type
+```sh
+$ ./fdf [path/to/map]
+```
+A bunch of samples maps are provided in the `maps` directory.
 
-### Memory
-Memory allocation and management  
-See [memory.h](memory/includes/memory.h) for details  
+## Controls
 
-### Characters
-Characters testing and converting functions  
-See [characters.h](characters/includes/characters.h) for details  
+Keyboard control only (Default mapped to US). Mouse is not supported for the moment.  
 
-### Strings
-Strings allocation, management and utilities functions  
-See [strings.h](strings/includes/strings.h) for details  
-
-### Wide Strings
-Wide strings allocation, management, testing and searching functions  
-See [wide_strings.h](wide_strings/includes/wide_strings.h) for details  
-
-### Read/Write
-Reading and printing fuctions  
-See [read_write.h](read_write/includes/read_write.h) for details  
-
-### Printf
-Personal implementation of printf() and its variants  
-Handling additionnal flags like `%b` for binary and `{colors}`  
-See [ft_printf.h](ft_printf/includes/ft_printf.h) for details  
-
-### Maths
-Common math functions  
-See [maths.h](maths/includes/maths.h) for details  
-
-### Linked Lists
-Linked lists creation, management and searching functions  
-See [linked_lists.h](linked_lists/includes/linked_lists.h) for details  
-
-### Log
-Logging functions that allows to open new shell windows, run a logging program that listen on a fifo and prints all readed input  
-Printed output can be saved in log files  
-See [log.h](log/includes/log.h) for details  
-
-## Makefile rules
-
-* all  
-   Compile all the library components  
-
-* libft  
-   Compile only the library  
-
-* log_server  
-   Compile only the logging server binary  
-
-* log_client  
-   Compile only the logging client binary  
-
-* clean  
-   Delete all the objects files  
-
-* fclean  
-   Delete both objects and binaries  
-
-* re  
-   Runs the `fclean` and `all` rules  
-
-* norm  
-   Runs the `norminette` command on all the sources and includes subdirectories (Only usable in 42 clusters)  
+* `R / T`  
+   Respectively switch beetween rotate (default) & translate modes  
+* `Arrows`  
+   Controls rotation & translation  
+* `Z / A`  
+   Respectively switch beetween zoom (default) & altitude modes  
+* `+ / -`  
+   Controls zoom & altitude values  
+* `C`  
+   Switch beetween gradient (default) & mono color mode
+* `V / X`  
+   Respectively increase & decrease the pinned altitude for current color set
+* `Space`  
+   Select next color or color gradient depending on the actual mode  
+* `P`  
+   Switch beetween perspective (default) & orthographic projections  
+* `A`  
+   Switch to altitude mode  
+* `H`  
+   Show/hide help panel  
+* `D`  
+   Show/hide FPS counter & debug infos  
+* `Shift left / right`  
+   Respectively slows down & speed up the controls sensitivity  
+* `Command + <key>`  
+   Locks the `<key`, useful for rotations/zoom. When locked, repress the `<key` once to unlock  
+* `Delete`  
+   Reset view to original position  
+* `Q / Escape`  
+   Quit the program  
 
 ## License
 
