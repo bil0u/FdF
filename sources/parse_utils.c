@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/07 01:02:58 by upopee            #+#    #+#             */
-/*   Updated: 2018/05/14 02:08:20 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/14 02:09:49 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@ int			count_and_check(t_list *lst, int *forced_colors)
 	int				ret;
 
 	if (!lst)
-		return (ERROR);
+		return (FAILURE);
 	if ((ref_value = ft_nbwords(lst->content, MAP_SEPARATOR)) == 1)
-		return (ERROR);
+		return (FAILURE);
 	while (lst)
 	{
 		str = lst->content;
 		if (ft_nbwords(str, MAP_SEPARATOR) != (size_t)ref_value)
-			return (ERROR);
+			return (FAILURE);
 		check_forced(forced_colors, str);
 		while (*str)
 		{
 			if ((ret = point_is_valid(str)) == 0)
-				return (ERROR);
+				return (FAILURE);
 			str += ret;
 			while (str[0] == MAP_SEPARATOR)
 				str++;

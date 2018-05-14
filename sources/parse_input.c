@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 09:49:36 by upopee            #+#    #+#             */
-/*   Updated: 2018/05/14 02:08:17 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/14 02:10:36 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			file_to_lst(char *file, t_list **dst)
 	char			*buff;
 
 	if ((fd = open(file, O_RDONLY)) < 0)
-		return (ERROR);
+		return (FAILURE);
 	height = 0;
 	buff = NULL;
 	while (get_next_line(fd, &buff) > 0)
@@ -38,7 +38,7 @@ int			file_to_lst(char *file, t_list **dst)
 void		end_error(t_list **lst, t_scene **world, int i, char *msg)
 {
 	if (world && *world
-				&& (*world)->height != ERROR && (*world)->width != ERROR)
+				&& (*world)->height != FAILURE && (*world)->width != FAILURE)
 	{
 		while (i < (*world)->height)
 		{
@@ -62,10 +62,10 @@ t_scene		*input_to_scene(char *file)
 	l = NULL;
 	if (!(w = (t_scene *)malloc(sizeof(t_scene))))
 		end_error(&l, &w, 0, "malloc: cannot allocate memory");
-	if ((w->height = file_to_lst(file, &l)) == ERROR)
+	if ((w->height = file_to_lst(file, &l)) == FAILURE)
 		end_error(&l, &w, 0, "open: file does not exist");
 	w->mod.force_c = 0;
-	if ((w->width = count_and_check(l, &w->mod.force_c)) == ERROR)
+	if ((w->width = count_and_check(l, &w->mod.force_c)) == FAILURE)
 		end_error(&l, &w, 0, "fdf: file not valid");
 	i = w->height;
 	if (!(w->map = (t_vertex3f **)malloc(sizeof(t_vertex3f *) * i)))
