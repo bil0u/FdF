@@ -2,6 +2,8 @@
 
 A basic 3D rendering engine for height maps, represented as wireframes
 
+Note : Only works on macOS 10.12 and later
+
 ## Features
 
 * Camera controls (zoom, rotation & translation)
