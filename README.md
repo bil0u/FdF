@@ -30,9 +30,11 @@ Note : Only works on macOS 10.12 and later
 
 ## Usage
 
-First, clone
+First, clone and pull the submodules
 ```sh
 $ git clone https://github.com/bil0u/fdf.git
+...
+$ git submodule update --init
 ```
 
 A Makefile is provided, just run in your shell
